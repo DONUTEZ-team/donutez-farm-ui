@@ -1,8 +1,5 @@
 @import '@styles/variables'
 
-html
-  background-color: $secondary-100
-
 html,
 body
   padding: 0
@@ -10,12 +7,19 @@ body
   font-family: $font
   //-ms-overflow-style: none
   //overflow-x: hidden !important
-  color: $third-100
+  color: $dark
   min-width: 320px
+
+html
+  background-color: #FBFBFA
+
+body
+  background-color: #FBFBFA
 
 a
   color: inherit
   text-decoration: none
+  cursor: pointer
 
 *
   box-sizing: border-box
@@ -35,3 +39,5 @@ button
   outline: none
   border: none
   cursor: pointer
+  &:disabled
+    cursor: not-allowed

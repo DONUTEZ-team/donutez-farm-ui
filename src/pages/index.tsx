@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from '@i18n';
 
-import { Button } from '@components/Button';
+import { Button } from '@components/ui/Button';
 
 const Home = () => {
   const { t, i18n } = useTranslation(['common', 'home']);
