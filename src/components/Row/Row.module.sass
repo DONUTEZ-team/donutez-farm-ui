@@ -1,0 +1,14 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  display: flex
+  height: 100%
+  padding: 0 32px
+  justify-content: space-between
+  flex-wrap: wrap
+  align-items: center
+  @include media("<=phone")
+    padding: 0 24px
+  @include media("<=Sphone")
+    padding: 0 16px

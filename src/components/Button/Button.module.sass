@@ -1,0 +1,111 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+// EXAMPLE CODE
+.root
+  box-shadow: none
+  border: none
+  background-color: transparent
+  outline: none
+  cursor: pointer
+  line-height: 1.25
+  &:disabled
+    cursor: not-allowed
+
+.primary, .secondary, .info
+  padding: 9px 16px
+  border-radius: 4px
+  text-align: center
+  font-size: 1rem
+  line-height: 1.4
+  font-family: $font
+  font-weight: 700
+  text-overflow: ellipsis
+  overflow: hidden
+  white-space: nowrap
+
+.primary
+  background-color: $primary-100
+  color: $third-100
+  border: 4px solid transparent
+  transition: background-color $animationTime, color $animationTime, border $animationTime
+  &:hover
+    background-color: $primary-60
+  &:active, &:focus
+    background-color: $primary-40
+    border: 4px solid $service-information
+    color: $primary-80
+  &:disabled
+    font-weight: 400
+    background-color: $primary-20
+    color: $primary-100
+
+.secondary
+  padding: 12px 16px
+  background-color: transparent
+  color: $primary-100
+  position: relative
+  transition: background-color $animationTime, color $animationTime
+  &::before, &::after
+    content: ''
+    position: absolute
+    top: -1px
+    bottom: -1px
+    left: -1px
+    right: -1px
+    transition: opacity $animationTime
+    border-radius: 4px
+  &::before
+    border: 2px solid $primary-100
+    opacity: 1
+  &::after
+    border: 2px solid $primary-60
+    opacity: 0
+  &:hover
+    background-color: $primary-40
+    color: $primary-100
+  &:active, &:focus
+    background: $service-information
+    color: $primary-60
+    &::before
+      opacity: 0
+    &::after
+      opacity: 1
+  &:disabled
+    font-weight: 400
+    background-color: transparent
+    color: $primary-40
+    &::before
+      border-color: $primary-40
+
+.info
+  background-color: transparent
+  color: $primary-100
+  transition: background-color $animationTime, color $animationTime
+  &:hover
+    color: $primary-60
+  &:active, &:focus
+    color: $service-information
+  &:disabled
+    color: $secondary-100
+
+.large
+  width: 284px
+
+.medium
+  width: 200px
+
+.small
+  width: 128px
+
+@include media('<=Lphone')
+  .primary, .secondary, .info
+    padding: 1px 16px
+  .secondary
+    padding: 4px 16px
+  .large
+    width: 200px
+  .medium
+    width: 126px
+  .small
+    width: 104px
