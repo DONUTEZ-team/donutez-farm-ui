@@ -14,6 +14,7 @@ import {
   required,
 } from '@utils/validators';
 import { useTezos } from '@utils/dapp';
+import { createTokenFAOne, createTokenFATwo } from '@utils/createToken';
 
 import { Container } from '@ui/Container';
 import { Row } from '@ui/Row';
@@ -25,8 +26,6 @@ import Minus from '@icons/Minus.svg';
 import HandFaOne from '@icons/FA1_2.svg';
 import HandFaTwo from '@icons/FA2.svg';
 
-import { createFarming } from '@utils/createFarming';
-import { createTokenFAOne, createTokenFATwo } from '@utils/createToken';
 import s from './Form.module.sass';
 
 const findInput = (inputs: any, errors: any) => inputs.find((input: any) => {
@@ -99,7 +98,7 @@ export const TokenForm: React.FC = () => {
             ...arrayMutators,
           }}
           render={({
-            handleSubmit, submitting, form, values,
+            handleSubmit, values,
           }) => (
             <form onSubmit={handleSubmit}>
               <Row className={s.row}>
@@ -183,13 +182,13 @@ export const TokenForm: React.FC = () => {
                               </React.Fragment>
                             ))}
                             <div className={s.plusWrapper}>
-                              {fields.length > 1 && (
+                              {fields.length && fields.length > 1 && (
                                 <Button
                                   theme="secondary"
                                   type="button"
                                   className={cx(s.buttonPlus, s.buttonMinus)}
                                   onClick={
-                                    () => fields.remove(fields.length - 1)
+                                    () => fields.length && fields.remove(fields.length - 1)
                                   }
                                 >
                                   <Minus className={s.buttonIcon} />

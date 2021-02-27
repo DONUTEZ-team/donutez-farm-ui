@@ -30,50 +30,44 @@ export const createTokenFATwo = async (
     tokenMetadata: string
   }[],
 ) => {
-  const tokenMD = MichelsonMap.fromLiteral({
-    0: {
-      token_id: '0',
+  const object: any = {};
+  metadata.forEach((item, index) => {
+    object[index] = {
+      token_id: `${index}`,
       extras: MichelsonMap.fromLiteral({
-        0: Buffer.from(
-          JSON.stringify({
-            name: 'Donutez Token',
-            authors: ['DONUTEZ TEAM'],
-          }),
-        ).toString('hex'),
+        index: Buffer.from(item.tokenMetadata).toString('hex'),
       }),
-    },
+    };
   });
 
-  // const tokenMD = MichelsonMap.fromLiteral(
-  //   metadata.map((item, index) => (
-  //     {
-  //       index: {
-  //         token_id: `${index}`,
-  //         extras: MichelsonMap.fromLiteral({
-  //           index: Buffer.from(item.tokenMetadata).toString('hex'),
-  //         }),
-  //       },
-  //     }
-  //   )),
-  // );
+  const tokenMD = MichelsonMap.fromLiteral(object);
 
-  // const newMetadata: any = [];
-  //
-  // metadata.map((item, index) => {
-  //   if (item.tokenMetadata) {
-  //     const innerObject: any = {};
-  //     innerObject[index] = JSON.stringify(item.tokenMetadata);
-  //
-  //     const object: any = {};
-  //     object[index] = {
-  //       token_id: index,
-  //       extras: innerObject,
-  //     };
-  //     newMetadata.push(object);
-  //   }
-  // });
-
-  // console.log('newMetadata', newMetadata);
+  const MD = MichelsonMap.fromLiteral({
+    '': Buffer.from('tezos-storage:here', 'ascii').toString('hex'),
+    here: Buffer.from(
+      JSON.stringify({
+        version: 'v0.0.1',
+        description: 'Donutez Token',
+        name: 'Donutez Token',
+        authors: ['DONUTEZ TEAM'],
+        source: {
+          tools: ['Ligo', 'Flextesa'],
+          location: 'https://ligolang.org/',
+        },
+        interfaces: ['TZIP-12', 'TZIP-16'],
+        errors: [],
+        views: [],
+        tokens: {
+          dynamic: [
+            {
+              big_map: 'tokenMD',
+            },
+          ],
+        },
+      }),
+      'ascii',
+    ).toString('hex'),
+  });
 
   const contract = await tezos.wallet.at(TOKEN_FA2);
 
@@ -82,7 +76,7 @@ export const createTokenFATwo = async (
   batchify(
     batch,
     [
-      contract.methods.default(totalSuply, tokenMD).toTransferParams(),
+      contract.methods.default(totalSuply, tokenMD, MD).toTransferParams(),
     ],
   );
 
