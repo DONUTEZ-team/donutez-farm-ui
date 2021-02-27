@@ -55,7 +55,7 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({
         />
         <link
           rel="preload"
-          href="/fonts/DonutQuest/DonutQuest-Black.ttf"
+          href="/fonts/DonutQuest/DonutQuest.ttf"
           as="font"
           crossOrigin=""
         />

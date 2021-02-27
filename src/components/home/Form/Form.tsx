@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 import { useTranslation } from '@i18n';
 
@@ -15,6 +15,34 @@ import s from './Form.module.sass';
 
 export const Form: React.FC = () => {
   const { t } = useTranslation(['common', 'home']);
+
+  const refDonutSecond = useRef(null);
+  const refDonutThird = useRef(null);
+
+  const [isSecondActive, setIsSecondActive] = useState({
+    second: false,
+    third: false,
+  });
+
+  const isScrolledIntoView = (elem: any) => {
+    const bounding = elem.getBoundingClientRect();
+    return (
+      bounding.top - 150 <= 0
+    );
+  };
+  const onScroll = () => {
+    if (refDonutSecond.current && refDonutThird.current) {
+      setIsSecondActive({
+        second: isScrolledIntoView(refDonutSecond.current),
+        third: isScrolledIntoView(refDonutThird.current),
+      });
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => onScroll());
+    return window.removeEventListener('scroll', () => onScroll());
+  }, []);
 
   return (
     <Container>
@@ -36,7 +64,7 @@ export const Form: React.FC = () => {
               <strong>DONUTEZ TOKEN</strong>
             </p>
           </div>
-          <div className={s.block}>
+          <div className={s.block} ref={refDonutSecond}>
             <Heading
               header={t('home:Set mining\nparameters')}
               subheader="02*"
@@ -97,7 +125,7 @@ export const Form: React.FC = () => {
               </p>
             </div>
           </div>
-          <div className={s.block}>
+          <div className={s.block} ref={refDonutThird}>
             <Heading
               header={t('home:Project\ninformation')}
               subheader={(
@@ -122,7 +150,27 @@ e.g. This project is about yeild farming..."
           </div>
         </div>
         <div className={s.donut}>
-          asdf
+          <img
+            className={cx(s.donutImage, s.donutImageFirst)}
+            src="/images/donut/DonutFirst.png"
+            alt="DONUTEZ base"
+          />
+          <img
+            className={cx(
+              s.donutImage,
+              s.donutImageSecond, { [s.active]: isSecondActive.second },
+            )}
+            src="/images/donut/DonutSecond.png"
+            alt="DONUTEZ base"
+          />
+          <img
+            className={cx(
+              s.donutImage,
+              s.donutImageThird, { [s.active]: isSecondActive.third },
+            )}
+            src="/images/donut/DonutThird.png"
+            alt="DONUTEZ base"
+          />
         </div>
       </Row>
       <Row className={s.final}>
