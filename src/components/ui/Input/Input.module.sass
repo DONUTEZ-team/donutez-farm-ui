@@ -1,0 +1,74 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  position: relative
+  box-sizing: border-box
+  display: block
+  width: 100%
+  min-width: 527px
+
+.label
+  margin-bottom: 6px
+  margin-left: 14px
+  font-size: 1.375rem
+  font-weight: 600
+
+.input
+  width: 100%
+  box-shadow: none
+  outline: none
+  border-radius: 10px
+  padding: 14px 24px
+  font-family: $font
+  font-weight: 400
+  font-size: 1.125rem
+  border: 2px solid $dark
+  color: $dark
+  transition: border-color $animationTime, box-shadow $animationTime
+  background: rgba($light, 0.6)
+  backdrop-filter: blur(25px)
+  &::placeholder
+    color: $dark-60
+    transition: color $animationTime
+  &:focus
+    border-color: $secondary
+    box-shadow: 0 0 0 3px rgba($secondary, .5)
+    &::placeholder
+      color: $dark
+
+.textarea
+  height: 160px
+  resize: none
+
+.root:not(.success):not(.error)
+  .input
+    &:hover:not(:disabled)
+      border-color: $secondary
+
+.errorContainer
+  max-height: 0
+  overflow: hidden
+  transition: max-height $animationTime
+
+.errorText
+  color: $accent
+  padding-top: 6px
+  font-size: 1.125rem
+  margin-left: 14px
+
+.error
+  .input
+    border-color: $accent
+    &:focus
+      border-color: $accent
+      box-shadow: 0 0 0 3px rgba($accent, .5)
+  .errorContainer
+    max-height: 26px
+
+.success
+  .input
+    border-color: $success
+    box-shadow: 0 0 0 3px rgba($success, .5)
+    &::placeholder
+      color: $success
