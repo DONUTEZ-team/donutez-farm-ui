@@ -1,0 +1,50 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+// EXAMPLE CODE
+.root
+  line-height: 1.25
+  font-weight: 900
+
+// Themes
+.primary, .secondary
+  border-radius: 50px
+  box-shadow: none
+  transition: box-shadow $animationTime
+  max-height: 50px
+  &:hover
+    box-shadow: $box-shadow-accent
+  &:active, &:focus
+    box-shadow: none
+
+.primary
+  background-color: $accent
+  color: $light
+  box-shadow: $box-shadow-accent
+  transition: background-color $animationTime, box-shadow $animationTime
+  &:hover
+    background-color: $accent-80
+  &:active, &:focus
+    background-color: $accent-120
+  &:disabled
+// TODO: disabled
+
+.secondary
+  background-color: transparent
+  border: 2px solid $accent
+  color: $accent
+  transition: color $animationTime, border-color $animationTime, box-shadow $animationTime
+  &:hover
+    border-color: $accent-80
+    color: $accent-80
+  &:active, &:focus
+    border-color: $accent-120
+    color: $accent-120
+  &:disabled
+// TODO: disabled
+
+// Sizes
+.large
+  padding: 11px
+  min-width: 280px
+  font-size: 1.25rem
