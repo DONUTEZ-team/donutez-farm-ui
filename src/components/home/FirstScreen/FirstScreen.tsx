@@ -15,7 +15,7 @@ export const FirstScreen: React.FC = () => {
     <Container className={s.root}>
       <Row className={s.row}>
         <h1 className={s.header}>
-          {t('home:All u need\nis farming...\nand Donuts')}
+          {t('home:All u need\nis farming...\nand Donutez')}
         </h1>
         <p className={s.description}>
           {t('home:Create your own yield farming in 5 minutes')}
