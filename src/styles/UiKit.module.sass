@@ -9,11 +9,21 @@
   position: relative
   justify-content: flex-start
 
+.subheader
+  margin-top: 60px
+  margin-bottom: 20px
+
+.buttons
+  display: flex
+  flex-direction: column
+
 .button
-  margin-top: 20px
+  &:not(:last-child)
+    margin-bottom: 20px
 
 .inputs
   padding: 50px 0
 
 .input
-  margin-bottom: 18px
+  &:not(:last-child)
+    margin-bottom: 18px

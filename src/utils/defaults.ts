@@ -1,8 +1,8 @@
 export const SEO = {
-  DEFAULT_TITLE: 'DEFAULT TITLE',
+  DEFAULT_TITLE: 'DONUTEZ FARM | Create your own yeild farming in 5 minutes',
   DEFAULT_DESSCRIPTION: 'DEFAULT DESCRIPTION',
   DEFAULT_IMAGE: 'og_image.jpg',
-  TEMPLATE_TITLE: 'TEMPLATE TITLE',
-  WEBSITE_URL: 'https://website-url/', // Slash in the end is necessary
-  CREATOR: '@olehkhalin',
+  TEMPLATE_TITLE: 'DONUTEZ FARM',
+  WEBSITE_URL: 'https://donutez-farm.vercel.app/', // Slash in the end is necessary
+  CREATOR: '@donutez',
 };

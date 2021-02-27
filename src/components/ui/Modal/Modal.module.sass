@@ -1,0 +1,48 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.overlay
+  position: fixed
+  top: 0
+  right: 0
+  left: 0
+  bottom: 0
+  z-index: 100
+  cursor: pointer
+  display: flex
+  align-items: flex-start
+  justify-content: center
+  max-height: 100vh
+  overflow-y: auto
+  background: linear-gradient(152.97deg, rgba(71, 198, 255, 0.2) 0%, rgba(71, 198, 255, 0) 100%)
+  backdrop-filter: blur(42px)
+
+.portal
+  position: relative
+  transition: none
+  opacity: 1
+  z-index: 100
+
+.wrapper
+  display: flex
+  justify-content: center
+  align-items: center
+  min-height: 100%
+  padding: 10px 0
+  box-sizing: border-box
+
+.root
+  outline: none
+  height: 100%
+
+.inner
+  position: relative
+  padding: 48px
+  cursor: default
+  display: flex
+  flex-direction: column
+  align-items: center
+  box-sizing: content-box
+  background: linear-gradient(152.97deg, rgba(2, 16, 79, 0.5) 0%, rgba(33, 59, 171, 0.5) 100%)
+  backdrop-filter: blur(70px)
+  border-radius: 16px
