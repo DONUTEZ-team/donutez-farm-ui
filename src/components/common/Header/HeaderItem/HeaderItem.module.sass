@@ -1,0 +1,12 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  padding: 20px
+  font-size: 1.25rem
+  font-weight: 600
+  transition: color $animationTime
+  &:hover
+    color: $secondary
+  &.active
+    color: $accent
