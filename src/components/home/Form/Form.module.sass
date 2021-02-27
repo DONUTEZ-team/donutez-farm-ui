@@ -1,0 +1,112 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.row
+  position: relative
+  align-items: flex-start
+
+.form
+  display: flex
+  flex-direction: column
+  width: 60%
+  justify-content: flex-start
+
+.block
+  padding: 110px 0
+
+.innerBlock
+  margin-bottom: 48px
+
+.input
+  &:not(:last-child)
+    margin-bottom: 18px
+
+.optional
+  font-size: 40px
+  line-height: 40px
+  margin-top: 40px
+  margin-left: 10px
+
+.item
+  font-size: 1.375rem
+  font-weight: 600
+  padding-left: 14px
+  &.active
+    color: $secondary
+  &:not(:last-child)
+    margin-bottom: 18px
+  strong
+    font-weight: 900
+
+.donut
+  width: 40%
+  position: sticky
+  top: 0
+  padding-top: 110px
+
+.final
+  padding: 110px 0
+  flex-direction: column
+  align-items: flex-start
+  position: relative
+  overflow: hidden
+
+.hand
+  position: absolute
+  right: 0
+  bottom: -123px
+
+.description
+  font-size: 1.5rem
+  margin-bottom: 50px
+  strong
+    font-weight: 900
+    color: $accent
+
+.cards
+  display: flex
+
+.card
+  width: 405px
+  padding: 32px
+  display: flex
+  flex-direction: column
+  &:first-child
+    margin-right: 26px
+  &:last-child
+    margin-left: 26px
+
+.header
+  font-family: $font-header
+  font-size: 2rem
+  color: $secondary
+  line-height: 42px
+  font-weight: normal
+
+.headerCTA
+  color: $accent
+
+.subheader
+  font-family: $font-header
+  font-size: 0.875rem
+  line-height: 18px
+  color: $accent
+  margin-bottom: 30px
+
+.subheaderEmpty
+  opacity: 0
+
+.listHeader, .list
+  font-weight: 900
+  font-size: 1.125rem
+
+.listHeader
+  color: $secondary
+
+.list
+  margin: 0 0 30px
+  padding-left: 20px
+
+.button
+  margin-top: auto
+  width: 100%
