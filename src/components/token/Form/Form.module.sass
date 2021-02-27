@@ -1,0 +1,84 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.row
+  position: relative
+  align-items: flex-start
+  flex-wrap: nowrap
+
+.form
+  display: flex
+  flex-direction: column
+  width: 60%
+  justify-content: flex-start
+
+.block
+  padding: 110px 0
+
+.input
+  &:not(:last-child)
+    margin-bottom: 18px
+
+.switcher
+  display: flex
+  margin-bottom: 36px
+
+.button
+  min-width: 180px
+  width: 180px
+  &:first-child
+    margin-right: 24px
+
+.buttonPrimary, .buttonSecondary
+  &:hover
+    box-shadow: 0px 6px 25px rgba($secondary, 0.4)
+
+.buttonPrimary
+  background-color: $secondary
+  box-shadow: 0px 6px 25px rgba($secondary, 0.4)
+  cursor: default
+  &:hover
+    background-color: $secondary
+  &:active, &:focus
+    background-color: $secondary
+
+.buttonSecondary
+  border: 2px solid $secondary
+  color: $secondary
+  &:hover
+    border-color: $secondary
+    color: $secondary
+  &:active, &:focus
+    border-color: $secondary
+    color: $secondary
+
+.finalButton
+  margin-top: 24px
+
+.wrapper
+  position: relative
+  overflow: hidden
+
+.plusWrapper
+  width: 100%
+  display: flex
+  justify-content: flex-end
+
+.buttonPlus
+  border-radius: 50%
+  min-width: 47px
+  width: 47px
+  height: 47px
+  font-weight: 900
+  font-size: 40px
+  display: flex
+  justify-content: center
+  align-items: center
+
+.buttonMinus
+  margin-right: 16px
+
+.hands
+  position: absolute
+  top: 400px
+  right: 0

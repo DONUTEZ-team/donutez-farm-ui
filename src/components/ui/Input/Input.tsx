@@ -21,11 +21,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   labelClassName,
   textarea,
   value,
+  disabled,
   ...props
 }, ref) => {
   const compoundClassName = cx(
     s.root,
     { [s.error]: error },
+    { [s.disabled]: disabled },
     { [s.success]: success },
     className,
   );
@@ -42,6 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
           {...props}
           className={cx(s.input, s.textarea, inputClassName)}
           value={value}
+          disabled={disabled}
         />
       ) : (
         <input
@@ -49,6 +52,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
           className={cx(s.input, inputClassName)}
           ref={ref}
           value={value}
+          disabled={disabled}
         />
       )}
       <div className={s.errorContainer}>

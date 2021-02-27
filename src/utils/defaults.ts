@@ -27,3 +27,6 @@ export const CONSTRUCT_STAKE_SUM = 7;
 export const FARM_CONTRACT = 'KT1Uj4y1ByRPMg9ZWwqr47FjGEhksCF72spV';
 
 export const DTZ_TOKEN = 'KT1DjjUVN3oV47L7qrBDi3Xf6MhFfBkeJfgg';
+
+export const TOKEN_FA1 = 'KT1APHGnkz4nk6c7Myf8GP7EJaTqGYkPYTyz';
+export const TOKEN_FA2 = 'KT1TNDpqKpTooHt2wFcYZAjj7iKRwkWjVBoA';
