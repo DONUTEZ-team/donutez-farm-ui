@@ -1,0 +1,51 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  padding: 34px 32px 48px
+  width: 376px
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.icons
+  display: flex
+  margin-bottom: 22px
+
+.icon
+  width: 104px
+  height: 104px
+  background: rgba(255, 214, 141, 0.6)
+  border: 2px solid $accent
+  backdrop-filter: blur(7px)
+  border-radius: 50%
+  display: flex
+  justify-content: center
+  align-items: center
+  &:nth-child(2)
+    margin-left: -32px
+
+.value
+  font-family: $font-header
+  font-size: 1.5rem
+  margin-bottom: 12px
+
+.header
+  font-size: 1.25rem
+  font-weight: normal
+  margin-bottom: 26px
+
+.button
+  font-size: 1.25rem
+  min-width: 200px
+
+.buttons
+  display: flex
+  width: 100%
+  .button
+    width: calc(50% - 12px)
+    min-width: auto
+    &:first-child
+      margin-right: 12px
+    &:last-child
+      margin-lest: 12px

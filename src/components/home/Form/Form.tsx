@@ -148,8 +148,8 @@ export const YieldForm: React.FC = () => {
                       <Input
                         {...input}
                         className={s.input}
-                        label="QP token address:"
-                        placeholder="Enter QP Token Address e.g. tz1W3a2...pSBmH"
+                        label={`${t('home:QP token address')}:`}
+                        placeholder={t('home:Enter QP Token Address e.g. tz1W3a2...pSBmH')}
                         error={(meta.touched && meta.error) || meta.submitError}
                         success={!meta.error && meta.touched && !meta.submitError}
                       />
@@ -167,8 +167,8 @@ export const YieldForm: React.FC = () => {
                         <Input
                           {...input}
                           className={s.input}
-                          label="Token Address:"
-                          placeholder="Enter reward Token Address e.g. tz1W3...SBmH"
+                          label={`${t('home:Token Address')}:`}
+                          placeholder={t('home:Enter reward Token Address e.g. tz1W3...SBmH')}
                           error={(meta.touched && meta.error) || meta.submitError}
                           success={!meta.error && meta.touched && !meta.submitError}
                         />
@@ -176,7 +176,10 @@ export const YieldForm: React.FC = () => {
                     </Field>
                   </div>
                   <div className={s.innerBlock}>
-                    <div className={s.timeLabel}>Lifetime:</div>
+                    <div className={s.timeLabel}>
+                      {t('home:Lifetime')}
+                      :
+                    </div>
                     <div className={s.timeWrapper}>
                       <Field name="lifeTimeDays" validate={composeValidators(required, validateDay)}>
                         {({ input, meta }) => (
@@ -186,7 +189,7 @@ export const YieldForm: React.FC = () => {
                             className={s.inputTime}
                             labelClassName={s.inputTimeLabel}
                             inputClassName={s.inputTimeInput}
-                            label="Days:"
+                            label={`${t('home:Days')}:`}
                             placeholder="69"
                             step={1}
                             min={1}
@@ -205,7 +208,7 @@ export const YieldForm: React.FC = () => {
                             className={s.inputTime}
                             labelClassName={s.inputTimeLabel}
                             inputClassName={s.inputTimeInput}
-                            label="Hours:"
+                            label={`${t('home:Hours')}:`}
                             placeholder="23"
                             step={1}
                             min={0}
@@ -224,7 +227,7 @@ export const YieldForm: React.FC = () => {
                             className={s.inputTime}
                             labelClassName={s.inputTimeLabel}
                             inputClassName={s.inputTimeInput}
-                            label="Minutes:"
+                            label={`${t('home:Minutes')}:`}
                             placeholder="00"
                             step={1}
                             min={0}
@@ -243,7 +246,7 @@ export const YieldForm: React.FC = () => {
                             className={s.inputTime}
                             labelClassName={s.inputTimeLabel}
                             inputClassName={s.inputTimeInput}
-                            label="Seconds:"
+                            label={`${t('home:Seconds')}:`}
                             placeholder="00"
                             step={1}
                             min={0}
@@ -255,7 +258,8 @@ export const YieldForm: React.FC = () => {
                       </Field>
                     </div>
                     <p className={s.item}>
-                      Estimated starting & closing time:
+                      {t('home:Estimated starting & closing time')}
+                      :
                       {' '}
                       <strong>XXXXXXX</strong>
                     </p>
@@ -278,7 +282,7 @@ export const YieldForm: React.FC = () => {
                           {...input}
                           type="number"
                           className={s.input}
-                          label="Reward Period in Seconds:"
+                          label={`${t('home:Reward Period in Seconds')}:`}
                           placeholder="932157"
                           step={1}
                           min={1}
@@ -304,15 +308,16 @@ export const YieldForm: React.FC = () => {
                           {...input}
                           type="number"
                           className={s.input}
-                          label="Mining Reward per Block:"
-                          placeholder="Mining reward for each block"
+                          label={`${t('home:Mining Reward per Block')}:`}
+                          placeholder={t('home:Mining reward for each block')}
                           error={(meta.touched && meta.error) || meta.submitError}
                           success={!meta.error && meta.touched && !meta.submitError}
                         />
                       )}
                     </Field>
                     <p className={s.item}>
-                      Total Working Blocks Amount:
+                      {t('home:Total Working Blocks Amount')}
+                      :
                       {' '}
                       <strong>
                         {
@@ -407,7 +412,7 @@ e.g. This project is about yeild farming..."
               </div>
             </Row>
             <Row className={s.final}>
-              <Heading header="Create it!" subheader="Finally" />
+              <Heading header={t('home:Create it!')} subheader={t('home:Finally')} />
               <p className={s.description}>
                 Get
                 {' '}
@@ -462,7 +467,7 @@ e.g. This project is about yeild farming..."
                       form.change('isStake', true);
                     }}
                   >
-                    {submitting ? 'Loading...' : t('home:Create & Stake')}
+                    {submitting ? t('common:Loading...') : t('home:Create & Stake')}
                   </Button>
                 </StyledCard>
                 <StyledCard className={s.card} theme="orange">
@@ -492,7 +497,7 @@ e.g. This project is about yeild farming..."
                       form.change('isStake', false);
                     }}
                   >
-                    {submitting ? 'Loading...' : t('home:Create')}
+                    {submitting ? t('common:Loading...') : t('common:Create')}
                   </Button>
                 </StyledCard>
               </div>

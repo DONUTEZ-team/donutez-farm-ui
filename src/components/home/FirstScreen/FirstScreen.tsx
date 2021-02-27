@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { ReactNode } from 'react';
+
 import { useTranslation } from '@i18n';
 
 import { Container } from '@ui/Container';
@@ -6,7 +7,6 @@ import { Row } from '@ui/Row';
 import { Button } from '@ui/Button';
 import HandToRight from '@icons/HandToRight.svg';
 
-import { ReactNode } from 'react';
 import s from './FirstScreen.module.sass';
 
 type FirstScreenProps = {

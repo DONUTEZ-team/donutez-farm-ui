@@ -134,7 +134,7 @@ export const TokenForm: React.FC = () => {
                         <Input
                           {...input}
                           className={s.input}
-                          label="Total supply:"
+                          label={`${t('token:Total supply')}:`}
                           placeholder="93481034"
                           error={(meta.touched && meta.error) || meta.submitError}
                           success={!meta.error && meta.touched && !meta.submitError}
@@ -155,7 +155,7 @@ export const TokenForm: React.FC = () => {
                                     <Input
                                       {...input}
                                       className={s.input}
-                                      label="Token id:"
+                                      label={`${t('token:Total id')}:`}
                                       placeholder={`${index}`}
                                       value={index}
                                       disabled
@@ -171,7 +171,7 @@ export const TokenForm: React.FC = () => {
                                     <Input
                                       {...input}
                                       className={s.input}
-                                      label="Token metadata:"
+                                      label={`${t('token:Total metadata')}:`}
                                       placeholder="1"
                                       textarea
                                       error={(meta.touched && meta.error) || meta.submitError}
@@ -213,7 +213,7 @@ export const TokenForm: React.FC = () => {
                     </>
                     )}
                     <Button type="submit" className={s.finalButton}>
-                      Create & Deploy
+                      {t('token:Create & Deploy')}
                     </Button>
                   </div>
                 </div>
