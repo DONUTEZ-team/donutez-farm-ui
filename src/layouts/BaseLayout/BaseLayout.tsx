@@ -3,6 +3,7 @@ import Head from 'next/head';
 import cx from 'classnames';
 
 import { SEO } from '@utils/defaults';
+import { Header } from '@components/common/Header';
 
 import s from './BaseLayout.module.sass';
 
@@ -122,7 +123,7 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({
         <meta property="twitter:image" content={finalImage} />
       </Head>
       {/* Content */}
-      {/* TODO: Header */}
+      <Header />
       <main className={cx(s.root, className)}>
         {children}
       </main>
