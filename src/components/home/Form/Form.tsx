@@ -7,7 +7,9 @@ import React, {
 import cx from 'classnames';
 import { useTranslation } from '@i18n';
 import { Field, withTypes } from 'react-final-form';
-import { FormApi } from 'final-form';
+import { FormApi, getIn } from 'final-form';
+// eslint-disable-next-line import/no-named-default
+import focusDecorator from 'final-form-focus';
 import {
   composeValidators,
   required,
@@ -29,6 +31,14 @@ import { Heading } from '@components/common/Heading';
 import HandRock from '@icons/HandRock.svg';
 
 import s from './Form.module.sass';
+
+const findInput = (inputs: any, errors: any) => inputs.find((input: any) => {
+  const name = input.name || input.id; // <------------ THERE
+  return name && getIn(errors, name);
+});
+
+// @ts-ignore
+const focusOnError = focusDecorator(null, findInput);
 
 // Default stake value
 type FormValues = {
@@ -115,6 +125,8 @@ export const YieldForm: React.FC = () => {
         key={i18n.language}
         onSubmit={onSubmit}
         initialValues={{ lifeTimeDays: 10, isStake: true }}
+        // @ts-ignore
+        decorators={[focusOnError]}
         render={({
           handleSubmit, submitting, form, values,
         }) => (

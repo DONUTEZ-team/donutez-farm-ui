@@ -25,8 +25,8 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
         label: t('common:Create Farming'),
       },
       {
-        link: '/deploy',
-        label: t('common:Deploy Token'),
+        link: '/token',
+        label: t('common:Create Token'),
       },
       {
         link: '/farm',

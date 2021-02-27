@@ -6,27 +6,46 @@ import { Row } from '@ui/Row';
 import { Button } from '@ui/Button';
 import HandToRight from '@icons/HandToRight.svg';
 
+import { ReactNode } from 'react';
 import s from './FirstScreen.module.sass';
 
-export const FirstScreen: React.FC = () => {
-  const { t } = useTranslation(['common', 'home']);
+type FirstScreenProps = {
+  title: string | ReactNode
+  description: string
+  image: string
+  isHome?: boolean
+};
+
+export const FirstScreen: React.FC<FirstScreenProps> = ({
+  title,
+  description,
+  image,
+  isHome,
+}) => {
+  const { t } = useTranslation(['common']);
 
   return (
     <Container className={s.root}>
       <Row className={s.row}>
         <h1 className={s.header}>
-          {t('home:All u need\nis farming...\nand Donutez')}
+          {title}
         </h1>
         <p className={s.description}>
-          {t('home:Create your own yield farming in 5 minutes')}
+          {description}
         </p>
-        <div className={s.buttonWrapper}>
+        {isHome ? (
+          <div className={s.buttonWrapper}>
+            <Button>
+              {t('common:Create')}
+            </Button>
+            <HandToRight className={s.hand} />
+          </div>
+        ) : (
           <Button>
             {t('common:Create')}
           </Button>
-          <HandToRight className={s.hand} />
-        </div>
-        <img className={s.image} src="/images/HomeFirst.png" alt="DONUTEZ FARM" />
+        )}
+        <img className={s.image} src={image} alt="DONUTEZ FARM" />
       </Row>
     </Container>
   );
