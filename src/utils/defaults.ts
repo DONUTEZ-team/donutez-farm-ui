@@ -30,3 +30,6 @@ export const DTZ_TOKEN = 'KT1DjjUVN3oV47L7qrBDi3Xf6MhFfBkeJfgg';
 
 export const TOKEN_FA1 = 'KT1APHGnkz4nk6c7Myf8GP7EJaTqGYkPYTyz';
 export const TOKEN_FA2 = 'KT1TNDpqKpTooHt2wFcYZAjj7iKRwkWjVBoA';
+
+export const CONTRACT_REWARD = 'KT1Uj4y1ByRPMg9ZWwqr47FjGEhksCF72spV';
+export const CONTRACT_POOL = 'KT1GqKSH1vnLDgNN4dNhcovTdid3PhT4sfrh';
