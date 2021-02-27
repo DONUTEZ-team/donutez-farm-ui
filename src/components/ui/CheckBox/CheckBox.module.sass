@@ -1,0 +1,56 @@
+@import '@styles/variables'
+
+.root
+  display: block
+  position: relative
+  cursor: pointer
+  user-select: none
+  width: 100%
+  padding-left: 44px
+  font-size: 1.375rem
+  font-weight: 600
+  margin-left: 14px
+  &:hover
+    .checkmark
+      border-color: $secondary
+      box-shadow: 0 0 0 3px rgba($secondary, .5) !important
+  .input:focus
+    ~ .checkmark
+      border-color: $secondary
+      box-shadow: 0 0 0 3px rgba($secondary, .5) !important
+  .input:checked
+    ~ .checkmark
+      background-color: $dark
+      transition: background-color $animationTime, border-color $animationTime, box-shadow $animationTime
+      box-shadow: 0 0 0 3px rgba($dark, .5)
+      .icon
+        opacity: 1
+        transition: opacity $animationTime ($animationTime - .1s)
+
+.input
+  position: absolute
+  opacity: 0
+  cursor: pointer
+  height: 0
+  width: 0
+
+.checkmark
+  position: absolute
+  top: 50%
+  left: 0
+  transform: translateY(-50%)
+  height: 30px
+  width: 30px
+  background-color: rgba($light, .6)
+  border: 2px solid $dark
+  border-radius: 10px
+  display: flex
+  justify-content: center
+  align-items: center
+  transition: background-color $animationTime ($animationTime - .1s), border-color $animationTime, box-shadow $animationTime
+
+.icon
+  opacity: 0
+  transition: opacity $animationTime
+  width: 20px
+  height: auto
