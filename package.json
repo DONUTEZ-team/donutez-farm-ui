@@ -10,7 +10,12 @@
     "makemessages": "i18next 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
+    "@taquito/taquito": "^8.0.4-beta.0",
+    "@temple-wallet/dapp": "^2.2.3",
+    "bignumber.js": "^9.0.1",
     "classnames": "^2.2.6",
+    "constate": "^3.1.0",
+    "memoizee": "^0.4.15",
     "next": "10.0.7",
     "next-i18next": "^7.0.1",
     "next-react-svg": "^1.1.2",
@@ -21,6 +26,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.11",
+    "@types/memoizee": "^0.4.5",
     "@types/react": "^17.0.2",
     "@types/react-modal": "^3.12.0",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
