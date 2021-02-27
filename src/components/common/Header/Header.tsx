@@ -3,9 +3,9 @@ import Link from 'next/link';
 import cx from 'classnames';
 import { useTranslation } from '@i18n';
 
+import { ConnectWallet } from '@containers/ConnectWallet';
 import { Container } from '@ui/Container';
 import { Row } from '@ui/Row';
-import { Button } from '@ui/Button';
 import { HeaderItem } from '@components/common/Header/HeaderItem';
 import Donutez from '@icons/DONUTEZ.svg';
 
@@ -59,12 +59,7 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
               />
             ))}
           </nav>
-          <Button
-            theme="secondary"
-            className={s.button}
-          >
-            {t('common:Connect wallet')}
-          </Button>
+          <ConnectWallet className={s.button} />
         </Row>
       </Container>
     </header>
