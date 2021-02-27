@@ -6,7 +6,10 @@ import { Container } from '@ui/Container';
 import { Row } from '@ui/Row';
 import { Input } from '@ui/Input';
 import { CheckBox } from '@ui/CheckBox';
+import { Button } from '@ui/Button';
+import { StyledCard } from '@ui/StyledCard';
 import { Heading } from '@components/common/Heading';
+import HandRock from '@icons/HandRock.svg';
 
 import s from './Form.module.sass';
 
@@ -121,6 +124,66 @@ e.g. This project is about yeild farming..."
         <div className={s.donut}>
           asdf
         </div>
+      </Row>
+      <Row className={s.final}>
+        <Heading header="Create it!" subheader="Finally" />
+        <p className={s.description}>
+          Get
+          {' '}
+          <strong>30%</strong>
+          {' '}
+          Discount for staking 60 DTZ
+          <br />
+          {' '}
+          and get them back as reward in
+          {' '}
+          <strong>~2 weeks</strong>
+          {' '}
+          to create new contracts
+        </p>
+        <div className={s.cards}>
+          <StyledCard className={s.card} theme="green">
+            <h3 className={cx(s.header, s.headerCTA)}>80 DTZ</h3>
+            <p className={s.subheader}>{t('home:+ 60 DTZ to stake')}</p>
+            <h4 className={s.listHeader}>
+              {t('home:You will get')}
+              :
+            </h4>
+            <ul className={s.list}>
+              <li>
+                {t('home:Smart contract')}
+              </li>
+              <li>
+                {t('home:Discount 30%')}
+              </li>
+              <li>
+                {t('home:Own front-end')}
+              </li>
+              <li>
+                {t('home:Staked DTZ which u’ll get back in 2 weeks as reward')}
+              </li>
+            </ul>
+            <Button className={s.button}>{t('home:Create & Stake')}</Button>
+          </StyledCard>
+          <StyledCard className={s.card} theme="orange">
+            <h3 className={s.header}>120 DTZ</h3>
+            <p className={cx(s.subheader, s.subheaderEmpty)}>0 DTZ</p>
+            <h4 className={s.listHeader}>
+              {t('home:You will get')}
+              :
+            </h4>
+            <ul className={s.list}>
+              <li>
+                {t('home:Smart contract')}
+              </li>
+              <li>
+                {t('home:Own front-end')}
+              </li>
+            </ul>
+            <Button className={s.button} theme="secondary">{t('home:Create')}</Button>
+          </StyledCard>
+        </div>
+        <HandRock className={s.hand} />
       </Row>
     </Container>
   );
