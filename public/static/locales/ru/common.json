@@ -3,8 +3,13 @@
   "Deploy Token": "Deploy Token",
   "Farm DONUTEZ": "Farm DONUTEZ",
   "Account": "Account",
-  "Connect wallet": "Connect wallet",
   "Create": "Create",
+  "Connect": "Connect",
   "Change language": "Change language",
-  "Open modal": "Open modal"
+  "Open modal": "Open modal",
+  "This field is required": "This field is required",
+  "Field has to be a number between 0 and 100": "Field has to be a number between 0 and 100",
+  "Field has to be a number between 0 and 24": "Field has to be a number between 0 and 24",
+  "Field has to be a number between 0 and 60": "Field has to be a number between 0 and 60",
+  "Validators.validateUSDTAddress": "Validators.validateUSDTAddress"
 }

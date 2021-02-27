@@ -18,3 +18,12 @@ export const APP_NAME = 'DONUTEZ FARM';
 
 export const NETWORK = NetworkType.DELPHINET;
 export const NETWORK_RPC = 'https://api.tez.ie/rpc/delphinet';
+
+export const CONSTRUCT_FARM_CONTRACT = 'KT1W1YaAqbBEeXYGpWLMPjJ8sAN6MiCwSqv8';
+export const CONSTRUCT_FEE = 10;
+export const CONSTRUCT_STAKE_FEE = 5;
+export const CONSTRUCT_STAKE_SUM = 7;
+
+export const FARM_CONTRACT = 'KT1Uj4y1ByRPMg9ZWwqr47FjGEhksCF72spV';
+
+export const DTZ_TOKEN = 'KT1DjjUVN3oV47L7qrBDi3Xf6MhFfBkeJfgg';

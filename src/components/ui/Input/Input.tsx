@@ -9,6 +9,7 @@ export type InputProps = {
   success?: boolean
   textarea?: boolean
   inputClassName?: string
+  labelClassName?: string
 } & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(({
@@ -17,10 +18,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   success = false,
   className,
   inputClassName,
+  labelClassName,
   textarea,
   value,
-  onFocus,
-  onBlur,
   ...props
 }, ref) => {
   const compoundClassName = cx(
@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   return (
     <label className={compoundClassName}>
       {label && (
-      <p className={s.label}>
+      <p className={cx(s.label, labelClassName)}>
         {label}
       </p>
       )}
