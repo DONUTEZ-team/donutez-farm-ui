@@ -5,6 +5,7 @@ import { BaseLayout } from '@layouts/BaseLayout';
 import { Container } from '@ui/Container';
 import { Row } from '@ui/Row';
 import { Button } from '@ui/Button';
+import { Input } from '@ui/Input';
 
 import s from '@styles/UiKit.module.sass';
 
@@ -28,6 +29,25 @@ const UiKit = () => {
           >
             {t('common:Change language')}
           </Button>
+          <div className={s.inputs}>
+            <Input
+              className={s.input}
+              label="Token Address"
+              placeholder="Enter reward Token Address e.g. tz1W3...SBmH"
+            />
+            <Input
+              className={s.input}
+              label="Token Address"
+              placeholder="Enter reward Token Address e.g. tz1W3...SBmH"
+              error="Enter valid token address"
+            />
+            <Input
+              className={s.input}
+              label="Token Address"
+              placeholder="Enter reward Token Address e.g. tz1W3...SBmH"
+              success
+            />
+          </div>
         </Row>
       </Container>
     </BaseLayout>
