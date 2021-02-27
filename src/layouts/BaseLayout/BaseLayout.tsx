@@ -116,7 +116,7 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({
         <meta property="og:description" content={finalDescription} />
         <meta property="og:image" content={finalImage} />
         <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content={SEO.CREATOR} />
         <meta name="twitter:title" content={finalTitle} />
         <meta name="twitter:description" content={finalDescription} />
