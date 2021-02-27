@@ -9,6 +9,7 @@ import { Input } from '@ui/Input';
 import { Modal } from '@ui/Modal';
 
 import s from '@styles/UiKit.module.sass';
+import { Heading } from '@components/common/Heading';
 
 const UiKit = () => {
   const { t, i18n } = useTranslation(['common', 'ui-kit']);
@@ -20,7 +21,7 @@ const UiKit = () => {
         <Row className={s.row}>
           <h1>{t('ui-kit:UI Kit - temporary')}</h1>
           <div className={s.buttons}>
-            <h2 className={s.subheader}>Buttons</h2>
+            <Heading header="Buttons" subheader="01*" />
             <Button className={s.button}>
               {t('common:Create')}
             </Button>
@@ -35,7 +36,7 @@ const UiKit = () => {
             </Button>
           </div>
           <div className={s.inputs}>
-            <h2 className={s.subheader}>Inputs</h2>
+            <Heading header="Inputs" subheader="02*" />
             <Input
               className={s.input}
               label="Token Address"
@@ -55,7 +56,7 @@ const UiKit = () => {
             />
           </div>
           <div className={s.buttons}>
-            <h2 className={s.subheader}>Modal</h2>
+            <Heading header="Modal" subheader="03*" />
             <Button className={s.button} onClick={() => setIsModalOpened(true)}>
               {t('common:Open modal')}
             </Button>
