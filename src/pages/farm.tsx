@@ -52,7 +52,7 @@ const Farm = () => {
         setUserBalance(storageUserBalance);
       }
     }
-  }, [accountPkh, tezos, CONTRACT_REWARD, CONTRACT_POOL]);
+  }, [accountPkh, tezos]);
   const loadHarvest = useCallback(async () => {
     if (tezos && accountPkh) {
       const storageUserHarvest = await getUserHarvest(
@@ -67,7 +67,7 @@ const Farm = () => {
         });
       }
     }
-  }, [accountPkh, tezos, CONTRACT_REWARD]);
+  }, [accountPkh, tezos]);
 
   // Load initial
   useEffect(() => {
@@ -100,7 +100,7 @@ const Farm = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [tezos, accountPkh, CONTRACT_REWARD]);
+  }, [tezos, accountPkh]);
 
   return (
     <BaseLayout className={s.wrapper}>
