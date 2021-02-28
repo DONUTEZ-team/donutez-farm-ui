@@ -59,6 +59,12 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({
           as="font"
           crossOrigin=""
         />
+        <link
+          rel="preload"
+          href="/fonts/HuangyinqiZhaopai/HuangyinqiZhaopai.ttf"
+          as="font"
+          crossOrigin=""
+        />
         {/* Favicons */}
         <link
           rel="icon"

@@ -1,13 +1,14 @@
 import React, {
   useCallback, useEffect, useRef, useState,
 } from 'react';
+import cx from 'classnames';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from '@i18n';
 import {
   useAccountPkh,
   getStorage,
   useTezos,
-  useOnBlock,
+  // useOnBlock,
   getUserBalance,
 } from '@utils/dapp';
 import { getUserHarvest, harvest } from '@utils/farm';
@@ -26,7 +27,7 @@ import HandOkay from '@icons/HandOkay.svg';
 import s from '@styles/Farm.module.sass';
 
 const Farm = () => {
-  const { t } = useTranslation(['common', 'farm']);
+  const { t, i18n } = useTranslation(['common', 'farm']);
 
   // Context
   const tezos = useTezos();
@@ -77,11 +78,11 @@ const Farm = () => {
     loadHarvest();
   }, [loadHarvest]);
 
-  // Reload when new block
-  if (tezos) { // Don't sure if necessary
-    useOnBlock(tezos, loadStorage);
-    useOnBlock(tezos, loadHarvest);
-  }
+  // // Reload when new block
+  // if (tezos) { // Don't sure if necessary
+  //   useOnBlock(tezos, loadStorage);
+  //   useOnBlock(tezos, loadHarvest);
+  // }
 
   // Modal logic
   const [isDepositOpen, setIsDepositOpen] = useState(false);
@@ -107,7 +108,7 @@ const Farm = () => {
       <Background />
       <Container>
         <Row className={s.row}>
-          <h1 className={s.header}>
+          <h1 className={cx(s.header, { chinese: i18n.language === 'zh' })}>
             {t('farm:stake QP tokens to earn DONUTEZ')}
           </h1>
           <div className={s.cards}>

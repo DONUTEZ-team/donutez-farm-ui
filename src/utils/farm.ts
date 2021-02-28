@@ -38,7 +38,6 @@ export const stake = async (
   amount: BigNumber,
   rewardContract: string,
 ) => {
-  console.log('amount', amount);
   const contractApprove = await tezos.wallet.at(tokenContract);
   const contractStake = await tezos.wallet.at(rewardContract);
 

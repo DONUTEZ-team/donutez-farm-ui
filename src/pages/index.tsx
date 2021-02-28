@@ -9,7 +9,7 @@ import { YieldForm } from '@components/home/Form';
 import s from '@styles/Home.module.sass';
 
 const Home = () => {
-  const { t } = useTranslation(['common', 'home']);
+  const { t, i18n } = useTranslation(['common', 'home']);
 
   return (
     <BaseLayout className={s.wrapper}>
@@ -17,7 +17,8 @@ const Home = () => {
       <FirstScreen
         title={t('home:All u need\nis farming...\nand Donutez')}
         description={t('home:Create your own yield farming in 5 minutes')}
-        image="/images/HomeFirst.png"
+        image={i18n.language === 'zh' ? '/images/HomeFirstChinese.png' : '/images/HomeFirst.png'}
+        isHome
       />
       <YieldForm />
     </BaseLayout>

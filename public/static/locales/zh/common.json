@@ -1,0 +1,22 @@
+{
+  "Create Farming": "建立耕种",
+  "Create Token": "创建令牌",
+  "Farm DONUTEZ": "农场DONUTEZ",
+  "Account": "帐户",
+  "Stake": "赌注",
+  "Unstake": "放心",
+  "Harvest": "收成",
+  "MAX": "最大限度",
+  "Confirm": "确认",
+  "Cancel": "取消",
+  "Create": "创建",
+  "Loading...": "载入中...",
+  "Connect": "连接",
+  "Change language": "改变语言",
+  "Open modal": "开放模式",
+  "This field is required": "此字段是必需的",
+  "Field has to be a number between 0 and 100": "字段必须是0到100之间的数字",
+  "Field has to be a number between 0 and 24": "字段必须是0到24之间的数字",
+  "Field has to be a number between 0 and 60": "字段必须为0到60之间的数字",
+  "Validators.validateUSDTAddress": "Validators.validateUSDTAddress"
+}

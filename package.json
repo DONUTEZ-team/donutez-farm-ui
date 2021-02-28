@@ -15,6 +15,7 @@
     "bignumber.js": "^9.0.1",
     "classnames": "^2.2.6",
     "constate": "^3.1.0",
+    "dayjs": "^1.10.4",
     "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",
     "final-form-focus": "^1.1.2",

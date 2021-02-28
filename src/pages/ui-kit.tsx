@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from '@i18n';
 
 import { BaseLayout } from '@layouts/BaseLayout';
@@ -14,12 +14,6 @@ import { Heading } from '@components/common/Heading';
 const UiKit = () => {
   const { t, i18n } = useTranslation(['common', 'ui-kit']);
   const [isModalOpened, setIsModalOpened] = useState(false);
-
-  useEffect(() => {
-    fetch('http://136.244.96.28/core/tokens/')
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <BaseLayout>
