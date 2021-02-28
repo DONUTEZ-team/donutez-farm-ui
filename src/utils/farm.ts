@@ -15,6 +15,7 @@ export const getUserHarvest = async (
     ledger,
   } = storage;
   const val = await ledger.get(accountPkh);
+  if (!val) return null;
 
   const {
     reward,
