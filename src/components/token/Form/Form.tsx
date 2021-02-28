@@ -84,10 +84,12 @@ export const TokenForm: React.FC = () => {
             .then((response) => response.json())
             .then((data) => data);
 
-          let finalToken = tokens.length !== 0 ? val[0] : '';
-          tokens.forEach((token: any) => {
-            if (!val.includes(token.token)) {
-              finalToken = token.token;
+          let finalToken = tokens.length === 0 ? val[0] : '';
+          const tokensFiltered = tokens.filter((token: any) => token.type === 'FA2');
+          val.forEach((value: any) => {
+            const newTokens = tokensFiltered.filter((token: any) => token.token === value);
+            if (newTokens.length === 0) {
+              finalToken = value;
             }
           });
 
@@ -103,7 +105,7 @@ export const TokenForm: React.FC = () => {
 
           setIsSuccessModal({
             opened: true,
-            tokenAddress: val[val.length - 1],
+            tokenAddress: finalToken,
             isFaTwo: true,
           });
         } else {
@@ -115,14 +117,17 @@ export const TokenForm: React.FC = () => {
           const { tokenList } = storage;
           const val = await tokenList.get(accountPkh);
 
+          //
           const tokens = await fetch(`${BACKEND_URL}/tokens/${accountPkh}/`)
             .then((response) => response.json())
             .then((data) => data);
 
-          let finalToken = tokens.length !== 0 ? val[0] : '';
-          tokens.forEach((token: any) => {
-            if (!val.includes(token.token)) {
-              finalToken = token.token;
+          let finalToken = tokens.length === 0 ? val[0] : '';
+          const tokensFiltered = tokens.filter((token: any) => token.type === 'FA12');
+          val.forEach((value: any) => {
+            const newTokens = tokensFiltered.filter((token: any) => token.token === value);
+            if (newTokens.length === 0) {
+              finalToken = value;
             }
           });
 
@@ -138,7 +143,7 @@ export const TokenForm: React.FC = () => {
           //
           setIsSuccessModal({
             opened: true,
-            tokenAddress: val[val.length - 1],
+            tokenAddress: finalToken,
             isFaTwo: false,
           });
         }

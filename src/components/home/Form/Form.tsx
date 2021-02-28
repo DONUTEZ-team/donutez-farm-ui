@@ -148,13 +148,24 @@ export const YieldForm: React.FC = () => {
         const { yieldFarmings } = storage;
         const val = await yieldFarmings.get(accountPkh);
 
+        const yfs = await fetch(`${BACKEND_URL}/yfs/${accountPkh}/`)
+          .then((response) => response.json())
+          .then((data) => data);
+
+        let finalYfs = yfs.length === 0 ? val[0] : '';
+        val.forEach((value: any) => {
+          const newYfs = yfs.filter((yieldFarm: any) => yieldFarm.yf === value);
+          if (newYfs.length === 0) {
+            finalYfs = value;
+          }
+        });
         //
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             user: accountPkh,
-            yf: val[val.length - 1],
+            yf: finalYfs,
             title,
             description,
           }),
@@ -166,7 +177,7 @@ export const YieldForm: React.FC = () => {
 
         setIsSuccessModal({
           opened: true,
-          tokenAddress: val[val.length - 1],
+          tokenAddress: finalYfs,
         });
 
         // @ts-ignore
