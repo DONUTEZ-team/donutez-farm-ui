@@ -80,11 +80,21 @@ export const TokenForm: React.FC = () => {
           const { tokenList } = storage;
           const val = await tokenList.get(accountPkh);
 
-          //
+          const tokens = await fetch(`${BACKEND_URL}/tokens/${accountPkh}/`)
+            .then((response) => response.json())
+            .then((data) => data);
+
+          let finalToken = tokens.length !== 0 ? val[0] : '';
+          tokens.forEach((token: any) => {
+            if (!val.includes(token.token)) {
+              finalToken = token.token;
+            }
+          });
+
           const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user: accountPkh, token: val[val.length - 1], type: 'FA2' }),
+            body: JSON.stringify({ user: accountPkh, token: finalToken, type: 'FA2' }),
           };
           fetch(`${BACKEND_URL}/tokens/`, requestOptions)
             .then((response) => console.log(response))
@@ -104,11 +114,23 @@ export const TokenForm: React.FC = () => {
           const storage = await getStorageInfo(tezos, TOKEN_FA1);
           const { tokenList } = storage;
           const val = await tokenList.get(accountPkh);
+
+          const tokens = await fetch(`${BACKEND_URL}/tokens/${accountPkh}/`)
+            .then((response) => response.json())
+            .then((data) => data);
+
+          let finalToken = tokens.length !== 0 ? val[0] : '';
+          tokens.forEach((token: any) => {
+            if (!val.includes(token.token)) {
+              finalToken = token.token;
+            }
+          });
+
           //
           const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user: accountPkh, token: val[val.length - 1], type: 'FA12' }),
+            body: JSON.stringify({ user: accountPkh, token: finalToken, type: 'FA12' }),
           };
           fetch(`${BACKEND_URL}/tokens/`, requestOptions)
             .then((response) => console.log(response))
