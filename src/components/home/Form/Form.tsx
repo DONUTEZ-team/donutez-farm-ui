@@ -544,6 +544,7 @@ e.g. This project is about yeild farming..."
                   <Button
                     className={s.button}
                     type="submit"
+                    disabled={submitting}
                     onClick={() => {
                       form.change('isStake', true);
                     }}
@@ -574,6 +575,7 @@ e.g. This project is about yeild farming..."
                     type="submit"
                     className={s.button}
                     theme="secondary"
+                    disabled={submitting}
                     onClick={() => {
                       form.change('isStake', false);
                     }}
