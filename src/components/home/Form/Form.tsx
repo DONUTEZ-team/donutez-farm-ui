@@ -11,6 +11,7 @@ import { FormApi, getIn } from 'final-form';
 import dayjs from 'dayjs';
 // eslint-disable-next-line import/no-named-default
 import focusDecorator from 'final-form-focus';
+import Confetti from 'react-dom-confetti';
 import {
   composeValidators,
   required,
@@ -37,6 +38,20 @@ import HandRock from '@icons/HandRock.svg';
 import { SuccessModal } from '@components/common/Modal';
 import Link from 'next/link';
 import s from './Form.module.sass';
+
+const config = {
+  angle: 90,
+  spread: 360,
+  startVelocity: 40,
+  elementCount: '200',
+  dragFriction: 0.12,
+  duration: 3000,
+  stagger: '3',
+  width: '10px',
+  height: '10px',
+  perspective: '500px',
+  colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
+};
 
 const findInput = (inputs: any, errors: any) => inputs.find((input: any) => {
   const name = input.name || input.id; // <------------ THERE
@@ -72,11 +87,13 @@ export const YieldForm: React.FC = () => {
 
   const refDonutSecond = useRef(null);
   const refDonutThird = useRef(null);
+  const refDonutFinal = useRef(null);
 
   const [isSecondActive, setIsSecondActive] = useState({
     second: false,
     third: false,
   });
+  const [finalDonutActive, setFinalActiveDonut] = useState(false);
 
   const isScrolledIntoView = (elem: any) => {
     const bounding = elem.getBoundingClientRect();
@@ -85,6 +102,10 @@ export const YieldForm: React.FC = () => {
     );
   };
   const onScroll = () => {
+    if (refDonutFinal.current) {
+      console.log('isScrolledIntoView(refDonutFinal.current)', isScrolledIntoView(refDonutFinal.current));
+      setFinalActiveDonut(isScrolledIntoView(refDonutFinal.current));
+    }
     if (refDonutSecond.current && refDonutThird.current) {
       setIsSecondActive({
         second: isScrolledIntoView(refDonutSecond.current),
@@ -149,6 +170,7 @@ export const YieldForm: React.FC = () => {
     }
   }, [tezos]);
 
+  // @ts-ignore
   return (
     <Container>
       <Form
@@ -456,6 +478,20 @@ e.g. This project is about yeild farming..."
                 />
               </div>
             </Row>
+            <div className={s.donutFinalWrapper} ref={refDonutFinal}>
+
+              <Confetti
+                className={s.confetti}
+                active={finalDonutActive}
+                // @ts-ignore
+                config={config}
+              />
+              <img
+                className={cx(s.donutFinal, { [s.finalActive]: finalDonutActive })}
+                src="/images/donut/DonutInBox.png"
+                alt="DONUTEZ base"
+              />
+            </div>
             <Row className={s.final}>
               <Heading header={t('home:Create it!')} subheader={t('home:Finally')} />
               <p className={s.description}>

@@ -161,3 +161,24 @@
 
 .modalAddressBottom
   margin-bottom: 48px
+
+.donutFinal
+  max-height: calc(100vh - 100px)
+  transform: translateX(-150%)
+  left: 50%
+  transition: transform $animationTime*2.5
+  position: sticky
+  top: 90px
+  &.finalActive
+    transform: translateX(-50%)
+
+.donutFinalWrapper
+  height: 120vh
+  position: relative
+  padding-top: 40px
+
+.confetti
+  position: absolute !important
+  left: 50%
+  top: 50%
+  z-index: 5
