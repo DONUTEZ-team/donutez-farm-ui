@@ -37,8 +37,15 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
         </p>
         {isHome ? (
           <div className={s.buttonWrapper}>
-            <Button onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'zh' : 'en')}>
+            <Button>
               {t('common:Create')}
+            </Button>
+            <Button
+              theme="secondary"
+              onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'zh' : 'en')}
+              className={s.button}
+            >
+              {i18n.language === 'zh' ? t('common:English') : t('common:Chinese')}
             </Button>
             {i18n.language === 'zh' ? <HandToRightChinese className={s.hand} /> : <HandToRight className={s.hand} />}
           </div>
