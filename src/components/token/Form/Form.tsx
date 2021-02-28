@@ -84,7 +84,7 @@ export const TokenForm: React.FC = () => {
           const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user: accountPkh, token: val, type: 'FA2' }),
+            body: JSON.stringify({ user: accountPkh, token: val[val.length - 1], type: 'FA2' }),
           };
           fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/', requestOptions)
             .then((response) => console.log(response))
@@ -108,7 +108,7 @@ export const TokenForm: React.FC = () => {
           const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user: accountPkh, token: val, type: 'FA12' }),
+            body: JSON.stringify({ user: accountPkh, token: val[val.length - 1], type: 'FA12' }),
           };
           fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/', requestOptions)
             .then((response) => console.log(response))
