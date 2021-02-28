@@ -13,7 +13,7 @@ import {
   composeValidators,
   required,
 } from '@utils/validators';
-import { useTezos } from '@utils/dapp';
+import { getStorageInfo, useTezos, useAccountPkh } from '@utils/dapp';
 import { createTokenFAOne, createTokenFATwo } from '@utils/createToken';
 
 import { Container } from '@ui/Container';
@@ -26,6 +26,8 @@ import Minus from '@icons/Minus.svg';
 import HandFaOne from '@icons/FA1_2.svg';
 import HandFaTwo from '@icons/FA2.svg';
 
+import { TOKEN_FA1, TOKEN_FA2 } from '@utils/defaults';
+import { SuccessModal } from '@components/common/Modal';
 import s from './Form.module.sass';
 
 const findInput = (inputs: any, errors: any) => inputs.find((input: any) => {
@@ -49,9 +51,15 @@ type FormValues = {
 export const TokenForm: React.FC = () => {
   const { t, i18n } = useTranslation(['common', 'token']);
   const [isFa2, setIsFa2] = useState(false);
+  const [isSuccessModal, setIsSuccessModal] = useState({
+    opened: false,
+    tokenAddress: '',
+    isFaTwo: false,
+  });
 
   // Context
   const tezos = useTezos();
+  const accountPkh = useAccountPkh();
 
   // Logic of form
   const { Form } = withTypes<FormValues>();
@@ -68,11 +76,49 @@ export const TokenForm: React.FC = () => {
             +values.totalSupply,
             values.metadatas,
           );
+          const storage = await getStorageInfo(tezos, TOKEN_FA2);
+          const { tokenList } = storage;
+          const val = await tokenList.get(accountPkh);
+
+          //
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: accountPkh, token: val, type: 'FA2' }),
+          };
+          fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/', requestOptions)
+            .then((response) => console.log(response))
+            .catch((err) => console.log(err));
+          //
+
+          setIsSuccessModal({
+            opened: true,
+            tokenAddress: val[val.length - 1],
+            isFaTwo: true,
+          });
         } else {
           await createTokenFAOne(
             tezos,
             +values.totalSupply,
           );
+          const storage = await getStorageInfo(tezos, TOKEN_FA1);
+          const { tokenList } = storage;
+          const val = await tokenList.get(accountPkh);
+          //
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: accountPkh, token: val, type: 'FA12' }),
+          };
+          fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/', requestOptions)
+            .then((response) => console.log(response))
+            .catch((err) => console.log(err));
+          //
+          setIsSuccessModal({
+            opened: true,
+            tokenAddress: val[val.length - 1],
+            isFaTwo: false,
+          });
         }
 
         // @ts-ignore
@@ -82,7 +128,7 @@ export const TokenForm: React.FC = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [tezos, isFa2]);
+  }, [tezos, isFa2, accountPkh]);
 
   return (
     <div className={s.wrapper}>
@@ -98,7 +144,7 @@ export const TokenForm: React.FC = () => {
             ...arrayMutators,
           }}
           render={({
-            handleSubmit, values,
+            handleSubmit, values, submitting,
           }) => (
             <form onSubmit={handleSubmit}>
               <Row className={s.row}>
@@ -212,8 +258,8 @@ export const TokenForm: React.FC = () => {
                       </FieldArray>
                     </>
                     )}
-                    <Button type="submit" className={s.finalButton}>
-                      {t('token:Create & Deploy')}
+                    <Button type="submit" className={s.finalButton} disabled={submitting}>
+                      {submitting ? t('common:Loading...') : t('token:Create & Deploy')}
                     </Button>
                   </div>
                 </div>
@@ -226,6 +272,23 @@ export const TokenForm: React.FC = () => {
       <div className={s.hands}>
         {isFa2 ? <HandFaTwo className={s.icon} /> : <HandFaOne className={s.icon} />}
       </div>
+      <SuccessModal
+        isOpen={isSuccessModal.opened}
+        onRequestClose={() => setIsSuccessModal({
+          opened: false,
+          tokenAddress: '',
+          isFaTwo: false,
+        })}
+      >
+        <h2 className={s.modalHeader}>
+          Your
+          {' '}
+          {isSuccessModal.isFaTwo ? 'FA 2' : 'FA 1.2'}
+          {' '}
+          token address:
+        </h2>
+        <strong className={s.modalAddress}>{isSuccessModal.tokenAddress}</strong>
+      </SuccessModal>
     </div>
   );
 };

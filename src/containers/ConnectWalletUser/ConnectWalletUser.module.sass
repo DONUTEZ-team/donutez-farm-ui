@@ -1,0 +1,62 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+
+.btn
+  letter-spacing: 0.1em
+  cursor: pointer
+  font-size: 14px
+  font-weight: 400
+  line-height: 45px
+  max-width: 160px
+  position: relative
+  text-decoration: none
+  text-transform: uppercase
+  background-color: #ffffff
+  width: 100%
+
+.btn:hover
+  text-decoration: none
+
+
+/*btn_background*/
+.effect04
+  --uismLinkDisplay: var(--smLinkDisplay, inline-flex)
+  display: var(--uismLinkDisplay)
+  color: #000
+  outline: solid  2px #000
+  position: relative
+  transition-duration: 0.4s
+  overflow: hidden
+
+
+.effect04::before,
+.effect04 span
+  margin: 0 auto
+  transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1)
+  transition-duration: 0.4s
+
+
+/* 文字1を上に */
+.effect04:hover
+  background-color: #000
+
+
+/* HOVERしたら文字1を上に */
+.effect04:hover span
+  transform: translateY(-400%) scale(-0.1,20)
+
+
+/*文字2*/
+.effect04::before
+  content: attr(data-sm-link-text)
+  color: #FFF
+  position: absolute
+  left: 0
+  right: 0
+  margin: auto
+  transform: translateY(500%) scale(-0.1,20)
+
+.effect04:hover::before
+  letter-spacing: 0.05em
+  transform: translateY(0) scale(1,1)

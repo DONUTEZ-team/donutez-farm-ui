@@ -19,17 +19,17 @@ export const APP_NAME = 'DONUTEZ FARM';
 export const NETWORK = NetworkType.DELPHINET;
 export const NETWORK_RPC = 'https://api.tez.ie/rpc/delphinet';
 
-export const CONSTRUCT_FARM_CONTRACT = 'KT1W1YaAqbBEeXYGpWLMPjJ8sAN6MiCwSqv8';
+export const CONSTRUCT_FARM_CONTRACT = 'KT1G4Lj716mUf9FCN9RMKp4871JgoY6SmE53';
 export const CONSTRUCT_FEE = 10;
 export const CONSTRUCT_STAKE_FEE = 5;
 export const CONSTRUCT_STAKE_SUM = 7;
 
-export const FARM_CONTRACT = 'KT1Uj4y1ByRPMg9ZWwqr47FjGEhksCF72spV';
+export const FARM_CONTRACT = 'KT1U2hLtjFQXPTRHJoCguXu5tyTq9gotQ5cy';
 
-export const DTZ_TOKEN = 'KT1DjjUVN3oV47L7qrBDi3Xf6MhFfBkeJfgg';
+export const DTZ_TOKEN = 'KT1NGECsbn7AEPkoJTsJQvE4EonjKAUHEoKL';
 
-export const TOKEN_FA1 = 'KT1APHGnkz4nk6c7Myf8GP7EJaTqGYkPYTyz';
-export const TOKEN_FA2 = 'KT1TNDpqKpTooHt2wFcYZAjj7iKRwkWjVBoA';
+export const TOKEN_FA1 = 'KT1UTsV7kUeqJv4duUGH1TxYsN7tiLTUfstT';
+export const TOKEN_FA2 = 'KT1JLDYtvCKnT6QaLYAHHr9wH6H7ZnL9tteq';
 
-export const CONTRACT_REWARD = 'KT1Uj4y1ByRPMg9ZWwqr47FjGEhksCF72spV';
-export const CONTRACT_POOL = 'KT1GqKSH1vnLDgNN4dNhcovTdid3PhT4sfrh';
+export const CONTRACT_REWARD = 'KT1U2hLtjFQXPTRHJoCguXu5tyTq9gotQ5cy';
+export const CONTRACT_POOL = 'KT1VTrqrKHp8a6ZZEQKZk4pPnUoDLALCAPJL';
