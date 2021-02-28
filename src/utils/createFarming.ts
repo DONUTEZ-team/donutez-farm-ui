@@ -46,5 +46,6 @@ export const createFarming = async (
     );
   }
 
-  await batch.send();
+  const batchOp = await batch.send();
+  await batchOp.confirmation();
 };

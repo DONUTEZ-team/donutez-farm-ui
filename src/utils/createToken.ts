@@ -19,7 +19,8 @@ export const createTokenFAOne = async (
     ],
   );
 
-  await batch.send();
+  const batchOp = await batch.send();
+  await batchOp.confirmation();
 };
 
 export const createTokenFATwo = async (
@@ -80,5 +81,6 @@ export const createTokenFATwo = async (
     ],
   );
 
-  await batch.send();
+  const batchOp = await batch.send();
+  await batchOp.confirmation();
 };

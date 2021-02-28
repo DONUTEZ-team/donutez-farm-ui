@@ -19,9 +19,12 @@ import {
   validateMinsSecs,
   validateSecs,
 } from '@utils/validators';
-import { useTezos } from '@utils/dapp';
+import { getStorageInfo, useAccountPkh, useTezos } from '@utils/dapp';
 import { createFarming } from '@utils/createFarming';
-import { CONSTRUCT_FEE, CONSTRUCT_STAKE_FEE, CONSTRUCT_STAKE_SUM } from '@utils/defaults';
+import {
+  CONSTRUCT_FARM_CONTRACT,
+  CONSTRUCT_FEE, CONSTRUCT_STAKE_FEE, CONSTRUCT_STAKE_SUM, TOKEN_FA1,
+} from '@utils/defaults';
 
 import { Container } from '@ui/Container';
 import { Row } from '@ui/Row';
@@ -31,6 +34,8 @@ import { StyledCard } from '@ui/StyledCard';
 import { Heading } from '@components/common/Heading';
 import HandRock from '@icons/HandRock.svg';
 
+import { SuccessModal } from '@components/common/Modal';
+import Link from 'next/link';
 import s from './Form.module.sass';
 
 const findInput = (inputs: any, errors: any) => inputs.find((input: any) => {
@@ -56,9 +61,14 @@ type FormValues = {
 
 export const YieldForm: React.FC = () => {
   const { t, i18n } = useTranslation(['common', 'home']);
+  const [isSuccessModal, setIsSuccessModal] = useState({
+    opened: false,
+    tokenAddress: '',
+  });
 
   // Context
   const tezos = useTezos();
+  const accountPkh = useAccountPkh();
 
   const refDonutSecond = useRef(null);
   const refDonutThird = useRef(null);
@@ -110,6 +120,14 @@ export const YieldForm: React.FC = () => {
           +values.rewardPerBlock,
           values.isStake,
         );
+        const storage = await getStorageInfo(tezos, CONSTRUCT_FARM_CONTRACT);
+        const { yieldFarmings } = storage;
+        const val = await yieldFarmings.get(accountPkh);
+        setIsSuccessModal({
+          opened: true,
+          tokenAddress: val[val.length - 1],
+        });
+        // TODO: DATABASE
 
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-implied-eval
@@ -522,6 +540,22 @@ e.g. This project is about yeild farming..."
           </form>
         )}
       />
+      <SuccessModal
+        isOpen={isSuccessModal.opened}
+        onRequestClose={() => setIsSuccessModal({
+          opened: false,
+          tokenAddress: '',
+        })}
+      >
+        <h2 className={s.modalHeader}>
+          Your yield farming contract address:
+        </h2>
+        <strong className={s.modalAddress}>{isSuccessModal.tokenAddress}</strong>
+        <h2 className={cx(s.modalHeader, s.modalHeader2)}>
+          Your website:
+        </h2>
+        <Link href={`/yield-farmings/${isSuccessModal.tokenAddress}`}><strong>{`/yield-farmings/${isSuccessModal.tokenAddress}`}</strong></Link>
+      </SuccessModal>
     </Container>
   );
 };
