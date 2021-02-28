@@ -128,7 +128,7 @@ export const YieldForm: React.FC = () => {
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user: accountPkh, token: val }),
+          body: JSON.stringify({ user: accountPkh, token: val[val.length - 1] }),
         };
         fetch('https://sleepy-tor-46627.herokuapp.com/core/yfs/', requestOptions)
           .then((response) => console.log(response))
