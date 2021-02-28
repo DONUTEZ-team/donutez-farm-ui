@@ -23,7 +23,7 @@ import { getStorageInfo, useAccountPkh, useTezos } from '@utils/dapp';
 import { createFarming } from '@utils/createFarming';
 import {
   CONSTRUCT_FARM_CONTRACT,
-  CONSTRUCT_FEE, CONSTRUCT_STAKE_FEE, CONSTRUCT_STAKE_SUM, TOKEN_FA1,
+  CONSTRUCT_FEE, CONSTRUCT_STAKE_FEE, CONSTRUCT_STAKE_SUM,
 } from '@utils/defaults';
 
 import { Container } from '@ui/Container';
@@ -123,11 +123,22 @@ export const YieldForm: React.FC = () => {
         const storage = await getStorageInfo(tezos, CONSTRUCT_FARM_CONTRACT);
         const { yieldFarmings } = storage;
         const val = await yieldFarmings.get(accountPkh);
+
+        //
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user: accountPkh, token: val }),
+        };
+        fetch('https://sleepy-tor-46627.herokuapp.com/core/yfs/', requestOptions)
+          .then((response) => console.log(response))
+          .catch((err) => console.log(err));
+        //
+
         setIsSuccessModal({
           opened: true,
           tokenAddress: val[val.length - 1],
         });
-        // TODO: DATABASE
 
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-implied-eval
@@ -554,7 +565,11 @@ e.g. This project is about yeild farming..."
         <h2 className={cx(s.modalHeader, s.modalHeader2)}>
           Your website:
         </h2>
-        <Link href={`/yield-farmings/${isSuccessModal.tokenAddress}`}><strong>{`/yield-farmings/${isSuccessModal.tokenAddress}`}</strong></Link>
+        <strong className={s.modalAddressBottom}>
+          <Link href={`/yield-farmings/${isSuccessModal.tokenAddress}`}>
+            {`https://donutez-farm.vercel.app/yield-farmings/${isSuccessModal.tokenAddress}`}
+          </Link>
+        </strong>
       </SuccessModal>
     </Container>
   );

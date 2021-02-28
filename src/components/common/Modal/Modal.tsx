@@ -18,12 +18,12 @@ export const SuccessModal: React.FC<ModalProps> = ({
   className,
   children,
 }) => {
-  const { t, i18n } = useTranslation(['common', 'farm']);
+  const { t } = useTranslation(['common']);
 
   return (
     <Modal className={cx(s.root, className)} isOpen={isOpen} onRequestClose={onRequestClose}>
       {children}
-      <Button onClick={onRequestClose} className={s.button}>Got it</Button>
+      <Button onClick={onRequestClose} className={s.button}>{t('common:Got it')}</Button>
     </Modal>
   );
 };

@@ -23,5 +23,35 @@
   &:not(:last-child)
     margin-bottom: 18px
 
+.farm
+  position: relative
+  a
+    color: $secondary
+  &:not(:last-child)
+    margin-bottom: 32px
+
+.number
+  position: absolute
+  top: -20px
+  left: -20px
+  font-size: 2rem
+  font-weight: 600
+  color: $accent-60
+  filter: blur(2px)
+  font-family: $font-header
+
+.farmInner
+  &:not(:last-child)
+    margin-bottom: 6px
+
 .outer
   padding: 110px 0
+
+.buttons
+  display: flex
+  padding-left: 70px
+
+.button
+  width: 180px
+  &:first-child
+    margin-right: 24px

@@ -88,7 +88,7 @@ export const OperationModal: React.FC<ModalProps> = ({
           await unstake(tezos, contractRewards, expense);
         }
 
-        await onRequestClose(e); // TODO: Change to loader
+        await onRequestClose(); // TODO: Change to loader
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-implied-eval
         setTimeout(form.restart);

@@ -79,6 +79,18 @@ export const TokenForm: React.FC = () => {
           const storage = await getStorageInfo(tezos, TOKEN_FA2);
           const { tokenList } = storage;
           const val = await tokenList.get(accountPkh);
+
+          //
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: accountPkh, token: val, type: 'FA2' }),
+          };
+          fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/', requestOptions)
+            .then((response) => console.log(response))
+            .catch((err) => console.log(err));
+          //
+
           setIsSuccessModal({
             opened: true,
             tokenAddress: val[val.length - 1],
@@ -92,6 +104,16 @@ export const TokenForm: React.FC = () => {
           const storage = await getStorageInfo(tezos, TOKEN_FA1);
           const { tokenList } = storage;
           const val = await tokenList.get(accountPkh);
+          //
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: accountPkh, token: val, type: 'FA12' }),
+          };
+          fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/', requestOptions)
+            .then((response) => console.log(response))
+            .catch((err) => console.log(err));
+          //
           setIsSuccessModal({
             opened: true,
             tokenAddress: val[val.length - 1],

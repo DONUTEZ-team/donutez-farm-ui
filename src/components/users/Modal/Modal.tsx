@@ -3,15 +3,14 @@ import cx from 'classnames';
 import BigNumber from 'bignumber.js';
 import { Field, withTypes } from 'react-final-form';
 import { FormApi } from 'final-form';
+import ReactModal from 'react-modal';
 import { useTezos } from '@utils/dapp';
 import { stake, unstake } from '@utils/farm';
 import { composeValidators, required } from '@utils/validators';
 import { convertUnits } from '@utils/helpers';
 
-import { Button } from '@ui/Button';
 import { Input } from '@ui/Input';
 
-import ReactModal from 'react-modal';
 import s from './Modal.module.sass';
 
 type LabelProps = {
