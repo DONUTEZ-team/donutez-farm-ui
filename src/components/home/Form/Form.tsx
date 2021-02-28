@@ -8,6 +8,7 @@ import cx from 'classnames';
 import { useTranslation } from '@i18n';
 import { Field, withTypes } from 'react-final-form';
 import { FormApi, getIn } from 'final-form';
+import dayjs from 'dayjs';
 // eslint-disable-next-line import/no-named-default
 import focusDecorator from 'final-form-focus';
 import {
@@ -261,7 +262,22 @@ export const YieldForm: React.FC = () => {
                       {t('home:Estimated starting & closing time')}
                       :
                       {' '}
-                      <strong>XXXXXXX</strong>
+                      <br />
+                      <strong>
+                        {
+                          (+values.lifeTimeDays || 1) * 86400
+                          + (+values.lifeTimeHours || 0) * 3600
+                          + (+values.lifeTimeMinutes || 0) * 60
+                          + (+values.lifeTimeSeconds || 0)
+                            ? (`${dayjs().format('YYYY-MM-DD HH:mm')} — ${dayjs(dayjs().add(
+                              ((+values.lifeTimeDays || 1) * 86400
+                            + (+values.lifeTimeHours || 0) * 3600
+                            + (+values.lifeTimeMinutes || 0) * 60
+                            + (+values.lifeTimeSeconds || 0)) * 1000,
+                            )).format('YYYY-MM-DD HH:mm')}`)
+                            : 'XXXXXXX'
+                        }
+                      </strong>
                     </p>
                   </div>
                   <div className={s.innerBlock}>
