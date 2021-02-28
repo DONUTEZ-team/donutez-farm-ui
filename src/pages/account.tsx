@@ -11,21 +11,24 @@ import { Button } from '@ui/Button';
 import { Heading } from '@components/common/Heading';
 
 import s from '@styles/Account.module.sass';
+import { BACKEND_URL } from '@utils/defaults';
 
 type TokensType = {
-  loading: boolean,
+  loading: boolean
   data: {
-    user: string,
-    token: string,
+    user: string
+    token: string
     type: 'FA12' | 'FA2'
   }[] | []
 };
 
 type YFSType = {
-  loading: boolean,
+  loading: boolean
   data: {
-    user: string,
+    user: string
     yf: string
+    title: string
+    description: string
   }[] | []
 };
 
@@ -44,14 +47,16 @@ const Account = () => {
   const accountPkh = useAccountPkh();
 
   useEffect(() => {
-    fetch(`https://sleepy-tor-46627.herokuapp.com/core/tokens/${accountPkh}`)
-      .then((response) => response.json())
-      .then((data) => setTokens({ data, loading: false }))
-      .catch((err) => console.log(err));
-    fetch(`https://sleepy-tor-46627.herokuapp.com/core/yfs/${accountPkh}`)
-      .then((response) => response.json())
-      .then((data) => setYfs({ data, loading: false }))
-      .catch((err) => console.log(err));
+    if (accountPkh) {
+      fetch(`${BACKEND_URL}/tokens/${accountPkh}/`)
+        .then((response) => response.json())
+        .then((data) => setTokens({ data, loading: false }))
+        .catch((err) => console.log(err));
+      fetch(`${BACKEND_URL}/yfs/${accountPkh}/`)
+        .then((response) => response.json())
+        .then((data) => setYfs({ data, loading: false }))
+        .catch((err) => console.log(err));
+    }
   }, [accountPkh]);
 
   return (
@@ -105,6 +110,26 @@ const Account = () => {
                       {`https://www.donutez-farm.vercel.app/yield-farmings/${farm.yf}`}
                     </Link>
                   </div>
+                  {farm.title && (
+                    <div className={cx(s.token, s.farmInner)}>
+                      <strong>
+                        {t('account:Website Title')}
+                        :
+                      </strong>
+                      {' '}
+                      {farm.title}
+                    </div>
+                  )}
+                  {farm.description && (
+                    <div className={cx(s.token, s.farmInner)}>
+                      <strong>
+                        {t('account:Website Description')}
+                        :
+                      </strong>
+                      {' '}
+                      {farm.description}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

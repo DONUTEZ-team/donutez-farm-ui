@@ -26,7 +26,7 @@ import Minus from '@icons/Minus.svg';
 import HandFaOne from '@icons/FA1_2.svg';
 import HandFaTwo from '@icons/FA2.svg';
 
-import { TOKEN_FA1, TOKEN_FA2 } from '@utils/defaults';
+import { BACKEND_URL, TOKEN_FA1, TOKEN_FA2 } from '@utils/defaults';
 import { SuccessModal } from '@components/common/Modal';
 import s from './Form.module.sass';
 
@@ -86,7 +86,7 @@ export const TokenForm: React.FC = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: accountPkh, token: val[val.length - 1], type: 'FA2' }),
           };
-          fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/', requestOptions)
+          fetch(`${BACKEND_URL}/tokens/`, requestOptions)
             .then((response) => console.log(response))
             .catch((err) => console.log(err));
           //
@@ -110,7 +110,7 @@ export const TokenForm: React.FC = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: accountPkh, token: val[val.length - 1], type: 'FA12' }),
           };
-          fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/', requestOptions)
+          fetch(`${BACKEND_URL}/tokens/`, requestOptions)
             .then((response) => console.log(response))
             .catch((err) => console.log(err));
           //

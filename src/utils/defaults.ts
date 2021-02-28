@@ -33,3 +33,5 @@ export const TOKEN_FA2 = 'KT1JLDYtvCKnT6QaLYAHHr9wH6H7ZnL9tteq';
 
 export const CONTRACT_REWARD = 'KT1U2hLtjFQXPTRHJoCguXu5tyTq9gotQ5cy';
 export const CONTRACT_POOL = 'KT1VTrqrKHp8a6ZZEQKZk4pPnUoDLALCAPJL';
+
+export const BACKEND_URL = 'https://sleepy-gorge-06414.herokuapp.com/core';

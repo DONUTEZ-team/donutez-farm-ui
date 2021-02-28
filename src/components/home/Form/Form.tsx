@@ -23,6 +23,7 @@ import {
 import { getStorageInfo, useAccountPkh, useTezos } from '@utils/dapp';
 import { createFarming } from '@utils/createFarming';
 import {
+  BACKEND_URL,
   CONSTRUCT_FARM_CONTRACT,
   CONSTRUCT_FEE, CONSTRUCT_STAKE_FEE, CONSTRUCT_STAKE_SUM,
 } from '@utils/defaults';
@@ -72,6 +73,8 @@ type FormValues = {
   rewardPeriod: number
   rewardPerBlock: number
   isStake: boolean
+  title: string
+  description: string
 };
 
 export const YieldForm: React.FC = () => {
@@ -103,7 +106,6 @@ export const YieldForm: React.FC = () => {
   };
   const onScroll = () => {
     if (refDonutFinal.current) {
-      console.log('isScrolledIntoView(refDonutFinal.current)', isScrolledIntoView(refDonutFinal.current));
       setFinalActiveDonut(isScrolledIntoView(refDonutFinal.current));
     }
     if (refDonutSecond.current && refDonutThird.current) {
@@ -141,6 +143,7 @@ export const YieldForm: React.FC = () => {
           +values.rewardPerBlock,
           values.isStake,
         );
+        const { title, description } = values;
         const storage = await getStorageInfo(tezos, CONSTRUCT_FARM_CONTRACT);
         const { yieldFarmings } = storage;
         const val = await yieldFarmings.get(accountPkh);
@@ -149,9 +152,14 @@ export const YieldForm: React.FC = () => {
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user: accountPkh, token: val[val.length - 1] }),
+          body: JSON.stringify({
+            user: accountPkh,
+            yf: val[val.length - 1],
+            title,
+            description,
+          }),
         };
-        fetch('https://sleepy-tor-46627.herokuapp.com/core/yfs/', requestOptions)
+        fetch(`${BACKEND_URL}/yfs/`, requestOptions)
           .then((response) => console.log(response))
           .catch((err) => console.log(err));
         //
@@ -440,18 +448,36 @@ export const YieldForm: React.FC = () => {
                       </>
                   )}
                   />
-                  <Input
-                    className={s.input}
-                    label="Official Website:"
-                    placeholder="Website Address e.g. https://www.a...x.com/"
-                  />
-                  <Input
-                    className={s.input}
-                    label="Project Introduction:"
-                    placeholder="Your Project Description
+                  <Field
+                    name="title"
+                  >
+                    {({ input, meta }) => (
+                      <Input
+                        {...input}
+                        className={s.input}
+                        label="Official Website:"
+                        placeholder="Website Address e.g. https://www.a...x.com/"
+                        error={(meta.touched && meta.error) || meta.submitError}
+                        success={!meta.error && meta.touched && !meta.submitError}
+                      />
+                    )}
+                  </Field>
+                  <Field
+                    name="description"
+                  >
+                    {({ input, meta }) => (
+                      <Input
+                        {...input}
+                        className={s.input}
+                        label="Project Introduction:"
+                        placeholder="Your Project Description
 e.g. This project is about yeild farming..."
-                    textarea
-                  />
+                        textarea
+                        error={(meta.touched && meta.error) || meta.submitError}
+                        success={!meta.error && meta.touched && !meta.submitError}
+                      />
+                    )}
+                  </Field>
                 </div>
               </div>
               <div className={s.donut}>

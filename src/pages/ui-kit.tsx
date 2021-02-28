@@ -10,13 +10,14 @@ import { Modal } from '@ui/Modal';
 
 import s from '@styles/UiKit.module.sass';
 import { Heading } from '@components/common/Heading';
+import { BACKEND_URL } from '@utils/defaults';
 
 const UiKit = () => {
   const { t, i18n } = useTranslation(['common', 'ui-kit']);
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   useEffect(() => {
-    fetch('https://sleepy-tor-46627.herokuapp.com/core/tokens/')
+    fetch(`${BACKEND_URL}/tokens/`)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   }, []);
