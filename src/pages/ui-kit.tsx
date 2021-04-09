@@ -11,6 +11,7 @@ import { Heading } from '@components/ui/Heading';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 
+import { StyledCard } from '@components/ui/StyledCard';
 import s from '../styles/UiKit.module.sass';
 
 const UiKit: React.FC = () => {
@@ -64,6 +65,12 @@ const UiKit: React.FC = () => {
                 <p className={s.colorsHeader}>Service</p>
                 <div className={cx(s.color, s.service, s.success100)}>100</div>
                 <div className={cx(s.color, s.service, s.success80)}>80</div>
+                <div className={cx(s.color, s.service, s.cardGreenFill)} />
+                <div className={cx(s.color, s.service, s.cardGreenBorder)} />
+                <div className={cx(s.color, s.service, s.cardOrangeFill)} />
+                <div className={cx(s.color, s.service, s.cardOrangeBorder)} />
+                <div className={cx(s.color, s.service, s.cardBlueFill)} />
+                <div className={cx(s.color, s.service, s.cardBlueBorder)} />
               </div>
             </div>
           </div>
@@ -218,6 +225,14 @@ const UiKit: React.FC = () => {
               textarea
               disabled
             />
+          </div>
+          <div className={s.block}>
+            <Heading header="Cards" subheader="08" />
+            <div className={s.cards}>
+              <StyledCard className={s.card} />
+              <StyledCard className={s.card} theme="green" />
+              <StyledCard className={s.card} theme="orange" />
+            </div>
           </div>
         </Row>
       </Container>
