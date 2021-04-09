@@ -1,0 +1,51 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  position: relative
+  align-self: stretch
+  display: flex
+  align-items: center
+
+.button
+  font-family: $font-header
+  font-size: 1.375rem
+  color: $dark-100
+  display: flex
+  align-items: center
+  padding: 20px
+  margin: -20px
+  transition: color $animationTime
+  &.active
+    color: $accent-100
+    .icon
+      path
+        fill: $accent-100
+
+.icon
+  margin-top: 7px
+  margin-left: 7px
+  path
+    transition: fill $animationTime
+
+.languages
+  position: absolute
+  top: 100%
+  left: 50%
+  transform: translateY(calc(-100% - 72px)) translateX(-50%)
+  background: $card-dark-blue-fill
+  display: flex
+  flex-direction: column
+  padding: 16px
+  border-radius: 16px
+  transition: opacity $animationTime, transform 0s $animationTime
+  opacity: 0
+  &.active
+    transform: translateY(0) translateX(-50%)
+    opacity: 1
+    transition: opacity $animationTime $animationTime, transform 0s 0s
+
+.language
+  font-size: 0.875rem
+  &:not(:last-child)
+    margin-bottom: 12px

@@ -1,7 +1,21 @@
 @import "@styles/variables"
+@import "@styles/breakpoints"
 
 .root
+  height: 72px
   position: fixed
   top: 0
-  left: 0
   width: 100%
+  z-index: 5
+  background: $light-60
+  backdrop-filter: blur(40px)
+
+.logo
+  cursor: pointer
+  margin-right: 40px
+
+.nav
+  margin-right: auto
+
+.languageSwitcher
+  margin-right: 40px
