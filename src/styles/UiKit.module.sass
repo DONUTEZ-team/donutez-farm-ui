@@ -1,0 +1,166 @@
+@import "@styles/variables"
+
+.row
+  flex-direction: column
+  align-items: flex-start
+
+.block
+  padding: 110px 0
+
+.header
+  color: $secondary-100
+  font-size: 4.375rem
+
+// Colors
+.colors
+  display: flex
+  font-size: 1.25rem
+
+.colorsColumn
+  display: flex
+  flex-direction: column
+  align-items: center
+  &:not(:last-child)
+    margin-right: 80px
+
+.colorsHeader
+  font-weight: 600
+  margin-bottom: 20px
+
+.color
+  width: 60px
+  height: 60px
+  border-radius: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 1.125rem
+  &:not(:last-child)
+    margin-bottom: 16px
+
+.accent, .secondary, .dark
+  color: $light-100
+// Accent
+.accent100
+  background-color: $accent-100
+.accent80
+  background-color: $accent-80
+.accent120
+  background-color: $accent-120
+.accent160
+  background-color: $accent-160
+.accent60
+  background-color: $accent-60
+  color: $dark-100
+.accent20
+  background-color: $accent-20
+  color: $dark-100
+// Secondary
+.secondary100
+  background-color: $secondary-100
+// Light
+.light100
+  background-color: $light-100
+.light120
+  background-color: $light-120
+.light140
+  background-color: $light-140
+.light160
+  background-color: $light-160
+.light60
+  background-color: $light-60
+// Dark
+.dark100
+  background-color: $dark-100
+.dark60
+  background-color: $dark-60
+  color: $dark-100
+// Dark
+.dark100
+  background-color: $dark-100
+.dark60
+  background-color: $dark-60
+  color: $dark-100
+// Service
+.success100
+  background-color: $success-100
+  color: $light-100
+.success80
+  background-color: $success-80
+.cardGreenFill
+  background: $card-green-fill
+.cardGreenBorder
+  background-color: $card-green-border
+.cardOrangeFill
+  background: $card-orange-fill
+.cardOrangeBorder
+  background-color: $card-orange-border
+.cardBlueFill
+  background: $card-blue-fill
+.cardBlueBorder
+  background-color: $card-blue-border
+
+// Fonts
+.font
+  margin-bottom: 20px
+.fontH1, .fontH2, .fontDesign
+  font-family: $font-header
+  color: $secondary-100
+.fontH1
+  font-size: 4.375rem
+  line-height: 1.14
+  margin-bottom: 60px
+.fontH2
+  font-size: 3.875rem
+  line-height: 1.03
+  margin-bottom: 60px
+.fontDesign
+  font-size: 6.875rem
+  line-height: 1.03
+  margin-bottom: 60px
+  color: $accent-60
+  filter: blur(4px)
+.fontLabels
+  font-weight: 600
+  font-size: 1.125rem
+.fontBold
+  font-weight: 900
+.fontGeneral
+  margin-bottom: 0
+
+// Buttons
+.buttons
+  display: flex
+  flex-direction: column
+  padding: 40px
+  border: 1px solid $light-160
+  &:first-of-type
+    padding-bottom: 20px
+    margin-top: 80px
+.buttonsLight
+  padding-top: 20px
+  background-color: $secondary-100
+
+.buttonsRow
+  display: flex
+  &:not(:last-child)
+    margin-bottom: 20px
+
+.button
+  &:not(:last-child)
+    margin-right: 20px
+
+// Inputs
+.input
+  &:not(:last-child)
+    margin-bottom: 20px
+
+// Cards
+.cards
+  display: flex
+
+.card
+  width: 360px
+  height: 400px
+  &:not(:last-child)
+    margin-right: 40px
