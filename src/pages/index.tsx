@@ -13,11 +13,11 @@ const Home: React.FC = () => {
   return (
     <BaseLayout>
       <NextSeo
-        title={t('secondary:Home page')}
-        description={t('secondary:Home page description. Couple sentences...')}
+        title={t('home:Home page')}
+        description={t('home:Home page description. Couple sentences...')}
         openGraph={{
-          title: t('secondary:Home page'),
-          description: t('secondary:Home page description. Couple sentences...'),
+          title: t('home:Home page'),
+          description: t('home:Home page description. Couple sentences...'),
         }}
       />
       <Container>

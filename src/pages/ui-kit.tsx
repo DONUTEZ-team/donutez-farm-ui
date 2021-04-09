@@ -16,7 +16,7 @@ import { Modal } from '@components/ui/Modal';
 import s from '../styles/UiKit.module.sass';
 
 const UiKit: React.FC = () => {
-  const { t } = useTranslation(['common', 'home']);
+  const { t } = useTranslation(['common', 'ui-kit']);
 
   const [modalOpened, setModalOpened] = useState(false);
   const openModal = useCallback(() => setModalOpened(true), []);
@@ -25,11 +25,11 @@ const UiKit: React.FC = () => {
   return (
     <BaseLayout>
       <NextSeo
-        title={t('secondary:Home page')}
-        description={t('secondary:Home page description. Couple sentences...')}
+        title={t('ui-kit:UI Kit page')}
+        description={t('ui-kit:UI Kit page description. Couple sentences...')}
         openGraph={{
-          title: t('secondary:Home page'),
-          description: t('secondary:Home page description. Couple sentences...'),
+          title: t('ui-kit:UI Kit page'),
+          description: t('ui-kit:UI Kit page description. Couple sentences...'),
         }}
       />
       <Container>
