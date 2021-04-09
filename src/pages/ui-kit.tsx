@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -10,12 +10,17 @@ import { Container } from '@components/ui/Container';
 import { Heading } from '@components/ui/Heading';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
-
 import { StyledCard } from '@components/ui/StyledCard';
+import { Modal } from '@components/ui/Modal';
+
 import s from '../styles/UiKit.module.sass';
 
 const UiKit: React.FC = () => {
   const { t } = useTranslation(['common', 'home']);
+
+  const [modalOpened, setModalOpened] = useState(false);
+  const openModal = useCallback(() => setModalOpened(true), []);
+  const closeModal = useCallback(() => setModalOpened(false), []);
 
   return (
     <BaseLayout>
@@ -234,8 +239,13 @@ const UiKit: React.FC = () => {
               <StyledCard className={s.card} theme="orange" />
             </div>
           </div>
+          <div className={s.block}>
+            <Heading header="Modal" subheader="09" />
+            <Button onClick={openModal}>Open Modal</Button>
+          </div>
         </Row>
       </Container>
+      <Modal isOpen={modalOpened} onRequestClose={closeModal} />
     </BaseLayout>
   );
 };
