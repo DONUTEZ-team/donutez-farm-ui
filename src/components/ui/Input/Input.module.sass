@@ -1,0 +1,89 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  position: relative
+  box-sizing: border-box
+  display: block
+  width: 100%
+  min-width: 587px
+
+.label
+  margin-bottom: 6px
+  margin-left: 14px
+  font-size: 1.125rem
+  font-weight: 600
+
+.input
+  width: 100%
+  box-shadow: none
+  outline: none
+  border-radius: 10px
+  padding: 12px 20px
+  font-family: $font
+  font-weight: 400
+  font-size: 1rem
+  border: 2px solid $dark-100
+  color: $dark-100
+  background: $light-60
+  transition: border-color $animationTime, box-shadow $animationTime, background-color $animationTime
+  &::placeholder
+    color: $dark-60
+    transition: color $animationTime
+  &:focus
+    border-color: $secondary-100
+    box-shadow: 0 0 0 3px rgba($secondary-100, .5)
+    background-color: $light-120
+    &::placeholder
+      color: $dark-100
+
+.root:not(.success):not(.error)
+  .input
+    &:hover:not(:disabled)
+      border-color: $secondary-100
+      background-color: $light-120
+
+// Error
+.errorContainer
+  max-height: 0
+  overflow: hidden
+  transition: max-height $animationTime
+  width: max-content
+
+.errorText
+  color: $accent-120
+  padding-top: 6px
+  font-size: 1rem
+  margin-left: 14px
+
+.error
+  .input
+    border-color: $accent-120
+    background-color: $accent-20
+    &:focus
+      border-color: $accent-100
+      box-shadow: 0 0 0 3px rgba($accent-120, .5)
+  .errorContainer
+    max-height: 30px
+
+// Success
+.success
+  .input
+    border-color: $success-100
+    background-color: $success-80
+    box-shadow: 0 0 0 3px rgba($success-100, .5)
+
+// Disabled
+.disabled
+  cursor: not-allowed
+  .label
+    color: $dark-60
+  .input
+    border: 2px solid $dark-60
+    color: $dark-60
+    cursor: not-allowed
+
+// Textarea
+.textarea
+  height: 160px
+  resize: none
