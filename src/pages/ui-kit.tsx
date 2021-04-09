@@ -7,8 +7,9 @@ import { NextSeo } from 'next-seo';
 import { BaseLayout } from '@layouts/BaseLayout';
 import { Row } from '@components/ui/Row';
 import { Container } from '@components/ui/Container';
-import { Heading } from '@components/common/Heading';
+import { Heading } from '@components/ui/Heading';
 import { Button } from '@components/ui/Button';
+import { Input } from '@components/ui/Input';
 
 import s from '../styles/UiKit.module.sass';
 
@@ -161,6 +162,62 @@ const UiKit: React.FC = () => {
             <div className={s.tags}>
               -- We&apos;ll add it later --
             </div>
+          </div>
+          <div className={s.block}>
+            <Heading header="Inputs" subheader="06" />
+            <Input
+              className={s.input}
+              label="Mining Reward per Block"
+              placeholder="Mining reward for each block"
+            />
+            <Input
+              className={s.input}
+              label="Mining Reward per Block (Success)"
+              placeholder="Mining reward for each block"
+              success
+            />
+            <Input
+              className={s.input}
+              label="Mining Reward per Block (Error)"
+              placeholder="Mining reward for each block"
+              error="Enter valid amount"
+            />
+            <Input
+              className={s.input}
+              label="Mining Reward per Block (Disabled)"
+              placeholder="Mining reward for each block"
+              disabled
+            />
+          </div>
+          <div className={s.block}>
+            <Heading header="Textareas" subheader="07" />
+            <Input
+              className={s.input}
+              label="Mining Reward per Block"
+              placeholder="Mining reward for each block"
+              textarea
+            />
+            <Input
+              className={s.input}
+              label="Mining Reward per Block (Success)"
+              placeholder="Mining reward for each block"
+              textarea
+              success
+            />
+            <Input
+              className={s.input}
+              label="Mining Reward per Block (Error)"
+              placeholder="Mining reward for each block"
+              textarea
+              error="Enter valid amount"
+            />
+            <Input
+              className={s.input}
+              label="Mining Reward per Block (Disabled)"
+              placeholder="Mining reward for each block"
+              textarea
+              disabled
+            />
           </div>
         </Row>
       </Container>
