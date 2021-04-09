@@ -156,6 +156,12 @@ const UiKit: React.FC = () => {
               </div>
             </div>
           </div>
+          <div className={s.block}>
+            <Heading header="Tags" subheader="05" />
+            <div className={s.tags}>
+              -- We&apos;ll add it later --
+            </div>
+          </div>
         </Row>
       </Container>
     </BaseLayout>
