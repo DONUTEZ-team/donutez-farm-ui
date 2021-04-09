@@ -67,13 +67,34 @@ const UiKit: React.FC = () => {
             </div>
           </div>
           <div className={s.block}>
-            <Heading header="Headings" subheader="02" />
+            <Heading header="Fonts" subheader="02" />
+            <div className={cx(s.font, s.fontH1)}>
+              h1 - DONUT QUEST 70/80px
+            </div>
+            <div className={cx(s.font, s.fontH2)}>
+              h2 - DONUT QUEST 62/64px
+            </div>
+            <div className={cx(s.font, s.fontDesign)}>
+              Design - DONUT QUEST 110px
+            </div>
+            <div className={cx(s.font, s.fontLabels)}>
+              Labels -  HK Grotesk SemiBold, 18px
+            </div>
+            <div className={cx(s.font, s.fontBold)}>
+              Bold -  HK Grotesk Black, 16px
+            </div>
+            <div className={cx(s.font, s.fontGeneral)}>
+              General -  HK Grotesk Regular, 16px
+            </div>
+          </div>
+          <div className={s.block}>
+            <Heading header="Headings" subheader="03" />
             <Heading header="Required" subheader="01" />
             <Heading header="Optional header" subheader="02" isRequired={false} />
             <Heading header="Create it!" subheader="Finally" isRequired={null} />
           </div>
           <div className={s.block}>
-            <Heading header="Buttons" subheader="03" />
+            <Heading header="Buttons" subheader="04" />
             <div className={s.buttons}>
               <div className={s.buttonsRow}>
                 <Button className={s.button}>
