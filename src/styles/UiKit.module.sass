@@ -11,6 +11,84 @@
   color: $secondary-100
   font-size: 4.375rem
 
+// Colors
+.colors
+  display: flex
+  font-size: 1.25rem
+
+.colorsColumn
+  display: flex
+  flex-direction: column
+  align-items: center
+  &:not(:last-child)
+    margin-right: 80px
+
+.colorsHeader
+  font-weight: 600
+  margin-bottom: 20px
+
+.color
+  width: 60px
+  height: 60px
+  border-radius: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 1.125rem
+  &:not(:last-child)
+    margin-bottom: 16px
+
+.accent, .secondary, .dark
+  color: $light-100
+// Accent
+.accent100
+  background-color: $accent-100
+.accent80
+  background-color: $accent-80
+.accent120
+  background-color: $accent-120
+.accent160
+  background-color: $accent-160
+.accent60
+  background-color: $accent-60
+  color: $dark-100
+.accent20
+  background-color: $accent-20
+  color: $dark-100
+// Secondary
+.secondary100
+  background-color: $secondary-100
+// Light
+.light100
+  background-color: $light-100
+.light120
+  background-color: $light-120
+.light140
+  background-color: $light-140
+.light160
+  background-color: $light-160
+.light60
+  background-color: $light-60
+// Dark
+.dark100
+  background-color: $dark-100
+.dark60
+  background-color: $dark-60
+  color: $dark-100
+// Dark
+.dark100
+  background-color: $dark-100
+.dark60
+  background-color: $dark-60
+  color: $dark-100
+// Service
+.success100
+  background-color: $success-100
+  color: $light-100
+.success80
+  background-color: $success-80
+
+// Buttons
 .buttons
   display: flex
   flex-direction: column

@@ -31,13 +31,49 @@ const UiKit: React.FC = () => {
             <h1 className={s.header}>[DEV] UI Kit</h1>
           </div>
           <div className={s.block}>
-            <Heading header="Headings" subheader="01" />
+            <Heading header="Colors" subheader="01" />
+            <div className={s.colors}>
+              <div className={s.colorsColumn}>
+                <p className={s.colorsHeader}>Accent</p>
+                <div className={cx(s.color, s.accent, s.accent100)}>100</div>
+                <div className={cx(s.color, s.accent, s.accent80)}>80</div>
+                <div className={cx(s.color, s.accent, s.accent120)}>120</div>
+                <div className={cx(s.color, s.accent, s.accent160)}>160</div>
+                <div className={cx(s.color, s.accent, s.accent60)}>60</div>
+                <div className={cx(s.color, s.accent, s.accent20)}>20</div>
+              </div>
+              <div className={s.colorsColumn}>
+                <p className={s.colorsHeader}>Secondary</p>
+                <div className={cx(s.color, s.secondary, s.secondary100)}>100</div>
+              </div>
+              <div className={s.colorsColumn}>
+                <p className={s.colorsHeader}>Light</p>
+                <div className={cx(s.color, s.light, s.light100)}>100</div>
+                <div className={cx(s.color, s.light, s.light120)}>120</div>
+                <div className={cx(s.color, s.light, s.light140)}>140</div>
+                <div className={cx(s.color, s.light, s.light160)}>160</div>
+                <div className={cx(s.color, s.light, s.light60)}>60</div>
+              </div>
+              <div className={s.colorsColumn}>
+                <p className={s.colorsHeader}>Dark</p>
+                <div className={cx(s.color, s.dark, s.dark100)}>100</div>
+                <div className={cx(s.color, s.dark, s.dark60)}>60</div>
+              </div>
+              <div className={s.colorsColumn}>
+                <p className={s.colorsHeader}>Service</p>
+                <div className={cx(s.color, s.service, s.success100)}>100</div>
+                <div className={cx(s.color, s.service, s.success80)}>80</div>
+              </div>
+            </div>
+          </div>
+          <div className={s.block}>
+            <Heading header="Headings" subheader="02" />
             <Heading header="Required" subheader="01" />
             <Heading header="Optional header" subheader="02" isRequired={false} />
             <Heading header="Create it!" subheader="Finally" isRequired={null} />
           </div>
           <div className={s.block}>
-            <Heading header="Buttons" subheader="02" />
+            <Heading header="Buttons" subheader="03" />
             <div className={s.buttons}>
               <div className={s.buttonsRow}>
                 <Button className={s.button}>
