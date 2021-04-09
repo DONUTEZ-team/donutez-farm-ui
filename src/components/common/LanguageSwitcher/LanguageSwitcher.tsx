@@ -21,13 +21,13 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className })
 
   return (
     <div
-      className={cx(s.root, { [s.active]: languagesDialogOpened }, className)}
+      className={cx(s.root, className)}
       onMouseEnter={openLanguages}
       onMouseLeave={closeLanguages}
     >
       <button
         type="button"
-        className={s.button}
+        className={cx(s.button, { [s.active]: languagesDialogOpened })}
       >
         {router.locale}
         <ArrowDown className={s.icon} />

@@ -19,12 +19,14 @@
   &.active
     color: $accent-100
     .icon
+      transform: rotate(-180deg)
       path
         fill: $accent-100
 
 .icon
   margin-top: 7px
   margin-left: 7px
+  transition: transform $animationTime
   path
     transition: fill $animationTime
 
