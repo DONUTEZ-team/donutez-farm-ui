@@ -1,0 +1,80 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  line-height: 1.25
+  font-weight: 900
+  text-align: center
+  padding: 9px 20px
+  font-size: 1.125rem
+  min-width: 220px
+  max-height: 42px
+  border-radius: 50px
+
+// Themes
+.primary, .light
+  transition: background-color $animationTime, box-shadow $animationTime
+
+.secondary, .lightSecondary
+  background-color: transparent
+  transition: color $animationTime, border-color $animationTime, box-shadow $animationTime
+
+.primary
+  background-color: $accent-100
+  color: $light-100
+  box-shadow: $box-shadow-accent-default
+  &:hover
+    background-color: $accent-80
+    box-shadow: $box-shadow-accent-hover
+  &:not(:disabled)
+    &:active, &:focus
+      background-color: $accent-120
+  &:disabled
+    background-color: $accent-160
+
+.secondary
+  border: 2px solid $accent-100
+  color: $accent-100
+  &:hover
+    border-color: $accent-80
+    color: $accent-80
+    box-shadow: $box-shadow-accent-hover
+  &:not(:disabled)
+    &:active, &:focus
+      border-color: $accent-120
+      color: $accent-120
+  &:disabled
+    border-color: $accent-160
+    color: $accent-160
+
+.light
+  background-color: $light-100
+  color: $secondary-100
+  box-shadow: $box-shadow-light-default
+  &:hover
+    box-shadow: $box-shadow-light-hover
+    background-color: $light-120
+  &:not(:disabled)
+    &:active, &:focus
+      background-color: $light-140
+  &:disabled
+    background-color: $light-160
+
+.lightSecondary
+  border: 2px solid $light-100
+  color: $light-100
+  &:hover
+    border-color: $light-120
+    color: $light-120
+    box-shadow: $box-shadow-light-hover-2
+  &:not(:disabled)
+    &:active, &:focus
+      border-color: $light-140
+      color: $light-140
+  &:disabled
+    border-color: $light-160
+    color: $light-160
+
+.primary, .secondary, .light, .lightSecondary
+  &:active, &:focus, &:disabled
+    box-shadow: none

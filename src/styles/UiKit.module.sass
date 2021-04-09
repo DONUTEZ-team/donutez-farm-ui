@@ -1,0 +1,26 @@
+@import "@styles/variables"
+
+.row
+  flex-direction: column
+  align-items: flex-start
+
+.buttons
+  display: flex
+  flex-direction: column
+  padding: 40px
+  border: 1px solid $light-160
+  &:first-of-type
+    padding-bottom: 20px
+    margin-top: 80px
+.buttonsLight
+  padding-top: 20px
+  background-color: $secondary-100
+
+.buttonsRow
+  display: flex
+  &:not(:last-child)
+    margin-bottom: 20px
+
+.button
+  &:not(:last-child)
+    margin-right: 20px
