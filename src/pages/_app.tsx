@@ -22,8 +22,45 @@ function MyApp({ Component, pageProps }: AppProps) {
   let description = DEFAULT_SEO.DESCRIPTION;
   if (router.locale === 'zh') {
     description = DEFAULT_SEO.DESCRIPTION_ZH;
-  } else if (router.locale === 'zh') {
+  } else if (router.locale === 'ru' || router.locale === 'uk') {
     description = DEFAULT_SEO.DESCRIPTION_RU;
+  }
+
+  let headerFont = (
+    <link
+      rel="preload"
+      href="/fonts/DonutQuest/DonutQuest.ttf"
+      as="font"
+      crossOrigin=""
+    />
+  );
+  if (router.locale === 'zh') {
+    headerFont = (
+      <link
+        rel="preload"
+        href="/fonts/CloudPangToYuGBK/CloudPangToYuGBK.ttf"
+        as="font"
+        crossOrigin=""
+      />
+    );
+  } else if (router.locale === 'ru' || router.locale === 'uk') {
+    headerFont = (
+      <link
+        rel="preload"
+        href="/fonts/Airfool/Airfool.ttf"
+        as="font"
+        crossOrigin=""
+      />
+    );
+  }
+
+  let ogImage = `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE.EN}`;
+  if (router.locale === 'zh') {
+    ogImage = `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE.ZH}`;
+  } else if (router.locale === 'ru') {
+    ogImage = `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE.RU}`;
+  } else if (router.locale === 'uk') {
+    ogImage = `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE.UK}`;
   }
 
   return (
@@ -42,7 +79,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           description,
           images: [
             {
-              url: `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE}`,
+              url: ogImage,
               width: 1200,
               height: 627,
               alt: DEFAULT_SEO.TITLE,
@@ -57,7 +94,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         languageAlternates={languageAlternates.length > 0 ? languageAlternates : undefined}
         additionalMetaTags={[{
           property: 'image',
-          content: `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE}`,
+          content: ogImage,
         }]}
       />
       <Head>
@@ -80,12 +117,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           as="font"
           crossOrigin=""
         />
-        <link
-          rel="preload"
-          href="/fonts/DonutQuest/DonutQuest.ttf"
-          as="font"
-          crossOrigin=""
-        />
+        {headerFont}
         {/* Favicons */}
         <link
           rel="icon"

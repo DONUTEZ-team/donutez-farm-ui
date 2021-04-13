@@ -5,7 +5,12 @@ export const DEFAULT_SEO = {
   DESCRIPTION_RU: 'Как мы используем Next.js в наших собственных и клиентских проектах для достижения лучших пользовательских практик и оптимизации SEO. Готовая к работе установка на основе TypeScript, Linter & Husky, SASS на уровне компонентов, интернационализация (next-i18next), React SVG.',
   SITE_NAME: 'Next Production Starter',
   WEBSITE_URL: 'https://website-url/', // Slash in the end is necessary
-  IMAGE: 'og_image.jpg',
+  IMAGE: {
+    EN: 'og_image.jpg',
+    RU: 'og_image_ru.jpg',
+    UK: 'og_image_uk.jpg',
+    ZH: 'og_image_zh.jpg',
+  },
   OG: {
     TYPE: 'website',
     SITE_NAME: 'Next Production Starter',

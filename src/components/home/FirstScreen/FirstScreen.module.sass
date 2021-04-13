@@ -1,0 +1,65 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  min-height: 600px
+  height: 100vh
+  max-height: 900px
+
+.row
+  flex-direction: column
+  align-items: flex-start
+  justify-content: center
+  height: 100%
+  position: relative
+  z-index: 2
+
+// Background
+.background1, .background2
+  position: absolute
+  z-index: -1
+
+.background1
+  left: 520px
+  top: -225p
+
+.background2
+  right: 930px
+  top: 80px
+
+// Content
+.header
+  white-space: pre-line
+  color: $secondary-100
+  font-size: 70px
+  line-height: 80px
+  margin-bottom: 26px
+  span
+    color: $accent-100
+
+.description
+  font-size: 1.5rem
+  margin-bottom: 70px
+
+.buttonWrapper
+  padding-left: 100px
+  position: relative
+
+.button
+  margin-top: 24px
+
+.hand
+  position: absolute
+  top: 10px
+  right: calc(100% - 70px)
+  width: 230px
+  height: auto
+
+.image
+  position: absolute
+  bottom: 0
+  right: 0
+  width: 22%
+  height: 85vh
+  max-height: 880px
+  min-width: 325px
