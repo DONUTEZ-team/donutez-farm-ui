@@ -54,6 +54,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
   }
 
+  let ogImage = `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE.EN}`;
+  if (router.locale === 'zh') {
+    ogImage = `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE.ZH}`;
+  } else if (router.locale === 'ru') {
+    ogImage = `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE.RU}`;
+  } else if (router.locale === 'uk') {
+    ogImage = `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE.UK}`;
+  }
+
   return (
     <>
       <DefaultSeo
@@ -70,7 +79,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           description,
           images: [
             {
-              url: `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE}`,
+              url: ogImage,
               width: 1200,
               height: 627,
               alt: DEFAULT_SEO.TITLE,
@@ -85,7 +94,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         languageAlternates={languageAlternates.length > 0 ? languageAlternates : undefined}
         additionalMetaTags={[{
           property: 'image',
-          content: `${DEFAULT_SEO.WEBSITE_URL}${DEFAULT_SEO.IMAGE}`,
+          content: ogImage,
         }]}
       />
       <Head>
