@@ -61,7 +61,9 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
             ))}
           </nav>
           <LanguageSwitcher className={s.languageSwitcher} />
-          <Button className={s.button}>Connect Wallet</Button>
+          <Button className={s.button}>
+            {t('common:Connect Wallet')}
+          </Button>
         </Row>
       </Container>
     </header>

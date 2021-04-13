@@ -22,8 +22,36 @@ function MyApp({ Component, pageProps }: AppProps) {
   let description = DEFAULT_SEO.DESCRIPTION;
   if (router.locale === 'zh') {
     description = DEFAULT_SEO.DESCRIPTION_ZH;
-  } else if (router.locale === 'zh') {
+  } else if (router.locale === 'ru' || router.locale === 'uk') {
     description = DEFAULT_SEO.DESCRIPTION_RU;
+  }
+
+  let headerFont = (
+    <link
+      rel="preload"
+      href="/fonts/DonutQuest/DonutQuest.ttf"
+      as="font"
+      crossOrigin=""
+    />
+  );
+  if (router.locale === 'zh') {
+    headerFont = (
+      <link
+        rel="preload"
+        href="/fonts/CloudPangToYuGBK/CloudPangToYuGBK.ttf"
+        as="font"
+        crossOrigin=""
+      />
+    );
+  } else if (router.locale === 'ru' || router.locale === 'uk') {
+    headerFont = (
+      <link
+        rel="preload"
+        href="/fonts/Airfool/Airfool.ttf"
+        as="font"
+        crossOrigin=""
+      />
+    );
   }
 
   return (
@@ -80,12 +108,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           as="font"
           crossOrigin=""
         />
-        <link
-          rel="preload"
-          href="/fonts/DonutQuest/DonutQuest.ttf"
-          as="font"
-          crossOrigin=""
-        />
+        {headerFont}
         {/* Favicons */}
         <link
           rel="icon"

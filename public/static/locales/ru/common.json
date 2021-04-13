@@ -1,6 +1,8 @@
 {
-  "Create Farming": "Create Farming",
-  "Create Token": "Create Token",
+  "Create Farming": "Создать Farming",
+  "Create Token": "Создать Токен",
   "Farm DONUTEZ": "Farm DONUTEZ",
-  "Account": "Account"
+  "Account": "Аккаунт",
+  "Connect Wallet": "Подключить Кошелек",
+  "Create": "Создать"
 }

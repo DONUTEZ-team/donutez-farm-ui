@@ -5,6 +5,18 @@
   font-style: normal
   font-weight: 400
   font-display: swap
+@font-face
+  font-family: "CloudPangToYuGBK"
+  src: url("/fonts/CloudPangToYuGBK/CloudPangToYuGBK.ttf")
+  font-style: normal
+  font-weight: 400
+  font-display: swap
+@font-face
+  font-family: "Airfool"
+  src: url("/fonts/Airfool/Airfool.ttf")
+  font-style: normal
+  font-weight: 400
+  font-display: swap
 
 @font-face
   font-family: "HK Grotesk"
@@ -45,6 +57,14 @@ h1, h2, h3, h4, h5, h6, p
 
 h1, h2
   font-family: $font-header
+
+html[lang="zh"]
+  h1, h2
+    font-family: $font-header-cn
+
+html[lang="ru"], html[lang="uk"]
+  h1, h2
+    font-family: $font-header-ru
 
 a
   color: inherit
