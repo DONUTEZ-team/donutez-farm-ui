@@ -54,7 +54,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
             {description}
           </p>
           <div className={s.buttonWrapper}>
-            <Button onClick={handleScroll}>
+            <Button className={s.button} onClick={handleScroll}>
               {t('common:Create')}
             </Button>
             <div className={s.hand}>
