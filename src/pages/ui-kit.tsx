@@ -10,11 +10,11 @@ import { Container } from '@components/ui/Container';
 import { Heading } from '@components/ui/Heading';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
+import { NumberInput } from '@components/common/NumberInput';
+import { MediaInput } from '@components/ui/MediaInput';
 import { StyledCard } from '@components/ui/StyledCard';
 import { Modal } from '@components/ui/Modal';
 
-import { NumberInput } from '@components/common/NumberInput';
-import { MediaInput } from '@components/ui/MediaInput';
 import s from '../styles/UiKit.module.sass';
 
 const UiKit: React.FC = () => {
