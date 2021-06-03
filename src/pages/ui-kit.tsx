@@ -13,6 +13,7 @@ import { Input } from '@components/ui/Input';
 import { StyledCard } from '@components/ui/StyledCard';
 import { Modal } from '@components/ui/Modal';
 
+import { NumberInput } from '@components/common/NumberInput';
 import s from '../styles/UiKit.module.sass';
 
 const UiKit: React.FC = () => {
@@ -198,6 +199,44 @@ const UiKit: React.FC = () => {
               className={s.input}
               label="Mining Reward per Block (Disabled)"
               placeholder="Mining reward for each block"
+              disabled
+            />
+          </div>
+          <div className={s.block}>
+            <Heading header="Number Inputs" subheader="06" />
+            <NumberInput
+              className={s.input}
+              label="Days"
+              placeholder="69"
+              step={1}
+              min={1}
+              max={100}
+            />
+            <NumberInput
+              className={s.input}
+              label="Days"
+              placeholder="69"
+              step={1}
+              min={1}
+              max={100}
+              success
+            />
+            <NumberInput
+              className={s.input}
+              label="Days"
+              placeholder="69"
+              step={1}
+              min={1}
+              max={100}
+              error="Too large"
+            />
+            <NumberInput
+              className={s.input}
+              label="Days"
+              placeholder="69"
+              step={1}
+              min={1}
+              max={100}
               disabled
             />
           </div>
