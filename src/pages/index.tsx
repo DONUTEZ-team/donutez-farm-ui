@@ -5,6 +5,7 @@ import { NextSeo } from 'next-seo';
 
 import { BaseLayout } from '@layouts/BaseLayout';
 import { FirstScreen } from '@components/home/FirstScreen';
+import { CreateFarmForm } from '@components/home/CreateFarmForm';
 
 const Home: React.FC = () => {
   const { t } = useTranslation(['home']);
@@ -24,7 +25,8 @@ const Home: React.FC = () => {
         description={t('home:Create your own yield farming in 5 minutes')}
         image="/images/HomePerson.png"
       />
-      <div style={{ height: 1200 }} />
+      <CreateFarmForm />
+      {/* <div style={{ height: 1200 }} /> */}
     </BaseLayout>
   );
 };
