@@ -10,10 +10,11 @@ import { Container } from '@components/ui/Container';
 import { Heading } from '@components/ui/Heading';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
+import { NumberInput } from '@components/common/NumberInput';
+import { MediaInput } from '@components/ui/MediaInput';
 import { StyledCard } from '@components/ui/StyledCard';
 import { Modal } from '@components/ui/Modal';
 
-import { NumberInput } from '@components/common/NumberInput';
 import s from '../styles/UiKit.module.sass';
 
 const UiKit: React.FC = () => {
@@ -203,7 +204,7 @@ const UiKit: React.FC = () => {
             />
           </div>
           <div className={s.block}>
-            <Heading header="Number Inputs" subheader="06" />
+            <Heading header="Number Inputs" subheader="07" />
             <NumberInput
               className={s.input}
               label="Days"
@@ -241,7 +242,7 @@ const UiKit: React.FC = () => {
             />
           </div>
           <div className={s.block}>
-            <Heading header="Textareas" subheader="07" />
+            <Heading header="Textareas" subheader="08" />
             <Input
               className={s.input}
               label="Mining Reward per Block"
@@ -271,7 +272,33 @@ const UiKit: React.FC = () => {
             />
           </div>
           <div className={s.block}>
-            <Heading header="Cards" subheader="08" />
+            <Heading header="Media Inputs" subheader="09" />
+            <MediaInput
+              className={s.input}
+              label="OG Image:"
+              onChange={() => {}}
+            />
+            <MediaInput
+              className={s.input}
+              label="OG Image:"
+              onChange={() => {}}
+              success
+            />
+            <MediaInput
+              className={s.input}
+              label="OG Image:"
+              onChange={() => {}}
+              error="File has to be less than 30 MB."
+            />
+            <MediaInput
+              className={s.input}
+              label="OG Image:"
+              onChange={() => {}}
+              disabled
+            />
+          </div>
+          <div className={s.block}>
+            <Heading header="Cards" subheader="10" />
             <div className={s.cards}>
               <StyledCard className={s.card} />
               <StyledCard className={s.card} theme="green" />
@@ -279,7 +306,7 @@ const UiKit: React.FC = () => {
             </div>
           </div>
           <div className={s.block}>
-            <Heading header="Modal" subheader="09" />
+            <Heading header="Modal" subheader="11" />
             <Button onClick={openModal}>Open Modal</Button>
           </div>
         </Row>

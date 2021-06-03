@@ -5,12 +5,13 @@ import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
 import { Field, withTypes } from 'react-final-form';
 
+import { parseNumber } from '@utils/helpers';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { Input } from '@components/ui/Input';
 import { NumberInput } from '@components/common/NumberInput';
+import { MediaInput } from '@components/ui/MediaInput';
 
-import { parseNumber } from '@utils/helpers';
 import { FormBlock } from './FormBlock';
 import s from './CreateFarmForm.module.sass';
 
@@ -376,7 +377,21 @@ e.g. This project is about yeild farming..."
                       />
                     )}
                   </Field>
-                  Project image as og image
+                  <Field<File | string>
+                    name="asset"
+                  >
+                    {({ input: { value, onChange, ...input }, meta }) => (
+                      <MediaInput
+                        {...input}
+                        className={s.input}
+                        label="OG image:"
+                        value={value}
+                        onChange={(file) => onChange(file)}
+                        error={(meta.touched && meta.error) || meta.submitError}
+                        success={!meta.error && meta.touched && !meta.submitError}
+                      />
+                    )}
+                  </Field>
                 </FormBlock>
               </div>
               <div className={s.donut}>
