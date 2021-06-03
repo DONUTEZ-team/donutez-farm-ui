@@ -21,6 +21,7 @@ const themeClass = {
   secondary: s.secondary,
   light: s.light,
   lightSecondary: s.lightSecondary,
+  clean: cx(s.secondary, s.clean),
 };
 
 export const Button: React.FC<ButtonProps> = ({

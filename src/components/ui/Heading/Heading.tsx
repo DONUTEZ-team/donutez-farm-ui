@@ -3,14 +3,14 @@ import cx from 'classnames';
 
 import s from './Heading.module.sass';
 
-type ContainerProps = {
+export interface HeadingProps {
   header: ReactNode
   subheader: ReactNode
   isRequired?: boolean | null
   className?: string
-};
+}
 
-export const Heading: React.FC<ContainerProps> = ({
+export const Heading: React.FC<HeadingProps> = ({
   header,
   subheader,
   isRequired = true,
