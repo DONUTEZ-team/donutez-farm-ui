@@ -27,7 +27,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   const compoundClassName = cx(
     s.root,
     { [s.success]: success },
-    { [s.error]: error },
+    { [s.error]: !!error },
     { [s.disabled]: disabled },
     className,
   );
