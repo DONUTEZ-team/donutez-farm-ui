@@ -1,13 +1,15 @@
 import React, {
-  useCallback,
+  useCallback, useState,
 } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
 import { Field, withTypes } from 'react-final-form';
 
+import { getStorageInfo, getTokenInfo, useTezos } from '@utils/dapp';
 import { parseNumber } from '@utils/helpers';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
+import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { NumberInput } from '@components/common/NumberInput';
 import { MediaInput } from '@components/ui/MediaInput';
@@ -42,9 +44,54 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
   className,
 }) => {
   const { t, i18n } = useTranslation(['common', 'home']);
+  const [pairTokenMetadata, setPairTokenMetadata] = useState<{
+    data: {
+      tokenName: string | null
+      tokenSymbol: string | null
+      tokenThumbnailUri: string | null
+    } | null
+    loading: boolean
+    error: boolean
+  }>({
+    data: null,
+    loading: false,
+    error: false,
+  });
+
+  const tezos = useTezos()!;
 
   // Logic of form
   const { Form } = withTypes<FormValues>();
+
+  const getTokenPairInfo = useCallback(async (pairAddress: string) => {
+    setPairTokenMetadata({
+      data: null,
+      loading: true,
+      error: false,
+    });
+    const {
+      storage: pairStorage,
+    } = await getStorageInfo(tezos, pairAddress);
+    const {
+      token_address: tokenAddress,
+    } = await pairStorage;
+
+    const tokenData = await getTokenInfo(tezos, tokenAddress);
+
+    if (!tokenData) {
+      setPairTokenMetadata({
+        data: null,
+        loading: false,
+        error: true,
+      });
+    } else {
+      setPairTokenMetadata({
+        data: tokenData,
+        loading: false,
+        error: false,
+      });
+    }
+  }, [tezos]);
 
   // TODO: submitting
   const onSubmit = useCallback(async (
@@ -84,17 +131,45 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                     name="qpToken"
                   >
                     {({ input, meta }) => (
-                      <Input
-                        {...input}
-                        className={s.input}
-                        label={`${t('home:QP token address')}:`}
-                        placeholder={t('home:Enter QP Token Address e.g. tz1W3a2...pSBmH')}
-                        error={(meta.touched && meta.error) || meta.submitError}
-                        success={!meta.error && meta.touched && !meta.submitError}
-                      />
+                      <>
+                        <Input
+                          {...input}
+                          className={s.input}
+                          label={`${t('home:QP token address')}:`}
+                          placeholder={t('home:Enter QP Token Address e.g. tz1W3a2...pSBmH')}
+                          error={(meta.touched && meta.error) || meta.submitError}
+                          success={!meta.error && meta.touched && !meta.submitError}
+                        />
+                        {
+                          pairTokenMetadata.error && 'Something went wrong'
+                        }
+                        {
+                          !pairTokenMetadata.error && (pairTokenMetadata.data ? (
+                            <>
+                              {/* TODO: Make tokens component */}
+                              {pairTokenMetadata.data.tokenThumbnailUri && (
+                                <img
+                                  src={pairTokenMetadata.data.tokenThumbnailUri}
+                                  alt={pairTokenMetadata.data.tokenName || 'Token'}
+                                />
+                              )}
+                              {pairTokenMetadata.data.tokenName || 'Unknown'}
+                              {' - '}
+                              {pairTokenMetadata.data.tokenSymbol || 'UNK'}
+                            </>
+                          ) : (
+                            <Button
+                              theme="secondary"
+                              disabled={meta.error}
+                              onClick={() => getTokenPairInfo(input.value)}
+                            >
+                              {pairTokenMetadata.loading ? 'Loading...' : 'Get info'}
+                            </Button>
+                          ))
+                        }
+                      </>
                     )}
                   </Field>
-                  TODO: button to load paired token&apos;s info
                 </FormBlock>
 
                 <FormBlock

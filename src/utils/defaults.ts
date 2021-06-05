@@ -4,3 +4,5 @@ export const APP_NAME = 'DONUTEZ Farm';
 
 export const NETWORK = process.env.NEXT_PUBLIC_NETWORK;
 export const NETWORK_RPC = process.env.NEXT_PUBLIC_NETWORK_RPC!;
+
+export const IPFS = 'ipfs';
