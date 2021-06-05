@@ -69,6 +69,11 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
         }) => (
           <form onSubmit={handleSubmit}>
             <Row className={s.row}>
+              <img
+                className={s.background}
+                src="/images/HomeBackground3.svg"
+                alt="DONUTEZ Farm"
+              />
               <div className={s.form}>
                 <FormBlock
                   header={t('home:Set up\nQP token')}
@@ -110,6 +115,7 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                         />
                       )}
                     </Field>
+                    TODO: button to load token&apos;s info & author
                   </div>
                   <div className={s.block}>
                     <div className={s.timeLabel}>
@@ -384,7 +390,7 @@ e.g. This project is about yeild farming..."
                       <MediaInput
                         {...input}
                         className={s.input}
-                        label="OG image:"
+                        label="Project image:"
                         value={value}
                         onChange={(file) => onChange(file)}
                         error={(meta.touched && meta.error) || meta.submitError}
