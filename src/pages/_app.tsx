@@ -4,8 +4,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { appWithTranslation } from 'next-i18next';
 import { DefaultSeo } from 'next-seo';
-import { DEFAULT_SEO } from '@utils/default-seo.config';
 
+import { DEFAULT_SEO } from '@utils/default-seo.config';
+import { DAppProvider } from '@utils/dapp';
+import { APP_NAME } from '@utils/defaults';
 import '@styles/globals.sass';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -64,7 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <>
+    <DAppProvider appName={APP_NAME}>
       <DefaultSeo
         title={undefined}
         titleTemplate={`${DEFAULT_SEO.TITLE} | %s`}
@@ -170,7 +172,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <Component {...pageProps} />
-    </>
+    </DAppProvider>
   );
 }
 

@@ -16,3 +16,5 @@ export const parseNumber = (value: string, min: number, max: number) => {
   // else return number
   return +onlyNums;
 };
+
+export const shortize = (str: string, decimal?: number) => `${str.slice(0, decimal ?? 4)}...${str.slice(-4)}`;
