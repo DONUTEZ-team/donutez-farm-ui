@@ -23,7 +23,9 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className })
     <div
       className={cx(s.root, className)}
       onMouseEnter={openLanguages}
+      onFocus={openLanguages}
       onMouseLeave={closeLanguages}
+      onBlur={closeLanguages}
     >
       <button
         type="button"

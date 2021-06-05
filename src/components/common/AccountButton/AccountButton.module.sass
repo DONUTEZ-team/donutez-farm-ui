@@ -1,0 +1,72 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.wrapper
+  position: relative
+  display: flex
+  align-items: center
+  align-self: stretch
+
+.root
+  height: 42px
+  border: 2px solid $secondary-100
+  display: flex
+  align-items: center
+  padding: 7px 0 10px 20px
+  border-radius: 50px
+
+.balance
+  font-family: $font-header
+  color: $secondary-100
+  font-size: 0.875rem
+
+.icon
+  width: 38px
+  height: 38px
+  background-color: $accent-60
+  margin-left: 10px
+  border-radius: 50%
+  margin-top: 2px
+
+
+.dialog
+  position: absolute
+  top: 100%
+  right: 0
+  transform: translateY(calc(-100% - 72px))
+  min-width: 420px
+  padding: 30px 25px
+  border-radius: 16px
+  background: $card-dark-blue-fill
+  display: flex
+  flex-direction: column
+  transition: opacity $animationTime, transform 0s $animationTime
+  opacity: 0
+  color: $light-100
+  &.active
+    transform: translateY(0)
+    opacity: 1
+    transition: opacity $animationTime 0s, transform 0s 0s
+
+.header
+  margin-bottom: 4px
+  font-weight: bold
+  font-size: 1.25rem
+
+.value
+  margin-bottom: 20px
+  color: $light-120
+  font-weight: 600
+
+.amount
+  font-family: $font-header
+
+.buttons
+  display: flex
+  margin-top: 10px
+
+.button
+  font-size: 1rem
+  min-width: 180px
+  &:first-child
+    margin-right: 20px

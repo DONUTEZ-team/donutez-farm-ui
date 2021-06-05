@@ -3,9 +3,9 @@ import Link from 'next/link';
 import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
 
+import { ConnectWallet } from '@containers/ConnectWallet';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
-import { Button } from '@components/ui/Button';
 import { HeaderItem } from '@components/common/Header/HeaderItem';
 import { LanguageSwitcher } from '@components/common/LanguageSwitcher';
 import Donutez from '@icons/DONUTEZ.svg';
@@ -61,9 +61,7 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
             ))}
           </nav>
           <LanguageSwitcher className={s.languageSwitcher} />
-          <Button className={s.button}>
-            {t('common:Connect Wallet')}
-          </Button>
+          <ConnectWallet />
         </Row>
       </Container>
     </header>
