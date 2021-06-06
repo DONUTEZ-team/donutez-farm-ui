@@ -35,18 +35,24 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
 
   return (
     <section className={s.root} ref={firstScreenRef}>
-      <Container className={s.container}>
+      <div className={s.backgrounds}>
+        <Container>
+          <Row className={s.row}>
+            <img
+              className={s.background1}
+              src="/images/HomeBackground1.svg"
+              alt="DONUTEZ Farm"
+            />
+            <img
+              className={s.background2}
+              src="/images/HomeBackground2.svg"
+              alt="DONUTEZ Farm"
+            />
+          </Row>
+        </Container>
+      </div>
+      <Container>
         <Row className={s.row}>
-          <img
-            className={s.background1}
-            src="/images/HomeBackground1.svg"
-            alt="DONUTEZ Farm"
-          />
-          <img
-            className={s.background2}
-            src="/images/HomeBackground2.svg"
-            alt="DONUTEZ Farm"
-          />
           <h1 className={s.header}>
             {title}
           </h1>

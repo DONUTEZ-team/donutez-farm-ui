@@ -1,10 +1,16 @@
 import React, {
   useCallback,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
-import { Field, withTypes } from 'react-final-form';
+import Image from 'next/image';
+import {
+  Field,
+  withTypes,
+} from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
 import dayjs from 'dayjs';
 
@@ -83,6 +89,32 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
   ] = useState<MetadataProps>(initialMetadataState);
 
   const tezos = useTezos()!;
+
+  // Donut animation
+  const refDonutGlaze = useRef(null);
+  const refDonutSprinkles = useRef(null);
+  const [donutStage, setDonutStage] = useState({
+    glaze: false,
+    sprinkles: false,
+  });
+  const isScrolledIntoView = (elem: any) => {
+    const bounding = elem.getBoundingClientRect();
+    return (
+      bounding.top - 150 <= 0
+    );
+  };
+  const onScroll = () => {
+    if (refDonutGlaze.current && refDonutSprinkles.current) {
+      setDonutStage({
+        glaze: isScrolledIntoView(refDonutGlaze.current),
+        sprinkles: isScrolledIntoView(refDonutSprinkles.current),
+      });
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', () => onScroll());
+    return window.removeEventListener('scroll', () => onScroll());
+  }, []);
 
   // Logic of form
   const { Form } = withTypes<FormValues>();
@@ -242,6 +274,7 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                 <FormBlock
                   header={t('home:Set mining\nparameters')}
                   subheader="02"
+                  ref={refDonutGlaze}
                 >
                   <div className={s.block}>
                     <Field
@@ -615,6 +648,7 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                   header={t('home:Set project\nparameters')}
                   subheader="03"
                   isRequired={false}
+                  ref={refDonutSprinkles}
                 >
                   <Field
                     name="title"
@@ -664,7 +698,45 @@ e.g. This project is about yeild farming..."
                 </FormBlock>
               </div>
               <div className={s.donut}>
-                There will be tokens image
+                <div className={cx(s.donutImage)}>
+                  <Image
+                    src="/images/donut/DonutBase.png"
+                    alt="DONUTEZ - donut base"
+                    layout="responsive"
+                    width={499}
+                    height={435}
+                  />
+                </div>
+                <div
+                  className={cx(
+                    s.donutImage,
+                    s.donutImageGlaze,
+                    { [s.active]: donutStage.glaze },
+                  )}
+                >
+                  <Image
+                    src="/images/donut/DonutGlaze.png"
+                    alt="DONUTEZ - donut glaze"
+                    layout="responsive"
+                    width={499}
+                    height={435}
+                  />
+                </div>
+                <div
+                  className={cx(
+                    s.donutImage,
+                    s.donutImageSprinkles,
+                    { [s.active]: donutStage.sprinkles },
+                  )}
+                >
+                  <Image
+                    src="/images/donut/DonutSprinkles.png"
+                    alt="DONUTEZ - donut sprinkles"
+                    layout="responsive"
+                    width={499}
+                    height={435}
+                  />
+                </div>
               </div>
             </Row>
             <div className={s.donutFinalWrapper}>
