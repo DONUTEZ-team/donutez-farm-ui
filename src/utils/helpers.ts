@@ -5,18 +5,18 @@ export const parseNumber = (value: string, min: number, max: number) => {
   const onlyNums = value.replace(/[^\d]/g, '');
 
   // if no numbers return empty
-  if (onlyNums === '') return null;
+  if (onlyNums === '') return '';
   // if less then min return min
   if (+onlyNums < min) {
-    return min;
+    return min.toString();
   }
   // if greater then max return max
   if (+onlyNums > max) {
-    return max;
+    return max.toString();
   }
 
   // else return number
-  return +onlyNums;
+  return onlyNums;
 };
 
 export const shortize = (str: string, decimal?: number) => `${str.slice(0, decimal ?? 4)}...${str.slice(-4)}`;
@@ -47,3 +47,15 @@ export const getTokenLogo = (url: string | null) => {
 
   return null;
 };
+
+export const convertToSeconds = (
+  days?: string | number,
+  hours?: string | number,
+  minutes?: string | number,
+  seconds?: string | number,
+) => (
+  (days ? +days : 1) * 86400
+  + (hours ? +hours : 0) * 3600
+  + (minutes ? +minutes : 0) * 60
+  + (seconds ? +seconds : 0)
+);
