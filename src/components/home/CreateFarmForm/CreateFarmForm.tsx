@@ -38,6 +38,7 @@ import { NumberInput } from '@components/common/NumberInput';
 import { TokenProps, TokensInfo } from '@components/common/TokensInfo';
 
 import { FormBlock } from './FormBlock';
+import { FinalDonut } from './FinalDonut';
 import s from './CreateFarmForm.module.sass';
 
 // Default form values
@@ -93,9 +94,11 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
   // Donut animation
   const refDonutGlaze = useRef(null);
   const refDonutSprinkles = useRef(null);
+  const refDonutCooked = useRef(null);
   const [donutStage, setDonutStage] = useState({
     glaze: false,
     sprinkles: false,
+    cooked: false,
   });
   const isScrolledIntoView = (elem: any) => {
     const bounding = elem.getBoundingClientRect();
@@ -104,10 +107,11 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
     );
   };
   const onScroll = () => {
-    if (refDonutGlaze.current && refDonutSprinkles.current) {
+    if (refDonutGlaze.current && refDonutSprinkles.current && refDonutCooked.current) {
       setDonutStage({
         glaze: isScrolledIntoView(refDonutGlaze.current),
         sprinkles: isScrolledIntoView(refDonutSprinkles.current),
+        cooked: isScrolledIntoView(refDonutCooked.current),
       });
     }
   };
@@ -196,60 +200,61 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
   }, []);
 
   return (
-    <Container className={className}>
-      <Form
-        key={i18n.language}
-        onSubmit={onSubmit}
-        initialValues={{ lifeTimeDays: 30, isStake: true }}
-        mutators={{
-          setValue: ([field, value], state, { changeValue }) => {
-            changeValue(state, field, () => value);
-          },
-        }}
-        render={({
-          handleSubmit, form, values,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Row className={s.row}>
-              <img
-                className={s.background}
-                src="/images/HomeBackground3.svg"
-                alt="DONUTEZ Farm"
-              />
-              <div className={s.form}>
-                <FormBlock
-                  header={t('home:Set up\nQP token')}
-                  subheader="01"
-                >
-                  <Field
-                    name="qpToken"
-                    validate={composeValidators(
-                      required,
-                      isContractAddress,
-                    )}
+    <section className={cx(s.root, className)}>
+      <Container className={className}>
+        <Form
+          key={i18n.language}
+          onSubmit={onSubmit}
+          initialValues={{ lifeTimeDays: 30, isStake: true }}
+          mutators={{
+            setValue: ([field, value], state, { changeValue }) => {
+              changeValue(state, field, () => value);
+            },
+          }}
+          render={({
+            handleSubmit, form, values,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Row className={s.row}>
+                <img
+                  className={s.background}
+                  src="/images/HomeBackground3.svg"
+                  alt="DONUTEZ Farm"
+                />
+                <div className={s.form}>
+                  <FormBlock
+                    header={t('home:Set up\nQP token')}
+                    subheader="01"
                   >
-                    {({ input, meta }) => (
-                      <>
-                        <Input
-                          {...input}
-                          className={s.input}
-                          label={`${t('home:QP token address')}:`}
-                          placeholder={t('home:Enter QP Token Address e.g. tz1W3a2...pSBmH')}
-                          error={
+                    <Field
+                      name="qpToken"
+                      validate={composeValidators(
+                        required,
+                        isContractAddress,
+                      )}
+                    >
+                      {({ input, meta }) => (
+                        <>
+                          <Input
+                            {...input}
+                            className={s.input}
+                            label={`${t('home:QP token address')}:`}
+                            placeholder={t('home:Enter QP Token Address e.g. tz1W3a2...pSBmH')}
+                            error={
                             pairTokenMetadata.error
                               ? "Couldn't load pair's metadata"
                               : ((meta.touched && meta.error) || meta.submitError)
                           }
-                          success={!meta.error && meta.touched && !meta.submitError}
-                        />
-                        <OnChange name="qpToken">
-                          {() => {
-                            if (pairTokenMetadata.data !== null) {
-                              setPairTokenMetadata(initialMetadataState);
-                            }
-                          }}
-                        </OnChange>
-                        {
+                            success={!meta.error && meta.touched && !meta.submitError}
+                          />
+                          <OnChange name="qpToken">
+                            {() => {
+                              if (pairTokenMetadata.data !== null) {
+                                setPairTokenMetadata(initialMetadataState);
+                              }
+                            }}
+                          </OnChange>
+                          {
                           pairTokenMetadata.data ? (
                             <TokensInfo
                               firstToken="Tez"
@@ -266,46 +271,46 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                             </Button>
                           )
                         }
-                      </>
-                    )}
-                  </Field>
-                </FormBlock>
-
-                <FormBlock
-                  header={t('home:Set mining\nparameters')}
-                  subheader="02"
-                  ref={refDonutGlaze}
-                >
-                  <div className={s.block}>
-                    <Field
-                      name="token"
-                      validate={composeValidators(
-                        required,
-                        isContractAddress,
+                        </>
                       )}
-                    >
-                      {({ input, meta }) => (
-                        <>
-                          <Input
-                            {...input}
-                            className={s.input}
-                            label={`${t('home:Token Address')}:`}
-                            placeholder={t('home:Enter reward Token Address e.g. tz1W3...SBmH')}
-                            error={
+                    </Field>
+                  </FormBlock>
+
+                  <FormBlock
+                    header={t('home:Set mining\nparameters')}
+                    subheader="02"
+                    ref={refDonutGlaze}
+                  >
+                    <div className={s.block}>
+                      <Field
+                        name="token"
+                        validate={composeValidators(
+                          required,
+                          isContractAddress,
+                        )}
+                      >
+                        {({ input, meta }) => (
+                          <>
+                            <Input
+                              {...input}
+                              className={s.input}
+                              label={`${t('home:Token Address')}:`}
+                              placeholder={t('home:Enter reward Token Address e.g. tz1W3...SBmH')}
+                              error={
                               rewardTokenMetadata.error
                                 ? "Couldn't load token's metadata"
                                 : ((meta.touched && meta.error) || meta.submitError)
                             }
-                            success={!meta.error && meta.touched && !meta.submitError}
-                          />
-                          <OnChange name="token">
-                            {() => {
-                              if (rewardTokenMetadata.data !== null) {
-                                setRewardTokenMetadata(initialMetadataState);
-                              }
-                            }}
-                          </OnChange>
-                          {
+                              success={!meta.error && meta.touched && !meta.submitError}
+                            />
+                            <OnChange name="token">
+                              {() => {
+                                if (rewardTokenMetadata.data !== null) {
+                                  setRewardTokenMetadata(initialMetadataState);
+                                }
+                              }}
+                            </OnChange>
+                            {
                             rewardTokenMetadata.data ? (
                               <TokensInfo
                                 firstToken={rewardTokenMetadata.data}
@@ -320,151 +325,151 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                               </Button>
                             )
                           }
-                        </>
-                      )}
-                    </Field>
-                  </div>
-                  <div className={s.block}>
-                    <div className={s.timeLabel}>
-                      {t('home:Lifetime')}
-                      :
-                    </div>
-                    <div className={s.timeWrapper}>
-                      <Field
-                        name="lifeTimeDays"
-                        validate={composeValidators(required, validateMinMax(1, 100))}
-                        parse={(value) => parseNumber(value, 1, 100)}
-                      >
-                        {({ input, meta }) => (
-                          <NumberInput
-                            {...input}
-                            className={s.inputTime}
-                            label={`${t('home:Days')}:`}
-                            placeholder="30"
-                            step={1}
-                            min={1}
-                            max={100}
-                            error={(meta.touched && meta.error) || meta.submitError}
-                            success={!meta.error && meta.touched && !meta.submitError}
-                            onIncrementClick={() => {
-                              form.mutators.setValue(
-                                'lifeTimeDays',
-                                +input.value + 1 > 100 ? 100 : +input.value + 1,
-                              );
-                            }}
-                            onDecrementClick={() => {
-                              form.mutators.setValue(
-                                'lifeTimeDays',
-                                +input.value - 1 < 1 ? 1 : +input.value - 1,
-                              );
-                            }}
-                          />
-                        )}
-                      </Field>
-
-                      <Field
-                        name="lifeTimeHours"
-                        validate={composeValidators(validateMinMax(1, 23))}
-                        parse={(value) => parseNumber(value, 1, 23)}
-                      >
-                        {({ input, meta }) => (
-                          <NumberInput
-                            {...input}
-                            className={s.inputTime}
-                            label={`${t('home:Hours')}:`}
-                            placeholder="13"
-                            step={1}
-                            min={1}
-                            max={23}
-                            error={(meta.touched && meta.error) || meta.submitError}
-                            success={!meta.error && meta.touched && !meta.submitError}
-                            onIncrementClick={() => {
-                              form.mutators.setValue(
-                                'lifeTimeHours',
-                                +input.value + 1 > 23 ? 23 : +input.value + 1,
-                              );
-                            }}
-                            onDecrementClick={() => {
-                              form.mutators.setValue(
-                                'lifeTimeHours',
-                                +input.value - 1 < 1 ? 1 : +input.value - 1,
-                              );
-                            }}
-                          />
-                        )}
-                      </Field>
-
-                      <Field
-                        name="lifeTimeMinutes"
-                        validate={composeValidators(validateMinMax(1, 59))}
-                        parse={(value) => parseNumber(value, 1, 59)}
-                      >
-                        {({ input, meta }) => (
-                          <NumberInput
-                            {...input}
-                            className={s.inputTime}
-                            label={`${t('home:Minutes')}:`}
-                            placeholder="00"
-                            step={1}
-                            min={1}
-                            max={59}
-                            error={(meta.touched && meta.error) || meta.submitError}
-                            success={!meta.error && meta.touched && !meta.submitError}
-                            onIncrementClick={() => {
-                              form.mutators.setValue(
-                                'lifeTimeMinutes',
-                                +input.value + 1 > 59 ? 59 : +input.value + 1,
-                              );
-                            }}
-                            onDecrementClick={() => {
-                              form.mutators.setValue(
-                                'lifeTimeMinutes',
-                                +input.value - 1 < 1 ? 1 : +input.value - 1,
-                              );
-                            }}
-                          />
-                        )}
-                      </Field>
-
-                      <Field
-                        name="lifeTimeSeconds"
-                        validate={composeValidators(validateMinMax(1, 59))}
-                        parse={(value) => parseNumber(value, 1, 59)}
-                      >
-                        {({ input, meta }) => (
-                          <NumberInput
-                            {...input}
-                            className={s.inputTime}
-                            label={`${t('home:Seconds')}:`}
-                            placeholder="00"
-                            step={1}
-                            min={1}
-                            max={59}
-                            error={(meta.touched && meta.error) || meta.submitError}
-                            success={!meta.error && meta.touched && !meta.submitError}
-                            onIncrementClick={() => {
-                              form.mutators.setValue(
-                                'lifeTimeSeconds',
-                                +input.value + 1 > 59 ? 59 : +input.value + 1,
-                              );
-                            }}
-                            onDecrementClick={() => {
-                              form.mutators.setValue(
-                                'lifeTimeSeconds',
-                                +input.value - 1 < 1 ? 1 : +input.value - 1,
-                              );
-                            }}
-                          />
+                          </>
                         )}
                       </Field>
                     </div>
-                    <p className={s.item}>
-                      {t('home:Estimated starting & closing time')}
-                      :
-                      {' '}
-                      <br />
-                      <strong>
-                        {
+                    <div className={s.block}>
+                      <div className={s.timeLabel}>
+                        {t('home:Lifetime')}
+                        :
+                      </div>
+                      <div className={s.timeWrapper}>
+                        <Field
+                          name="lifeTimeDays"
+                          validate={composeValidators(required, validateMinMax(1, 100))}
+                          parse={(value) => parseNumber(value, 1, 100)}
+                        >
+                          {({ input, meta }) => (
+                            <NumberInput
+                              {...input}
+                              className={s.inputTime}
+                              label={`${t('home:Days')}:`}
+                              placeholder="30"
+                              step={1}
+                              min={1}
+                              max={100}
+                              error={(meta.touched && meta.error) || meta.submitError}
+                              success={!meta.error && meta.touched && !meta.submitError}
+                              onIncrementClick={() => {
+                                form.mutators.setValue(
+                                  'lifeTimeDays',
+                                  +input.value + 1 > 100 ? 100 : +input.value + 1,
+                                );
+                              }}
+                              onDecrementClick={() => {
+                                form.mutators.setValue(
+                                  'lifeTimeDays',
+                                  +input.value - 1 < 1 ? 1 : +input.value - 1,
+                                );
+                              }}
+                            />
+                          )}
+                        </Field>
+
+                        <Field
+                          name="lifeTimeHours"
+                          validate={composeValidators(validateMinMax(1, 23))}
+                          parse={(value) => parseNumber(value, 1, 23)}
+                        >
+                          {({ input, meta }) => (
+                            <NumberInput
+                              {...input}
+                              className={s.inputTime}
+                              label={`${t('home:Hours')}:`}
+                              placeholder="13"
+                              step={1}
+                              min={1}
+                              max={23}
+                              error={(meta.touched && meta.error) || meta.submitError}
+                              success={!meta.error && meta.touched && !meta.submitError}
+                              onIncrementClick={() => {
+                                form.mutators.setValue(
+                                  'lifeTimeHours',
+                                  +input.value + 1 > 23 ? 23 : +input.value + 1,
+                                );
+                              }}
+                              onDecrementClick={() => {
+                                form.mutators.setValue(
+                                  'lifeTimeHours',
+                                  +input.value - 1 < 1 ? 1 : +input.value - 1,
+                                );
+                              }}
+                            />
+                          )}
+                        </Field>
+
+                        <Field
+                          name="lifeTimeMinutes"
+                          validate={composeValidators(validateMinMax(1, 59))}
+                          parse={(value) => parseNumber(value, 1, 59)}
+                        >
+                          {({ input, meta }) => (
+                            <NumberInput
+                              {...input}
+                              className={s.inputTime}
+                              label={`${t('home:Minutes')}:`}
+                              placeholder="00"
+                              step={1}
+                              min={1}
+                              max={59}
+                              error={(meta.touched && meta.error) || meta.submitError}
+                              success={!meta.error && meta.touched && !meta.submitError}
+                              onIncrementClick={() => {
+                                form.mutators.setValue(
+                                  'lifeTimeMinutes',
+                                  +input.value + 1 > 59 ? 59 : +input.value + 1,
+                                );
+                              }}
+                              onDecrementClick={() => {
+                                form.mutators.setValue(
+                                  'lifeTimeMinutes',
+                                  +input.value - 1 < 1 ? 1 : +input.value - 1,
+                                );
+                              }}
+                            />
+                          )}
+                        </Field>
+
+                        <Field
+                          name="lifeTimeSeconds"
+                          validate={composeValidators(validateMinMax(1, 59))}
+                          parse={(value) => parseNumber(value, 1, 59)}
+                        >
+                          {({ input, meta }) => (
+                            <NumberInput
+                              {...input}
+                              className={s.inputTime}
+                              label={`${t('home:Seconds')}:`}
+                              placeholder="00"
+                              step={1}
+                              min={1}
+                              max={59}
+                              error={(meta.touched && meta.error) || meta.submitError}
+                              success={!meta.error && meta.touched && !meta.submitError}
+                              onIncrementClick={() => {
+                                form.mutators.setValue(
+                                  'lifeTimeSeconds',
+                                  +input.value + 1 > 59 ? 59 : +input.value + 1,
+                                );
+                              }}
+                              onDecrementClick={() => {
+                                form.mutators.setValue(
+                                  'lifeTimeSeconds',
+                                  +input.value - 1 < 1 ? 1 : +input.value - 1,
+                                );
+                              }}
+                            />
+                          )}
+                        </Field>
+                      </div>
+                      <p className={s.item}>
+                        {t('home:Estimated starting & closing time')}
+                        :
+                        {' '}
+                        <br />
+                        <strong>
+                          {
                           convertToSeconds(
                             values.lifeTimeDays,
                             values.lifeTimeHours,
@@ -482,111 +487,111 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                               )).format('HH:mm. MMMM DD, YYYY')}`
                             ) : 'XX:XX XXXX XX, XXXX  —  XX:XX XXXX XX, XXXX'
                         }
-                      </strong>
-                    </p>
-                  </div>
-                  <div className={s.block}>
-                    <Field
-                      name="rewardPeriod"
-                      validate={composeValidators(
-                        required,
-                        validateMinMax(1, convertToSeconds(
-                          values.lifeTimeDays,
-                          values.lifeTimeHours,
-                          values.lifeTimeMinutes,
-                          values.lifeTimeSeconds,
-                        )),
-                      )}
-                      parse={(value) => parseNumber(value, 1, convertToSeconds(
-                        values.lifeTimeDays,
-                        values.lifeTimeHours,
-                        values.lifeTimeMinutes,
-                        values.lifeTimeSeconds,
-                      ))}
-                    >
-                      {({ input, meta }) => (
-                        <NumberInput
-                          {...input}
-                          type="number"
-                          theme="large"
-                          className={s.input}
-                          label={`${t('home:Reward Period in Seconds')}:`}
-                          placeholder="932157"
-                          step={10}
-                          min={1}
-                          max={convertToSeconds(
+                        </strong>
+                      </p>
+                    </div>
+                    <div className={s.block}>
+                      <Field
+                        name="rewardPeriod"
+                        validate={composeValidators(
+                          required,
+                          validateMinMax(1, convertToSeconds(
                             values.lifeTimeDays,
                             values.lifeTimeHours,
                             values.lifeTimeMinutes,
                             values.lifeTimeSeconds,
-                          )}
-                          error={(meta.touched && meta.error) || meta.submitError}
-                          success={!meta.error && meta.touched && !meta.submitError}
-                          onIncrementClick={() => {
-                            form.mutators.setValue(
-                              'rewardPeriod',
-                              +input.value + 10 > convertToSeconds(
-                                values.lifeTimeDays,
-                                values.lifeTimeHours,
-                                values.lifeTimeMinutes,
-                                values.lifeTimeSeconds,
-                              )
-                                ? convertToSeconds(
+                          )),
+                        )}
+                        parse={(value) => parseNumber(value, 1, convertToSeconds(
+                          values.lifeTimeDays,
+                          values.lifeTimeHours,
+                          values.lifeTimeMinutes,
+                          values.lifeTimeSeconds,
+                        ))}
+                      >
+                        {({ input, meta }) => (
+                          <NumberInput
+                            {...input}
+                            type="number"
+                            theme="large"
+                            className={s.input}
+                            label={`${t('home:Reward Period in Seconds')}:`}
+                            placeholder="932157"
+                            step={10}
+                            min={1}
+                            max={convertToSeconds(
+                              values.lifeTimeDays,
+                              values.lifeTimeHours,
+                              values.lifeTimeMinutes,
+                              values.lifeTimeSeconds,
+                            )}
+                            error={(meta.touched && meta.error) || meta.submitError}
+                            success={!meta.error && meta.touched && !meta.submitError}
+                            onIncrementClick={() => {
+                              form.mutators.setValue(
+                                'rewardPeriod',
+                                +input.value + 10 > convertToSeconds(
                                   values.lifeTimeDays,
                                   values.lifeTimeHours,
                                   values.lifeTimeMinutes,
                                   values.lifeTimeSeconds,
                                 )
-                                : +input.value + 10,
-                            );
-                          }}
-                          onDecrementClick={() => {
-                            form.mutators.setValue(
-                              'rewardPeriod',
-                              +input.value - 10 < 1 ? 1 : +input.value - 10,
-                            );
-                          }}
-                        />
-                      )}
-                    </Field>
-                    <Field
-                      name="rewardPerPeriod"
-                      validate={required}
-                    >
-                      {({ input, meta }) => (
-                        <NumberInput
-                          {...input}
-                          type="number"
-                          theme="large"
-                          className={s.input}
-                          label={`${t('home:Mining Reward per Period')}:`}
-                          placeholder="100"
-                          step={10}
-                          min={1}
-                          max={1_000_000}
-                          error={(meta.touched && meta.error) || meta.submitError}
-                          success={!meta.error && meta.touched && !meta.submitError}
-                          onIncrementClick={() => {
-                            form.mutators.setValue(
-                              'rewardPerPeriod',
-                              +input.value + 10 > 1_000_000 ? 1_000_000 : +input.value + 10,
-                            );
-                          }}
-                          onDecrementClick={() => {
-                            form.mutators.setValue(
-                              'rewardPerPeriod',
-                              +input.value - 10 < 1 ? 1 : +input.value - 10,
-                            );
-                          }}
-                        />
-                      )}
-                    </Field>
-                    <p className={s.item}>
-                      {t('home:Total Working Blocks Amount')}
-                      :
-                      {' '}
-                      <strong>
-                        {
+                                  ? convertToSeconds(
+                                    values.lifeTimeDays,
+                                    values.lifeTimeHours,
+                                    values.lifeTimeMinutes,
+                                    values.lifeTimeSeconds,
+                                  )
+                                  : +input.value + 10,
+                              );
+                            }}
+                            onDecrementClick={() => {
+                              form.mutators.setValue(
+                                'rewardPeriod',
+                                +input.value - 10 < 1 ? 1 : +input.value - 10,
+                              );
+                            }}
+                          />
+                        )}
+                      </Field>
+                      <Field
+                        name="rewardPerPeriod"
+                        validate={required}
+                      >
+                        {({ input, meta }) => (
+                          <NumberInput
+                            {...input}
+                            type="number"
+                            theme="large"
+                            className={s.input}
+                            label={`${t('home:Mining Reward per Period')}:`}
+                            placeholder="100"
+                            step={10}
+                            min={1}
+                            max={1_000_000}
+                            error={(meta.touched && meta.error) || meta.submitError}
+                            success={!meta.error && meta.touched && !meta.submitError}
+                            onIncrementClick={() => {
+                              form.mutators.setValue(
+                                'rewardPerPeriod',
+                                +input.value + 10 > 1_000_000 ? 1_000_000 : +input.value + 10,
+                              );
+                            }}
+                            onDecrementClick={() => {
+                              form.mutators.setValue(
+                                'rewardPerPeriod',
+                                +input.value - 10 < 1 ? 1 : +input.value - 10,
+                              );
+                            }}
+                          />
+                        )}
+                      </Field>
+                      <p className={s.item}>
+                        {t('home:Total Working Blocks Amount')}
+                        :
+                        {' '}
+                        <strong>
+                          {
                           values.lifeTimeDays && values.rewardPeriod && Math.floor(
                             convertToSeconds(
                               values.lifeTimeDays,
@@ -605,13 +610,13 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                             )
                             : 'XXXXXXXXXXXX'
                         }
-                      </strong>
-                    </p>
-                    <p className={s.item}>
-                      Total Reward:
-                      {' '}
-                      <strong>
-                        {
+                        </strong>
+                      </p>
+                      <p className={s.item}>
+                        Total Reward:
+                        {' '}
+                        <strong>
+                          {
                           values.lifeTimeDays && values.rewardPeriod && values.rewardPerPeriod
                           && Math.floor(
                             convertToSeconds(
@@ -631,120 +636,130 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                             ) * values.rewardPerPeriod} ${!!rewardTokenMetadata.data?.symbol}`
                             : 'XXXXXXXXXXXX'
                         }
-                      </strong>
-                    </p>
-                    <p className={cx(s.item, s.active)}>
-                      Available balance:
-                      {' '}
-                      <strong>
-                        0
-                        {!!rewardTokenMetadata.data?.symbol}
-                      </strong>
-                    </p>
-                  </div>
-                </FormBlock>
+                        </strong>
+                      </p>
+                      <p className={cx(s.item, s.active)}>
+                        Available balance:
+                        {' '}
+                        <strong>
+                          0
+                          {!!rewardTokenMetadata.data?.symbol}
+                        </strong>
+                      </p>
+                    </div>
+                  </FormBlock>
 
-                <FormBlock
-                  header={t('home:Set project\nparameters')}
-                  subheader="03"
-                  isRequired={false}
-                  ref={refDonutSprinkles}
-                >
-                  <Field
-                    name="title"
+                  <FormBlock
+                    header={t('home:Set project\nparameters')}
+                    subheader="03"
+                    isRequired={false}
+                    ref={refDonutSprinkles}
                   >
-                    {({ input, meta }) => (
-                      <Input
-                        {...input}
-                        className={s.input}
-                        label="Project Title:"
-                        placeholder="Project title e.g. Tezos Yield Farming"
-                        error={(meta.touched && meta.error) || meta.submitError}
-                        success={!meta.error && meta.touched && !meta.submitError}
-                      />
-                    )}
-                  </Field>
-                  <Field
-                    name="description"
-                  >
-                    {({ input, meta }) => (
-                      <Input
-                        {...input}
-                        className={s.input}
-                        label="Project Description:"
-                        placeholder="Your Project Description
+                    <Field
+                      name="title"
+                    >
+                      {({ input, meta }) => (
+                        <Input
+                          {...input}
+                          className={s.input}
+                          label="Project Title:"
+                          placeholder="Project title e.g. Tezos Yield Farming"
+                          error={(meta.touched && meta.error) || meta.submitError}
+                          success={!meta.error && meta.touched && !meta.submitError}
+                        />
+                      )}
+                    </Field>
+                    <Field
+                      name="description"
+                    >
+                      {({ input, meta }) => (
+                        <Input
+                          {...input}
+                          className={s.input}
+                          label="Project Description:"
+                          placeholder="Your Project Description
 e.g. This project is about yeild farming..."
-                        textarea
-                        error={(meta.touched && meta.error) || meta.submitError}
-                        success={!meta.error && meta.touched && !meta.submitError}
-                      />
+                          textarea
+                          error={(meta.touched && meta.error) || meta.submitError}
+                          success={!meta.error && meta.touched && !meta.submitError}
+                        />
+                      )}
+                    </Field>
+                    <Field<File | string>
+                      name="asset"
+                    >
+                      {({ input: { value, onChange, ...input }, meta }) => (
+                        <MediaInput
+                          {...input}
+                          className={s.input}
+                          label="Project image:"
+                          value={value}
+                          onChange={(file) => onChange(file)}
+                          error={(meta.touched && meta.error) || meta.submitError}
+                          success={!meta.error && meta.touched && !meta.submitError}
+                        />
+                      )}
+                    </Field>
+                  </FormBlock>
+                </div>
+                <div className={s.donut}>
+                  <div className={cx(s.donutImage)}>
+                    <Image
+                      src="/images/donut/DonutBase.png"
+                      alt="DONUTEZ - donut base"
+                      layout="responsive"
+                      width={499}
+                      height={435}
+                    />
+                  </div>
+                  <div
+                    className={cx(
+                      s.donutImage,
+                      s.donutImageGlaze,
+                      { [s.active]: donutStage.glaze },
                     )}
-                  </Field>
-                  <Field<File | string>
-                    name="asset"
                   >
-                    {({ input: { value, onChange, ...input }, meta }) => (
-                      <MediaInput
-                        {...input}
-                        className={s.input}
-                        label="Project image:"
-                        value={value}
-                        onChange={(file) => onChange(file)}
-                        error={(meta.touched && meta.error) || meta.submitError}
-                        success={!meta.error && meta.touched && !meta.submitError}
-                      />
+                    <Image
+                      src="/images/donut/DonutGlaze.png"
+                      alt="DONUTEZ - donut glaze"
+                      layout="responsive"
+                      width={499}
+                      height={435}
+                    />
+                  </div>
+                  <div
+                    className={cx(
+                      s.donutImage,
+                      s.donutImageSprinkles,
+                      { [s.active]: donutStage.sprinkles },
                     )}
-                  </Field>
-                </FormBlock>
-              </div>
-              <div className={s.donut}>
-                <div className={cx(s.donutImage)}>
-                  <Image
-                    src="/images/donut/DonutBase.png"
-                    alt="DONUTEZ - donut base"
-                    layout="responsive"
-                    width={499}
-                    height={435}
-                  />
+                  >
+                    <Image
+                      src="/images/donut/DonutSprinkles.png"
+                      alt="DONUTEZ - donut sprinkles"
+                      layout="responsive"
+                      width={499}
+                      height={435}
+                    />
+                  </div>
                 </div>
-                <div
-                  className={cx(
-                    s.donutImage,
-                    s.donutImageGlaze,
-                    { [s.active]: donutStage.glaze },
-                  )}
-                >
-                  <Image
-                    src="/images/donut/DonutGlaze.png"
-                    alt="DONUTEZ - donut glaze"
-                    layout="responsive"
-                    width={499}
-                    height={435}
-                  />
-                </div>
-                <div
-                  className={cx(
-                    s.donutImage,
-                    s.donutImageSprinkles,
-                    { [s.active]: donutStage.sprinkles },
-                  )}
-                >
-                  <Image
-                    src="/images/donut/DonutSprinkles.png"
-                    alt="DONUTEZ - donut sprinkles"
-                    layout="responsive"
-                    width={499}
-                    height={435}
-                  />
-                </div>
-              </div>
-            </Row>
-            <div className={s.donutFinalWrapper}>
-              Image with donut in the box
-            </div>
-          </form>
-        )}
-      />
-    </Container>
+              </Row>
+              <FinalDonut isAnimated={donutStage.cooked} ref={refDonutCooked} />
+            </form>
+          )}
+        />
+      </Container>
+      {/* <div className={s.backgrounds}> */}
+      {/*  <Container> */}
+      {/*    <Row className={s.row}> */}
+      {/*      <img */}
+      {/*        className={s.background2} */}
+      {/*        src="/images/HomeBackground4.svg" */}
+      {/*        alt="DONUTEZ Farm" */}
+      {/*      /> */}
+      {/*    </Row> */}
+      {/*  </Container> */}
+      {/* </div> */}
+    </section>
   );
 };

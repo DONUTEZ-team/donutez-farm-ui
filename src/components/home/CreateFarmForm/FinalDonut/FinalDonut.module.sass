@@ -1,0 +1,19 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  height: 120vh
+  position: relative
+  padding-top: 40px
+
+.image
+  max-height: calc(100vh - 100px)
+  transform: translateX(-150%)
+  left: 50%
+  transition: transform $animationTime*2.5
+  position: sticky
+  top: 90px
+  width: 50%
+  height: 100%
+  &.active
+    transform: translateX(-50%)
