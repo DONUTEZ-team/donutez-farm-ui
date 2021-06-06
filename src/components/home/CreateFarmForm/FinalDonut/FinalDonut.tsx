@@ -41,7 +41,7 @@ export const FinalDonut = forwardRef<HTMLDivElement, FinalDonutProps>(({
     }
   };
 
-  const fire = () => {
+  const fire = useCallback(() => {
     makeShot(0.25, {
       spread: 26,
       startVelocity: 55,
@@ -68,7 +68,7 @@ export const FinalDonut = forwardRef<HTMLDivElement, FinalDonutProps>(({
       spread: 120,
       startVelocity: 45,
     });
-  };
+  }, []);
 
   const handleFire = useCallback(() => {
     fire();
@@ -80,7 +80,7 @@ export const FinalDonut = forwardRef<HTMLDivElement, FinalDonutProps>(({
 
   useEffect(() => {
     if (isAnimated) {
-      const timer1 = setTimeout(handleFire, 600);
+      const timer1 = setTimeout(handleFire, 400);
       return () => clearTimeout(timer1);
     }
     return () => {};
