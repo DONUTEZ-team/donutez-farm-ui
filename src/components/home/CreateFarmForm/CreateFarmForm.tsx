@@ -1,13 +1,28 @@
 import React, {
-  useCallback, useState,
+  useCallback,
+  useState,
 } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
 import { Field, withTypes } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
+import dayjs from 'dayjs';
 
-import { getStorageInfo, getTokenInfo, useTezos } from '@utils/dapp';
-import { parseNumber } from '@utils/helpers';
+import {
+  getStorageInfo,
+  getTokenInfo,
+  useTezos,
+} from '@utils/dapp';
+import {
+  convertToSeconds,
+  parseNumber,
+} from '@utils/helpers';
+import {
+  composeValidators,
+  isContractAddress,
+  required,
+  validateMinMax,
+} from '@utils/validators';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { Button } from '@components/ui/Button';
@@ -26,14 +41,14 @@ type FormValues = {
   // farming information
   token: string
   lifeTimeDays: number
-  lifeTimeHours: number
-  lifeTimeMinutes: number
-  lifeTimeSeconds: number
+  lifeTimeHours?: number
+  lifeTimeMinutes?: number
+  lifeTimeSeconds?: number
   rewardPeriod: number
   rewardPerPeriod: number
   // website information
-  title: string
-  description: string
+  title?: string
+  description?: string
   // donutez configuration
   isStake: boolean
 };
@@ -160,7 +175,7 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
           },
         }}
         render={({
-          handleSubmit, form,
+          handleSubmit, form, values,
         }) => (
           <form onSubmit={handleSubmit}>
             <Row className={s.row}>
@@ -174,9 +189,12 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                   header={t('home:Set up\nQP token')}
                   subheader="01"
                 >
-                  {/* TODO: Required and qp token pattern */}
                   <Field
                     name="qpToken"
+                    validate={composeValidators(
+                      required,
+                      isContractAddress,
+                    )}
                   >
                     {({ input, meta }) => (
                       <>
@@ -226,8 +244,13 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                   subheader="02"
                 >
                   <div className={s.block}>
-                    {/* TODO: Required and token pattern */}
-                    <Field name="token">
+                    <Field
+                      name="token"
+                      validate={composeValidators(
+                        required,
+                        isContractAddress,
+                      )}
+                    >
                       {({ input, meta }) => (
                         <>
                           <Input
@@ -274,9 +297,9 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                       :
                     </div>
                     <div className={s.timeWrapper}>
-                      {/* TODO: Required, number and [min, max] */}
                       <Field
                         name="lifeTimeDays"
+                        validate={composeValidators(required, validateMinMax(1, 100))}
                         parse={(value) => parseNumber(value, 1, 100)}
                       >
                         {({ input, meta }) => (
@@ -306,9 +329,9 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                         )}
                       </Field>
 
-                      {/* TODO: Number and [min, max] */}
                       <Field
                         name="lifeTimeHours"
+                        validate={composeValidators(validateMinMax(1, 23))}
                         parse={(value) => parseNumber(value, 1, 23)}
                       >
                         {({ input, meta }) => (
@@ -338,9 +361,9 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                         )}
                       </Field>
 
-                      {/* TODO: Number and [min, max] */}
                       <Field
                         name="lifeTimeMinutes"
+                        validate={composeValidators(validateMinMax(1, 59))}
                         parse={(value) => parseNumber(value, 1, 59)}
                       >
                         {({ input, meta }) => (
@@ -370,9 +393,9 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                         )}
                       </Field>
 
-                      {/* TODO: Number and [min, max] */}
                       <Field
                         name="lifeTimeSeconds"
+                        validate={composeValidators(validateMinMax(1, 59))}
                         parse={(value) => parseNumber(value, 1, 59)}
                       >
                         {({ input, meta }) => (
@@ -408,14 +431,45 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                       {' '}
                       <br />
                       <strong>
-                        TODO: Formatted lifetime from to
+                        {
+                          convertToSeconds(
+                            values.lifeTimeDays,
+                            values.lifeTimeHours,
+                            values.lifeTimeMinutes,
+                            values.lifeTimeSeconds,
+                          )
+                            ? (
+                              `${dayjs().format('HH:mm. MMMM DD, YYYY')}  —  ${dayjs(dayjs().add(
+                                convertToSeconds(
+                                  values.lifeTimeDays,
+                                  values.lifeTimeHours,
+                                  values.lifeTimeMinutes,
+                                  values.lifeTimeSeconds,
+                                ) * 1000,
+                              )).format('HH:mm. MMMM DD, YYYY')}`
+                            ) : 'XX:XX XXXX XX, XXXX  —  XX:XX XXXX XX, XXXX'
+                        }
                       </strong>
                     </p>
                   </div>
                   <div className={s.block}>
-                    {/* TODO: required & number & [min, max] */}
                     <Field
                       name="rewardPeriod"
+                      validate={composeValidators(
+                        required,
+                        validateMinMax(1, convertToSeconds(
+                          values.lifeTimeDays,
+                          values.lifeTimeHours,
+                          values.lifeTimeMinutes,
+                          values.lifeTimeSeconds,
+                        )),
+                      )}
+                      parse={(value) => parseNumber(value, 1, convertToSeconds(
+                        values.lifeTimeDays,
+                        values.lifeTimeHours,
+                        values.lifeTimeMinutes,
+                        values.lifeTimeSeconds,
+                      ))}
                     >
                       {({ input, meta }) => (
                         <NumberInput
@@ -427,13 +481,30 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                           placeholder="932157"
                           step={10}
                           min={1}
-                          max={1_000_000}
+                          max={convertToSeconds(
+                            values.lifeTimeDays,
+                            values.lifeTimeHours,
+                            values.lifeTimeMinutes,
+                            values.lifeTimeSeconds,
+                          )}
                           error={(meta.touched && meta.error) || meta.submitError}
                           success={!meta.error && meta.touched && !meta.submitError}
                           onIncrementClick={() => {
                             form.mutators.setValue(
                               'rewardPeriod',
-                              +input.value + 10 > 1_000_000 ? 1_000_000 : +input.value + 10,
+                              +input.value + 10 > convertToSeconds(
+                                values.lifeTimeDays,
+                                values.lifeTimeHours,
+                                values.lifeTimeMinutes,
+                                values.lifeTimeSeconds,
+                              )
+                                ? convertToSeconds(
+                                  values.lifeTimeDays,
+                                  values.lifeTimeHours,
+                                  values.lifeTimeMinutes,
+                                  values.lifeTimeSeconds,
+                                )
+                                : +input.value + 10,
                             );
                           }}
                           onDecrementClick={() => {
@@ -447,6 +518,7 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                     </Field>
                     <Field
                       name="rewardPerPeriod"
+                      validate={required}
                     >
                       {({ input, meta }) => (
                         <NumberInput
@@ -481,20 +553,60 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                       :
                       {' '}
                       <strong>
-                        Count blocks
+                        {
+                          values.lifeTimeDays && values.rewardPeriod && Math.floor(
+                            convertToSeconds(
+                              values.lifeTimeDays,
+                              values.lifeTimeHours,
+                              values.lifeTimeMinutes,
+                              values.lifeTimeSeconds,
+                            ) / +values.rewardPeriod,
+                          ) > 0
+                            ? Math.floor(
+                              convertToSeconds(
+                                values.lifeTimeDays,
+                                values.lifeTimeHours,
+                                values.lifeTimeMinutes,
+                                values.lifeTimeSeconds,
+                              ) / +values.rewardPeriod,
+                            )
+                            : 'XXXXXXXXXXXX'
+                        }
                       </strong>
                     </p>
                     <p className={s.item}>
                       Total Reward:
                       {' '}
                       <strong>
-                        Total Reward
+                        {
+                          values.lifeTimeDays && values.rewardPeriod && values.rewardPerPeriod
+                          && Math.floor(
+                            convertToSeconds(
+                              values.lifeTimeDays,
+                              values.lifeTimeHours,
+                              values.lifeTimeMinutes,
+                              values.lifeTimeSeconds,
+                            ) / +values.rewardPeriod,
+                          ) > 0
+                            ? `${Math.floor(
+                              convertToSeconds(
+                                values.lifeTimeDays,
+                                values.lifeTimeHours,
+                                values.lifeTimeMinutes,
+                                values.lifeTimeSeconds,
+                              ) / +values.rewardPeriod,
+                            ) * values.rewardPerPeriod} ${!!rewardTokenMetadata.data?.symbol}`
+                            : 'XXXXXXXXXXXX'
+                        }
                       </strong>
                     </p>
                     <p className={cx(s.item, s.active)}>
                       Available balance:
                       {' '}
-                      <strong>0 DTZ</strong>
+                      <strong>
+                        0
+                        {!!rewardTokenMetadata.data?.symbol}
+                      </strong>
                     </p>
                   </div>
                 </FormBlock>
