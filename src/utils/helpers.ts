@@ -30,7 +30,6 @@ export const uintToString = (stringOfUint: any) => {
 };
 
 export const getTokenLogo = (url: string | null) => {
-  console.log(url);
   if (!url) {
     return null;
   }

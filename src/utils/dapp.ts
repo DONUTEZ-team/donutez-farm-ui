@@ -186,13 +186,14 @@ export const getTokenInfo = async (tezos: TezosToolkit, tokenAddress: string) =>
   } = await tokenMetadata.get(0);
   if (!tokenInfo) return null;
 
-  const tokenName = uintToString(tokenInfo.get('name')) ?? null;
-  const tokenSymbol = uintToString(tokenInfo.get('symbol')) ?? null;
-  const tokenThumbnailUri = getTokenLogo(uintToString(tokenInfo.get('thumbnailUri'))) ?? null;
+  const name = uintToString(tokenInfo.get('name')) ?? null;
+  const symbol = uintToString(tokenInfo.get('symbol')) ?? null;
+  const icon = getTokenLogo(uintToString(tokenInfo.get('thumbnailUri'))) ?? null;
 
   return {
-    tokenName,
-    tokenSymbol,
-    tokenThumbnailUri,
+    name,
+    symbol,
+    icon,
+    address: tokenAddress,
   };
 };

@@ -4,6 +4,7 @@ import React, {
 import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
 import { Field, withTypes } from 'react-final-form';
+import { OnChange } from 'react-final-form-listeners';
 
 import { getStorageInfo, getTokenInfo, useTezos } from '@utils/dapp';
 import { parseNumber } from '@utils/helpers';
@@ -11,8 +12,9 @@ import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
-import { NumberInput } from '@components/common/NumberInput';
 import { MediaInput } from '@components/ui/MediaInput';
+import { NumberInput } from '@components/common/NumberInput';
+import { TokenProps, TokensInfo } from '@components/common/TokensInfo';
 
 import { FormBlock } from './FormBlock';
 import s from './CreateFarmForm.module.sass';
@@ -40,23 +42,30 @@ type CreateFarmFormProps = {
   className?: string
 };
 
+type MetadataProps = {
+  data: TokenProps | null
+  loading: boolean
+  error: boolean
+};
+
+const initialMetadataState = {
+  data: null,
+  loading: false,
+  error: false,
+};
+
 export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
   className,
 }) => {
   const { t, i18n } = useTranslation(['common', 'home']);
-  const [pairTokenMetadata, setPairTokenMetadata] = useState<{
-    data: {
-      tokenName: string | null
-      tokenSymbol: string | null
-      tokenThumbnailUri: string | null
-    } | null
-    loading: boolean
-    error: boolean
-  }>({
-    data: null,
-    loading: false,
-    error: false,
-  });
+  const [
+    pairTokenMetadata,
+    setPairTokenMetadata,
+  ] = useState<MetadataProps>(initialMetadataState);
+  const [
+    rewardTokenMetadata,
+    setRewardTokenMetadata,
+  ] = useState<MetadataProps>(initialMetadataState);
 
   const tezos = useTezos()!;
 
@@ -69,26 +78,65 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
       loading: true,
       error: false,
     });
-    const {
-      storage: pairStorage,
-    } = await getStorageInfo(tezos, pairAddress);
-    const {
-      token_address: tokenAddress,
-    } = await pairStorage;
+    try {
+      const {
+        storage: pairStorage,
+      } = await getStorageInfo(tezos, pairAddress);
+      const {
+        token_address: tokenAddress,
+      } = await pairStorage;
 
-    const tokenData = await getTokenInfo(tezos, tokenAddress);
+      const tokenData = await getTokenInfo(tezos, tokenAddress);
 
-    if (!tokenData) {
+      if (!tokenData) {
+        setPairTokenMetadata({
+          data: null,
+          loading: false,
+          error: true,
+        });
+      } else {
+        setPairTokenMetadata({
+          data: tokenData,
+          loading: false,
+          error: false,
+        });
+      }
+    } catch (e) {
       setPairTokenMetadata({
         data: null,
         loading: false,
         error: true,
       });
-    } else {
-      setPairTokenMetadata({
-        data: tokenData,
+    }
+  }, [tezos]);
+
+  const getRewardTokenInfo = useCallback(async (tokenAddress: string) => {
+    setRewardTokenMetadata({
+      data: null,
+      loading: true,
+      error: false,
+    });
+    try {
+      const tokenData = await getTokenInfo(tezos, tokenAddress);
+
+      if (!tokenData) {
+        setRewardTokenMetadata({
+          data: null,
+          loading: false,
+          error: true,
+        });
+      } else {
+        setRewardTokenMetadata({
+          data: tokenData,
+          loading: false,
+          error: false,
+        });
+      }
+    } catch (e) {
+      setRewardTokenMetadata({
+        data: null,
         loading: false,
-        error: false,
+        error: true,
       });
     }
   }, [tezos]);
@@ -137,35 +185,36 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                           className={s.input}
                           label={`${t('home:QP token address')}:`}
                           placeholder={t('home:Enter QP Token Address e.g. tz1W3a2...pSBmH')}
-                          error={(meta.touched && meta.error) || meta.submitError}
+                          error={
+                            pairTokenMetadata.error
+                              ? "Couldn't load pair's metadata"
+                              : ((meta.touched && meta.error) || meta.submitError)
+                          }
                           success={!meta.error && meta.touched && !meta.submitError}
                         />
+                        <OnChange name="qpToken">
+                          {() => {
+                            if (pairTokenMetadata.data !== null) {
+                              setPairTokenMetadata(initialMetadataState);
+                            }
+                          }}
+                        </OnChange>
                         {
-                          pairTokenMetadata.error && 'Something went wrong'
-                        }
-                        {
-                          !pairTokenMetadata.error && (pairTokenMetadata.data ? (
-                            <>
-                              {/* TODO: Make tokens component */}
-                              {pairTokenMetadata.data.tokenThumbnailUri && (
-                                <img
-                                  src={pairTokenMetadata.data.tokenThumbnailUri}
-                                  alt={pairTokenMetadata.data.tokenName || 'Token'}
-                                />
-                              )}
-                              {pairTokenMetadata.data.tokenName || 'Unknown'}
-                              {' - '}
-                              {pairTokenMetadata.data.tokenSymbol || 'UNK'}
-                            </>
+                          pairTokenMetadata.data ? (
+                            <TokensInfo
+                              firstToken="Tez"
+                              secondToken={pairTokenMetadata.data}
+                              pairLink={input.value}
+                            />
                           ) : (
                             <Button
                               theme="secondary"
-                              disabled={meta.error}
+                              disabled={meta.error || pairTokenMetadata.loading}
                               onClick={() => getTokenPairInfo(input.value)}
                             >
                               {pairTokenMetadata.loading ? 'Loading...' : 'Get info'}
                             </Button>
-                          ))
+                          )
                         }
                       </>
                     )}
@@ -180,17 +229,44 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                     {/* TODO: Required and token pattern */}
                     <Field name="token">
                       {({ input, meta }) => (
-                        <Input
-                          {...input}
-                          className={s.input}
-                          label={`${t('home:Token Address')}:`}
-                          placeholder={t('home:Enter reward Token Address e.g. tz1W3...SBmH')}
-                          error={(meta.touched && meta.error) || meta.submitError}
-                          success={!meta.error && meta.touched && !meta.submitError}
-                        />
+                        <>
+                          <Input
+                            {...input}
+                            className={s.input}
+                            label={`${t('home:Token Address')}:`}
+                            placeholder={t('home:Enter reward Token Address e.g. tz1W3...SBmH')}
+                            error={
+                              rewardTokenMetadata.error
+                                ? "Couldn't load token's metadata"
+                                : ((meta.touched && meta.error) || meta.submitError)
+                            }
+                            success={!meta.error && meta.touched && !meta.submitError}
+                          />
+                          <OnChange name="token">
+                            {() => {
+                              if (rewardTokenMetadata.data !== null) {
+                                setRewardTokenMetadata(initialMetadataState);
+                              }
+                            }}
+                          </OnChange>
+                          {
+                            rewardTokenMetadata.data ? (
+                              <TokensInfo
+                                firstToken={rewardTokenMetadata.data}
+                              />
+                            ) : (
+                              <Button
+                                theme="secondary"
+                                disabled={meta.error || rewardTokenMetadata.loading}
+                                onClick={() => getRewardTokenInfo(input.value)}
+                              >
+                                {rewardTokenMetadata.loading ? 'Loading...' : 'Get info'}
+                              </Button>
+                            )
+                          }
+                        </>
                       )}
                     </Field>
-                    TODO: button to load token&apos;s info & author
                   </div>
                   <div className={s.block}>
                     <div className={s.timeLabel}>
