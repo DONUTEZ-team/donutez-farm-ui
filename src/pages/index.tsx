@@ -24,6 +24,7 @@ const Home: React.FC = () => {
         title={t('home:All u need\nis farming...\nand Donutez')}
         description={t('home:Create your own yield farming in 5 minutes')}
         image="/images/HomePerson.png"
+        isHome
       />
       <CreateFarmForm />
     </BaseLayout>
