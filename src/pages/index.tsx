@@ -26,7 +26,6 @@ const Home: React.FC = () => {
         image="/images/HomePerson.png"
       />
       <CreateFarmForm />
-      {/* <div style={{ height: 1200 }} /> */}
     </BaseLayout>
   );
 };
