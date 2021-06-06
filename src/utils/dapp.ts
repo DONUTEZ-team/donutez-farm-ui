@@ -9,6 +9,7 @@ import { TempleWallet } from '@temple-wallet/dapp';
 import { TezosToolkit } from '@taquito/taquito';
 import memoizee from 'memoizee';
 import { NETWORK_RPC } from '@utils/defaults';
+import { getTokenLogo, uintToString } from '@utils/helpers';
 
 export type DAppType = {
   wallet: null | TempleWallet
@@ -173,3 +174,26 @@ const getStoragePure = async (tezos: TezosToolkit, contractAddress: string) => {
 };
 
 export const getStorageInfo = memoizee(getStoragePure, { maxAge: 30000 });
+
+// Token info
+export const getTokenInfo = async (tezos: TezosToolkit, tokenAddress: string) => {
+  const {
+    token_metadata: tokenMetadata,
+  } = await getStorageInfo(tezos, tokenAddress);
+  if (!tokenMetadata) return null;
+  const {
+    token_info: tokenInfo,
+  } = await tokenMetadata.get(0);
+  if (!tokenInfo) return null;
+
+  const name = uintToString(tokenInfo.get('name')) ?? null;
+  const symbol = uintToString(tokenInfo.get('symbol')) ?? null;
+  const icon = getTokenLogo(uintToString(tokenInfo.get('thumbnailUri'))) ?? null;
+
+  return {
+    name,
+    symbol,
+    icon,
+    address: tokenAddress,
+  };
+};
