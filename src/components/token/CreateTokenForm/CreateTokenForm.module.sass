@@ -1,0 +1,74 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  position: relative
+
+.row
+  position: relative
+  align-items: flex-start
+  z-index: 2
+
+.heading
+  width: 100%
+  margin-top: 110px
+
+.form
+  display: flex
+  align-items: flex-start
+  position: relative
+
+.block
+  padding-bottom: 110px
+
+.input
+  min-width: 400px
+  max-width: 400px
+  &:not(:last-child)
+    margin-bottom: 16px
+
+.button
+  margin-top: 16px
+
+.card
+  margin-left: 120px
+  width: 300px
+  position: sticky
+  top: 100px
+  bottom: 20px
+
+.section
+  position: relative
+
+.handsWrapper
+  width: 20%
+  height: 100%
+  right: 0
+  top: 0
+  position: absolute
+  z-index: 3
+  pointer-events: none
+
+.hands
+  position: sticky
+  top: 350px
+  right: 0
+  width: 100%
+  height: auto
+  &.active
+    display: none
+
+.backgroundWrapper
+  position: absolute
+  bottom: 0
+  left: 0
+  width: 100%
+  pointer-events: none
+  height: 700px
+  z-index: 1
+  overflow: hidden
+
+.background
+  position: absolute
+  right: 500px
+  top: 0

@@ -19,6 +19,17 @@ export const parseNumber = (value: string, min: number, max: number) => {
   return onlyNums;
 };
 
+export const parseTokenName = (value: string) => {
+  const onlyChars = value.replace(/[0-9]/g, '');
+  return onlyChars.length > 20 ? onlyChars.slice(0, 20) : onlyChars;
+};
+
+export const parseTokenSymbol = (value: string) => {
+  const onlyChars = value.replace(/[0-9]/g, '');
+  const newValue = onlyChars.length > 4 ? onlyChars.slice(0, 4) : onlyChars;
+  return newValue.toUpperCase();
+};
+
 export const shortize = (str: string, decimal?: number) => `${str.slice(0, decimal ?? 4)}...${str.slice(-4)}`;
 
 export const uintToString = (stringOfUint: any) => {
