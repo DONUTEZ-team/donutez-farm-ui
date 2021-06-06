@@ -633,7 +633,11 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                                 values.lifeTimeMinutes,
                                 values.lifeTimeSeconds,
                               ) / +values.rewardPeriod,
-                            ) * values.rewardPerPeriod} ${!!rewardTokenMetadata.data?.symbol}`
+                            ) * values.rewardPerPeriod} ${
+                              rewardTokenMetadata.data?.symbol
+                                ? rewardTokenMetadata.data?.symbol
+                                : ''
+                            }`
                             : 'XXXXXXXXXXXX'
                         }
                         </strong>
@@ -643,7 +647,8 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                         {' '}
                         <strong>
                           0
-                          {!!rewardTokenMetadata.data?.symbol}
+                          {' '}
+                          {rewardTokenMetadata.data?.symbol}
                         </strong>
                       </p>
                     </div>
