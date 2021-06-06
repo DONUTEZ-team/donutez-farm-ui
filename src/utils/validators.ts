@@ -31,7 +31,7 @@ export const isTokenAddress = (value: string) => (
 );
 
 export const validateMinMax = (min: number, max: number) => (value: string) => (
-  +value >= min && +value <= max
+  !value || (+value >= min && +value <= max)
     ? undefined
     : i18n?.t('common:Value has to be between {{min}} and {{max}}', { min, max })
 );
