@@ -1,0 +1,61 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  min-height: 650px
+  position: relative
+  overflow: hidden
+
+.background1, .background2, .background3
+  position: absolute
+  z-index: -1
+
+.background1
+  left: 200px
+  top: -1000px
+
+.background2
+  right: 900px
+  top: 0
+
+.background3
+  left: 200px
+  top: 100px
+
+.row
+  flex-direction: column
+  justify-content: flex-start
+  position: relative
+  height: 100vh
+  z-index: 2
+
+.header
+  margin: 150px 0 50px
+  width: 100%
+  text-align: center
+  font-size: 2.5rem
+  color: $secondary-100
+
+.cards
+  display: flex
+
+.card
+  &:first-child
+    margin-right: 32px
+  &:last-child
+    margin-left: 32px
+
+.button
+  width: calc(50% - 12px)
+  min-width: auto
+  &:first-child
+    margin-right: 12px
+  &:last-child
+    margin-left: 12px
+
+.hand
+  position: absolute
+  bottom: -126px
+  right: 0
+  width: 173px
+  height: auto

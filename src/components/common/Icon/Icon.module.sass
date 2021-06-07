@@ -1,0 +1,30 @@
+@import "@styles/variables"
+@import "@styles/breakpoints"
+
+.root
+  width: 104px
+  height: 104px
+  background: rgba(255, 214, 141, 0.6)
+  border: 2px solid $accent-100
+  backdrop-filter: blur(7px)
+  border-radius: 50%
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-bottom: 24px
+  margin-left: auto
+  margin-right: auto
+  padding: 13px
+
+.inner
+  width: 100%
+  height: 100%
+  border-radius: 50%
+  overflow: hidden
+  > svg
+    width: 100%
+    height: auto
+  > img
+    width: 100%
+    height: 100%
+    object-fit: cover
