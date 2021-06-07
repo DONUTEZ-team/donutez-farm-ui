@@ -3,7 +3,7 @@ import Link from 'next/link';
 import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
 
-import { ConnectWallet } from '@containers/ConnectWallet';
+import { ConnectWallet } from '@containers/common/ConnectWallet';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { HeaderItem } from '@components/common/Header/HeaderItem';

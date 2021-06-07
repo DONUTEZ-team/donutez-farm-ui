@@ -8,6 +8,7 @@ import {
 } from '@components/ui/MediaInput';
 import XToken from '@icons/X_TOKEN.svg';
 
+import { Icon } from '@components/common/Icon';
 import s from './TokenCard.module.sass';
 
 type TokenCardProps = {
@@ -68,22 +69,20 @@ export const TokenCard: React.FC<TokenCardProps> = ({
 
   return (
     <StyledCard className={cx(s.root, className)} theme="blue">
-      <div className={s.icon}>
-        <div className={s.iconInner}>
-          {icon ? (
-            <img
-              src={
+      <Icon className={s.icon}>
+        {icon ? (
+          <img
+            src={
               typeof mediaPreviewInfo === 'string'
                 ? mediaPreviewInfo
                 : mediaPreviewInfo?.url
             }
-              alt={name}
-            />
-          ) : (
-            <XToken />
-          )}
-        </div>
-      </div>
+            alt={name}
+          />
+        ) : (
+          <XToken />
+        )}
+      </Icon>
       <h2 className={s.header}>
         Token:
         {' '}
