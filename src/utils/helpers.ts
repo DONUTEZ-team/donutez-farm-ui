@@ -1,8 +1,15 @@
 import { IPFS } from '@utils/defaults';
+import { Batch, TransferParams } from '@utils/types';
+
+export const batchify = (
+  batch: Batch, transfers: TransferParams[],
+) => (
+  transfers.reduce((b, tParams) => b.withTransfer(tParams), batch)
+);
 
 export const parseNumber = (value: string, min: number, max: number) => {
   // leave only numbers
-  const onlyNums = value.replace(/[^\d]/g, '');
+  const onlyNums = value.replace(/[^0-9]/g, '');
 
   // if no numbers return empty
   if (onlyNums === '') return '';
@@ -20,13 +27,15 @@ export const parseNumber = (value: string, min: number, max: number) => {
 };
 
 export const parseTokenName = (value: string) => {
-  const onlyChars = value.replace(/[0-9]/g, '');
+  const onlyChars = value.length < 2
+    ? value.trim().replace(/[^ a-zA-Z]+/g, '')
+    : value.replace(/[^ a-zA-Z]+/g, '');
   return onlyChars.length > 20 ? onlyChars.slice(0, 20) : onlyChars;
 };
 
 export const parseTokenSymbol = (value: string) => {
-  const onlyChars = value.replace(/[0-9]/g, '');
-  const newValue = onlyChars.length > 4 ? onlyChars.slice(0, 4) : onlyChars;
+  const onlyChars = value.replace(/[^a-zA-Z]+/g, '');
+  const newValue = onlyChars.length > 6 ? onlyChars.slice(0, 6) : onlyChars;
   return newValue.toUpperCase();
 };
 
@@ -70,3 +79,18 @@ export const convertToSeconds = (
   + (minutes ? +minutes : 0) * 60
   + (seconds ? +seconds : 0)
 );
+
+export const formatName = (name: string) => (
+  name.trim().replaceAll(' ', '_')
+);
+
+enum AcceptedImageTypes {
+  'image/jpeg' = '.jpg',
+  'image/png' = '.png',
+}
+
+export const formatImageType = (type: string) => (
+  AcceptedImageTypes[type as keyof typeof AcceptedImageTypes]
+);
+
+export const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;

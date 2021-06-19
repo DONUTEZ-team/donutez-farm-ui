@@ -6,9 +6,8 @@ import {
   MediaPreviewInfo,
   MediaType,
 } from '@components/ui/MediaInput';
-import XToken from '@icons/X_TOKEN.svg';
-
 import { Icon } from '@components/common/Icon';
+
 import s from './TokenCard.module.sass';
 
 type TokenCardProps = {
@@ -80,7 +79,10 @@ export const TokenCard: React.FC<TokenCardProps> = ({
             alt={name}
           />
         ) : (
-          <XToken />
+          <img
+            src="/images/icon-token.png"
+            alt={name}
+          />
         )}
       </Icon>
       <h2 className={s.header}>

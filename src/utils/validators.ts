@@ -13,7 +13,7 @@ export const composeValidators = (...validators: ValidationType[]) => (value: st
 );
 
 export const required = (value: string | number) => (
-  value !== ''
+  value && value !== ''
     ? undefined
     : i18n?.t('common:This field is required')
 );
@@ -33,5 +33,5 @@ export const isTokenAddress = (value: string) => (
 export const validateMinMax = (min: number, max: number) => (value: string) => (
   !value || (+value >= min && +value <= max)
     ? undefined
-    : i18n?.t('common:Value has to be between {{min}} and {{max}}', { min, max })
+    : i18n?.t('common:Value has to be a number between {{min}} and {{max}}', { min, max })
 );

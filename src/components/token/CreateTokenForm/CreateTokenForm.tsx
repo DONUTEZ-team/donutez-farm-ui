@@ -1,22 +1,33 @@
-import React, { useCallback } from 'react';
+import React, { ReactNode, useCallback, useState } from 'react';
+import Image from 'next/image';
 import cx from 'classnames';
 import { useTranslation } from 'next-i18next';
 import {
   Field,
   withTypes,
 } from 'react-final-form';
-import Image from 'next/image';
+import { FormApi } from 'final-form';
+import createDecorator from 'final-form-focus';
 
+import {
+  BCD,
+  TEMPLATE_TOKEN_ICON,
+} from '@utils/defaults';
+import { useTezos } from '@utils/dapp';
+import {
+  parseNumber,
+  parseTokenSymbol,
+  parseTokenName,
+  formatName,
+  formatImageType, getTokenLogo,
+} from '@utils/helpers';
 import {
   composeValidators,
   required,
   validateMinMax,
 } from '@utils/validators';
-import {
-  parseNumber,
-  parseTokenSymbol,
-  parseTokenName,
-} from '@utils/helpers';
+import { createToken } from '@utils/createToken';
+import useIpfsFactory from '@utils/ipfs';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { Button } from '@components/ui/Button';
@@ -24,15 +35,60 @@ import { Heading } from '@components/ui/Heading';
 import { Input } from '@components/ui/Input';
 import { MediaInput } from '@components/ui/MediaInput';
 import { NumberInput } from '@components/common/NumberInput';
+import { TokensInfo } from '@components/common/TokensInfo';
+import {
+  ModalStatuses,
+  StateModal,
+} from '@components/common/StateModal';
 
 import { TokenCard } from './TokenCard';
 import s from './CreateTokenForm.module.sass';
+
+const focusOnErrors = createDecorator();
+
+type SuccessModalMessageProps = {
+  name: string
+  symbol?: string
+  icon: string
+  address: string
+};
+
+const SuccessModalMessage: React.FC<SuccessModalMessageProps> = ({
+  name,
+  symbol,
+  icon,
+  address,
+}) => (
+  <>
+    <p>Your token has been created successfully!</p>
+    <TokensInfo
+      firstToken={{
+        name,
+        symbol: symbol ?? name.replace(' ', '').substr(0, 3).toUpperCase(),
+        icon: getTokenLogo(icon),
+        address,
+      }}
+      className={s.tokenInfo}
+    />
+    <p>
+      Token address is
+      {' '}
+      <a
+        href={`${BCD}${address}`}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        {address}
+      </a>
+    </p>
+  </>
+);
 
 // Default form values
 type FormValues = {
   name: string
   symbol: string
-  icon: string
+  icon: any
   totalSupply: number
   decimals: number
 };
@@ -46,15 +102,76 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
 }) => {
   const { t, i18n } = useTranslation(['common', 'home']);
 
+  const tezos = useTezos();
+
+  const [modalState, setModalState] = useState<{
+    status: ModalStatuses,
+    message: string | ReactNode | null
+  }>({
+    status: ModalStatuses.Default,
+    message: null,
+  });
+
   // Logic of form
   const { Form } = withTypes<FormValues>();
+  const { ipfs } = useIpfsFactory();
 
-  // TODO: submitting
   const onSubmit = useCallback(async (
     values: FormValues,
+    form: FormApi<FormValues>,
   ) => {
-    console.log('submit', values);
-  }, []);
+    try {
+      if (tezos) {
+        let ipfsFileUrl = TEMPLATE_TOKEN_ICON;
+        if (values.icon) {
+          setModalState({
+            status: ModalStatuses.Pending,
+            message: 'Loading asset to IPFS...',
+          });
+          const fileName = formatName(`${values.name} ${values.symbol}${formatImageType(values.icon.type)}`);
+          const ipfsFile = await ipfs.add({
+            path: fileName,
+            content: values.icon,
+          },
+          {
+            wrapWithDirectory: true,
+          });
+          ipfsFileUrl = `ipfs://${ipfsFile.cid.string}/${fileName}`;
+        }
+
+        setModalState({
+          status: ModalStatuses.Pending,
+          message: 'Creating token...',
+        });
+        await createToken(
+          tezos,
+          values.name,
+          values.symbol ?? values.name.replace(' ', '').substr(0, 3).toUpperCase(),
+          ipfsFileUrl,
+          values.totalSupply,
+          values.decimals,
+        );
+        setModalState({
+          status: ModalStatuses.Success,
+          message: (
+            <SuccessModalMessage
+              name={values.name}
+              symbol={values.symbol}
+              icon={ipfsFileUrl}
+              // TODO: Change address
+              address="KT1CBerr3qiQ8caoKHVDZNH4Dcb4iRAHoh9r"
+            />
+          ),
+        });
+        setTimeout(form.restart);
+      }
+    } catch (e) {
+      setModalState({
+        status: ModalStatuses.Error,
+        message: 'Something went wrong while creating token...',
+      });
+    }
+  }, [tezos, ipfs]);
 
   return (
     <section className={cx(s.root, className)}>
@@ -71,6 +188,8 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
         key={i18n.language}
         onSubmit={onSubmit}
         initialValues={{ decimals: 6 }}
+        // @ts-ignore
+        decorators={[focusOnErrors]}
         mutators={{
           setValue: ([field, value], state, { changeValue }) => {
             changeValue(state, field, () => value);
@@ -103,7 +222,6 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
                       </Field>
                       <Field
                         name="symbol"
-                        validate={required}
                         parse={parseTokenSymbol}
                       >
                         {({ input, meta }) => (
@@ -266,6 +384,20 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
           </Row>
         </Container>
       </div>
+      <StateModal
+        isOpen={modalState.status !== ModalStatuses.Default}
+        onRequestClose={
+          () => (
+            modalState.status === ModalStatuses.Error
+            || modalState.status === ModalStatuses.Success
+          ) && setModalState({
+            status: ModalStatuses.Default,
+            message: null,
+          })
+        }
+        status={modalState.status}
+        message={modalState.message}
+      />
     </section>
   );
 };
