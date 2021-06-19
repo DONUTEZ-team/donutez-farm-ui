@@ -6,9 +6,8 @@ import {
   MediaPreviewInfo,
   MediaType,
 } from '@components/ui/MediaInput';
-import XToken from '@icons/X_TOKEN.svg';
-
 import { Icon } from '@components/common/Icon';
+
 import s from './TokenCard.module.sass';
 
 type TokenCardProps = {
