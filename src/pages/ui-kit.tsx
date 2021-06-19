@@ -11,7 +11,7 @@ import { Heading } from '@components/ui/Heading';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { NumberInput } from '@components/common/NumberInput';
-import { MediaInput } from '@components/ui/MediaInput';
+import { MediaInput } from '@components/common/MediaInput';
 import { StyledCard } from '@components/ui/StyledCard';
 import { Modal } from '@components/ui/Modal';
 

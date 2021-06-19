@@ -33,7 +33,7 @@ import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
-import { MediaInput } from '@components/ui/MediaInput';
+import { MediaInput } from '@components/common/MediaInput';
 import { NumberInput } from '@components/common/NumberInput';
 import { TokenProps, TokensInfo } from '@components/common/TokensInfo';
 

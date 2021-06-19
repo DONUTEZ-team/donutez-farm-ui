@@ -3,10 +3,11 @@
   "Create Token": "Створити Токен",
   "Farm DONUTEZ": "Farm DONUTEZ",
   "Account": "Аккаунт",
+  "Choose file": "Оберіть файл",
   "Create": "Створити",
   "Loading...": "Loading...",
-  "This field is required": "This field is required",
-  "You entered not a valid QP address": "You entered not a valid QP address",
-  "You entered not a valid token address": "You entered not a valid token address",
-  "Value has to be a number between {{min}} and {{max}}": "Value has to be a number between {{min}} and {{max}}"
+  "This field is required": "Це поле є обов`язковим для заповнення",
+  "You entered not a valid QP address": "Ви ввели неправильну адресу QP токена",
+  "You entered not a valid token address": "Ви ввели неправильну адресу токена",
+  "Value has to be a number between {{min}} and {{max}}": "Значення має бути числом від {{min}} до {{max}}"
 }

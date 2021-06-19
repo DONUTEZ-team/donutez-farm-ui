@@ -3,10 +3,11 @@
   "Create Token": "创建令牌",
   "Farm DONUTEZ": "农场多努兹",
   "Account": "帐户",
+  "Choose file": "选择文件",
   "Create": "创造",
   "Loading...": "Loading...",
-  "This field is required": "This field is required",
-  "You entered not a valid QP address": "You entered not a valid QP address",
-  "You entered not a valid token address": "You entered not a valid token address",
-  "Value has to be a number between {{min}} and {{max}}": "Value has to be a number between {{min}} and {{max}}"
+  "This field is required": "此字段是必需的",
+  "You entered not a valid QP address": "您输入的 QP 地址无效",
+  "You entered not a valid token address": "您输入的令牌地址无效",
+  "Value has to be a number between {{min}} and {{max}}": "值必须是介于{{min}}和{{max}}之间的数字"
 }
