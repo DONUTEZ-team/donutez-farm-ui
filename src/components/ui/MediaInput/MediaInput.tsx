@@ -119,7 +119,7 @@ export const MediaInput: React.FC<MediaInputProps> = ({
                     <img
                       className={s.imagePreview}
                       src={mediaPreviewInfo.url}
-                      alt="NFT"
+                      alt="DONUTEZ"
                     />
                   )
                 }

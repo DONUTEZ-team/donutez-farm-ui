@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import s from './Modal.module.sass';
 
-type ModalProps = {
+export type ModalProps = {
   innerClassName?: string;
 } & ReactModal.Props;
 

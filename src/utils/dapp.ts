@@ -11,8 +11,21 @@ import memoizee from 'memoizee';
 import { NETWORK_RPC } from '@utils/defaults';
 import { getTokenLogo, uintToString } from '@utils/helpers';
 
+function removeFeeAndLimit(op: any) {
+  const {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    fee, gas_limit, storage_limit, ...rest
+  } = op;
+  return rest;
+}
+class PatchedTempleWallet extends TempleWallet {
+  async sendOperations(opParams: any[]) {
+    return super.sendOperations(opParams.map(removeFeeAndLimit));
+  }
+}
+
 export type DAppType = {
-  wallet: null | TempleWallet
+  wallet: null | PatchedTempleWallet
   tezos: TezosToolkit | null
   accountPkh: string | null
 };
@@ -26,16 +39,16 @@ function useDApp({ appName }: { appName: string }) {
 
   const ready = Boolean(tezos);
 
-  useEffect(() => TempleWallet.onAvailabilityChange(async (available) => {
+  useEffect(() => PatchedTempleWallet.onAvailabilityChange(async (available) => {
     if (available) {
       let perm;
       try {
-        perm = await TempleWallet.getCurrentPermission();
+        perm = await PatchedTempleWallet.getCurrentPermission();
       } catch (error) {
         console.log(error);
       }
 
-      const wlt = new TempleWallet(appName, perm);
+      const wlt = new PatchedTempleWallet(appName, perm);
       setState({
         wallet: wlt,
         tezos: wlt.connected ? wlt.toTezos() : new TezosToolkit(NETWORK_RPC),
@@ -52,10 +65,10 @@ function useDApp({ appName }: { appName: string }) {
 
   useEffect(() => {
     if (wallet && wallet.connected) {
-      TempleWallet.onPermissionChange((perm) => {
+      PatchedTempleWallet.onPermissionChange((perm) => {
         if (!perm) {
           setState({
-            wallet: new TempleWallet(appName),
+            wallet: new PatchedTempleWallet(appName),
             tezos: new TezosToolkit(NETWORK_RPC),
             accountPkh: null,
           });

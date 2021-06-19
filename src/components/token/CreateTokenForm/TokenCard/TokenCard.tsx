@@ -80,7 +80,10 @@ export const TokenCard: React.FC<TokenCardProps> = ({
             alt={name}
           />
         ) : (
-          <XToken />
+          <img
+            src="/images/icon-token.png"
+            alt={name}
+          />
         )}
       </Icon>
       <h2 className={s.header}>
