@@ -106,7 +106,7 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
       bounding.top - 150 <= 0
     );
   };
-  const onScroll = () => {
+  const onScroll = useCallback(() => {
     if (refDonutGlaze.current && refDonutSprinkles.current && refDonutCooked.current) {
       setDonutStage({
         glaze: isScrolledIntoView(refDonutGlaze.current),
@@ -114,11 +114,11 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
         cooked: isScrolledIntoView(refDonutCooked.current),
       });
     }
-  };
+  }, []);
   useEffect(() => {
     window.addEventListener('scroll', () => onScroll());
     return window.removeEventListener('scroll', () => onScroll());
-  }, []);
+  }, [onScroll]);
 
   // Logic of form
   const { Form } = withTypes<FormValues>();
