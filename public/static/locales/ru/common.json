@@ -8,5 +8,5 @@
   "This field is required": "This field is required",
   "You entered not a valid QP address": "You entered not a valid QP address",
   "You entered not a valid token address": "You entered not a valid token address",
-  "Value has to be between {{min}} and {{max}}": "Value has to be between {{min}} and {{max}}"
+  "Value has to be a number between {{min}} and {{max}}": "Value has to be a number between {{min}} and {{max}}"
 }
