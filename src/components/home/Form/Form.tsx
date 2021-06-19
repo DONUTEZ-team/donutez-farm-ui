@@ -78,6 +78,7 @@ type FormValues = {
 };
 
 export const YieldForm: React.FC = () => {
+  // Translations
   const { t, i18n } = useTranslation(['common', 'home']);
   const [isSuccessModal, setIsSuccessModal] = useState({
     opened: false,
