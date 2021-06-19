@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+import { useTranslation } from 'next-i18next';
 import cx from 'classnames';
 
 import { StyledCard } from '@components/ui/StyledCard';
 import {
   MediaPreviewInfo,
   MediaType,
-} from '@components/ui/MediaInput';
+} from '@components/common/MediaInput';
 import { Icon } from '@components/common/Icon';
 
 import s from './TokenCard.module.sass';
@@ -27,6 +31,8 @@ export const TokenCard: React.FC<TokenCardProps> = ({
   totalSupply,
   className,
 }) => {
+  const { t } = useTranslation(['common', 'token']);
+
   const [mediaPreviewInfo, setMediaPreviewInfo] = useState<MediaPreviewInfo | string>();
 
   useEffect(
@@ -86,8 +92,8 @@ export const TokenCard: React.FC<TokenCardProps> = ({
         )}
       </Icon>
       <h2 className={s.header}>
-        Token:
-        {' '}
+        {t('token:Token')}
+        {': '}
         {`${name || 'Unnamed'} (${
           symbol || (
             name
@@ -97,13 +103,13 @@ export const TokenCard: React.FC<TokenCardProps> = ({
         })`}
       </h2>
       <h2 className={s.header}>
-        Decimals:
-        {' '}
+        {t('token:Decimals')}
+        {': '}
         {decimals || decimals === 0 ? decimals : 6}
       </h2>
       <h2 className={s.header}>
-        Total supply:
-        {' '}
+        {t('token:Total supply')}
+        {': '}
         {totalSupply || 0}
       </h2>
     </StyledCard>

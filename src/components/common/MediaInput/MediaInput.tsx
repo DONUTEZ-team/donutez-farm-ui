@@ -3,6 +3,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useTranslation } from 'next-i18next';
 import cx from 'classnames';
 
 import { Button } from '@components/ui/Button';
@@ -37,6 +38,8 @@ export const MediaInput: React.FC<MediaInputProps> = ({
   className,
   ...inputProps
 }) => {
+  const { t } = useTranslation('common');
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [mediaPreviewInfo, setMediaPreviewInfo] = useState<MediaPreviewInfo>();
 
@@ -136,7 +139,7 @@ export const MediaInput: React.FC<MediaInputProps> = ({
               theme="secondary"
               disabled={disabled}
             >
-              Choose file
+              {t('common:Choose file')}
             </Button>
           </>
         )}

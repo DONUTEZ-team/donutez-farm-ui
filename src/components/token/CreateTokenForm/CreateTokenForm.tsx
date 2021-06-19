@@ -33,7 +33,7 @@ import { Row } from '@components/ui/Row';
 import { Button } from '@components/ui/Button';
 import { Heading } from '@components/ui/Heading';
 import { Input } from '@components/ui/Input';
-import { MediaInput } from '@components/ui/MediaInput';
+import { MediaInput } from '@components/common/MediaInput';
 import { NumberInput } from '@components/common/NumberInput';
 import { TokensInfo } from '@components/common/TokensInfo';
 import {
@@ -58,31 +58,35 @@ const SuccessModalMessage: React.FC<SuccessModalMessageProps> = ({
   symbol,
   icon,
   address,
-}) => (
-  <>
-    <p>Your token has been created successfully!</p>
-    <TokensInfo
-      firstToken={{
-        name,
-        symbol: symbol ?? name.replace(' ', '').substr(0, 3).toUpperCase(),
-        icon: getTokenLogo(icon),
-        address,
-      }}
-      className={s.tokenInfo}
-    />
-    <p>
-      Token address is
-      {' '}
-      <a
-        href={`${BCD}${address}`}
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        {address}
-      </a>
-    </p>
-  </>
-);
+}) => {
+  const { t } = useTranslation('token');
+
+  return (
+    <>
+      <p>{t('token:Your token has been created successfully!')}</p>
+      <TokensInfo
+        firstToken={{
+          name,
+          symbol: symbol ?? name.replace(' ', '').substr(0, 3).toUpperCase(),
+          icon: getTokenLogo(icon),
+          address,
+        }}
+        className={s.tokenInfo}
+      />
+      <p>
+        {t('token:Token address is')}
+        {' '}
+        <a
+          href={`${BCD}${address}`}
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          {address}
+        </a>
+      </p>
+    </>
+  );
+};
 
 // Default form values
 type FormValues = {
@@ -100,7 +104,7 @@ type CreateTokenFormProps = {
 export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
   className,
 }) => {
-  const { t, i18n } = useTranslation(['common', 'home']);
+  const { t, i18n } = useTranslation(['common', 'token']);
 
   const tezos = useTezos();
 
@@ -126,7 +130,7 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
         if (values.icon) {
           setModalState({
             status: ModalStatuses.Pending,
-            message: 'Loading asset to IPFS...',
+            message: t('token:Loading asset to IPFS...'),
           });
           const fileName = formatName(`${values.name} ${values.symbol}${formatImageType(values.icon.type)}`);
           const ipfsFile = await ipfs.add({
@@ -141,7 +145,7 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
 
         setModalState({
           status: ModalStatuses.Pending,
-          message: 'Creating token...',
+          message: t('token:Creating token...'),
         });
         await createToken(
           tezos,
@@ -168,17 +172,17 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
     } catch (e) {
       setModalState({
         status: ModalStatuses.Error,
-        message: 'Something went wrong while creating token...',
+        message: e.message,
       });
     }
-  }, [tezos, ipfs]);
+  }, [tezos, t, ipfs]);
 
   return (
     <section className={cx(s.root, className)}>
       <Container>
         <Row className={s.row}>
           <Heading
-            header={t('home:Token\nInformation')}
+            header={t('token:Token\nInformation')}
             subheader="01"
             className={s.heading}
           />
@@ -213,8 +217,8 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
                           <Input
                             {...input}
                             className={s.input}
-                            label={`${t('home:Token name')}:`}
-                            placeholder={t('home:DONUTEZ')}
+                            label={`${t('token:Token name')}:`}
+                            placeholder="DONUTEZ"
                             error={(meta.touched && meta.error) || meta.submitError}
                             success={!meta.error && meta.touched && !meta.submitError}
                           />
@@ -228,8 +232,8 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
                           <Input
                             {...input}
                             className={s.input}
-                            label={`${t('home:Token symbol')}:`}
-                            placeholder={t('home:DTZ')}
+                            label={`${t('token:Token symbol')}:`}
+                            placeholder="DTZ"
                             error={(meta.touched && meta.error) || meta.submitError}
                             success={!meta.error && meta.touched && !meta.submitError}
                           />
@@ -245,7 +249,7 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
                             {...input}
                             theme="large"
                             className={s.input}
-                            label={`${t('home:Decimals')}:`}
+                            label={`${t('token:Decimals')}:`}
                             placeholder="6"
                             step={1}
                             min={0}
@@ -274,7 +278,7 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
                           <MediaInput
                             {...input}
                             className={s.input}
-                            label="Token icon:"
+                            label={`${t('token:Token icon')}:`}
                             value={value}
                             onChange={(file) => onChange(file)}
                             error={(meta.touched && meta.error) || meta.submitError}
@@ -292,7 +296,7 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
                             {...input}
                             theme="large"
                             className={s.input}
-                            label={`${t('home:Total supply')}:`}
+                            label={`${t('token:Total supply')}:`}
                             placeholder="1000000"
                             step={1}
                             min={1}
