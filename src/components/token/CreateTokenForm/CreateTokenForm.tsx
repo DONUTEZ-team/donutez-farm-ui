@@ -13,7 +13,10 @@ import {
   BCD,
   TEMPLATE_TOKEN_ICON,
 } from '@utils/defaults';
-import { useTezos } from '@utils/dapp';
+import {
+  useAccountPkh,
+  useTezos,
+} from '@utils/dapp';
 import {
   parseNumber,
   parseTokenSymbol,
@@ -41,6 +44,7 @@ import {
   StateModal,
 } from '@components/common/StateModal';
 
+import { ConnectWallet } from '@containers/common/ConnectWallet';
 import { TokenCard } from './TokenCard';
 import s from './CreateTokenForm.module.sass';
 
@@ -107,6 +111,7 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
   const { t, i18n } = useTranslation(['common', 'token']);
 
   const tezos = useTezos();
+  const accountPkh = useAccountPkh();
 
   const [modalState, setModalState] = useState<{
     status: ModalStatuses,
@@ -318,9 +323,17 @@ export const CreateTokenForm: React.FC<CreateTokenFormProps> = ({
                           />
                         )}
                       </Field>
-                      <Button type="submit" className={s.button} disabled={submitting}>
-                        {submitting ? t('common:Loading...') : t('token:Create & Deploy')}
-                      </Button>
+                      {
+                        !accountPkh
+                          ? (
+                            <ConnectWallet className={s.button} label="Connect wallet" />
+                          )
+                          : (
+                            <Button type="submit" className={s.button} disabled={submitting}>
+                              {submitting ? t('common:Loading...') : t('token:Create & Deploy')}
+                            </Button>
+                          )
+                      }
                     </div>
                     <TokenCard
                       className={s.card}

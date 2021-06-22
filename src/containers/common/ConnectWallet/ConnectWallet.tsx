@@ -8,10 +8,14 @@ import { Button } from '@components/ui/Button';
 import { AccountButton } from '@components/common/AccountButton';
 
 type ConnectWalletProps = {
+  label?: string
   className?: string
 };
 
-export const ConnectWallet: React.FC<ConnectWalletProps> = ({ className }) => {
+export const ConnectWallet: React.FC<ConnectWalletProps> = ({
+  label = 'Connect',
+  className,
+}) => {
   const connect = useConnect();
   const disconnect = useDisconnect();
   const ready = useReady();
@@ -42,7 +46,7 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = ({ className }) => {
       className={className}
       onClick={handleConnect}
     >
-      Connect
+      {label}
     </Button>
   );
 };
