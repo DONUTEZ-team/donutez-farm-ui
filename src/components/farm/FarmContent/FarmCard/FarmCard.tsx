@@ -10,7 +10,7 @@ type FarmCardProps = {
   className?: string
   firstIcon: ReactNode | string
   secondIcon?: ReactNode | string
-  value: number
+  value: number | null
   header: string
   buttons: ReactNode
 };
@@ -29,7 +29,7 @@ export const FarmCard: React.FC<FarmCardProps> = ({
       {secondIcon && <Icon className={s.icon}>{secondIcon}</Icon>}
     </div>
     <p className={s.value}>
-      {value}
+      {value ?? 'XXXX'}
     </p>
     <h2 className={s.header}>
       {header}

@@ -13,3 +13,5 @@ export const BCD = 'https://better-call.dev/florencenet/';
 export const IPFS = 'ipfs';
 
 export const TEMPLATE_TOKEN_ICON = 'ipfs://QmQ4cRoKh994ZpajU1phPVRJJx72TDsezozzhuKsfXDpDp/Template_icon_TIC.png';
+
+export const LOCALSTORAGE_RECONNECT_KEY = 'ABORT_RECONNECT';

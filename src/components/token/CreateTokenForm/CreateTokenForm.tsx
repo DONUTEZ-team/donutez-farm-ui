@@ -31,6 +31,7 @@ import {
   validateMinMax,
 } from '@utils/validators';
 import useIpfsFactory from '@utils/ipfs';
+import { ConnectWallet } from '@containers/common/ConnectWallet';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { Button } from '@components/ui/Button';
@@ -44,7 +45,6 @@ import {
   StateModal,
 } from '@components/common/StateModal';
 
-import { ConnectWallet } from '@containers/common/ConnectWallet';
 import { TokenCard } from './TokenCard';
 import s from './CreateTokenForm.module.sass';
 
