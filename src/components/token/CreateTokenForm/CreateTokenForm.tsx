@@ -16,6 +16,7 @@ import {
 import {
   useAccountPkh,
   useTezos,
+  createToken,
 } from '@utils/dapp';
 import {
   parseNumber,
@@ -29,7 +30,6 @@ import {
   required,
   validateMinMax,
 } from '@utils/validators';
-import { createToken } from '@utils/createToken';
 import useIpfsFactory from '@utils/ipfs';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
