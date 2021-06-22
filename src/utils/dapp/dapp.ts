@@ -8,7 +8,7 @@ import constate from 'constate';
 import { TempleWallet } from '@temple-wallet/dapp';
 import { TezosToolkit } from '@taquito/taquito';
 import memoizee from 'memoizee';
-import { NETWORK_RPC } from '@utils/defaults';
+import { LOCALSTORAGE_RECONNECT_KEY, NETWORK_RPC } from '@utils/defaults';
 import { getTokenLogo, uintToString } from '@utils/helpers';
 
 export type DAppType = {
@@ -35,7 +35,10 @@ function useDApp({ appName }: { appName: string }) {
         console.log(error);
       }
 
-      const wlt = new TempleWallet(appName, perm);
+      const wlt = new TempleWallet(
+        appName,
+        localStorage.getItem(LOCALSTORAGE_RECONNECT_KEY) ? null : perm,
+      );
       setState({
         wallet: wlt,
         tezos: wlt.connected ? wlt.toTezos() : new TezosToolkit(NETWORK_RPC),
@@ -73,6 +76,7 @@ function useDApp({ appName }: { appName: string }) {
         await wallet.connect(network, opts);
         const tzs = wallet.toTezos();
         const pkh = await tzs.wallet.pkh();
+        localStorage.removeItem(LOCALSTORAGE_RECONNECT_KEY);
         setState({
           wallet,
           tezos: tzs,
@@ -92,7 +96,7 @@ function useDApp({ appName }: { appName: string }) {
         tezos: new TezosToolkit(NETWORK_RPC),
         accountPkh: null,
       }));
-      localStorage.setItem('shouldPreventReconnect', 'true');
+      localStorage.setItem(LOCALSTORAGE_RECONNECT_KEY, 'true');
     },
     [],
   );

@@ -3,6 +3,8 @@ import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import cx from 'classnames';
 
+import { useAccountPkh } from '@utils/dapp';
+import { ConnectWallet } from '@containers/common/ConnectWallet';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { Button } from '@components/ui/Button';
@@ -20,6 +22,7 @@ export const FarmContent: React.FC<FarmContentProps> = ({
   className,
 }) => {
   const { t } = useTranslation(['farm']);
+  const accountPkh = useAccountPkh();
 
   return (
     <section className={cx(s.root, className)}>
@@ -47,26 +50,30 @@ export const FarmContent: React.FC<FarmContentProps> = ({
             <FarmCard
               className={s.card}
               firstIcon={<DonutezIcon />}
-              value={0}
+              value={!accountPkh ? null : 0}
               header="DONUTEZ tokens earned"
-              buttons={(
-                <>
-                  <Button>Harvest</Button>
-                </>
-              )}
+              buttons={
+                !accountPkh
+                  ? <ConnectWallet label="Connect wallet" />
+                  : <Button>Harvest</Button>
+              }
             />
             <FarmCard
               className={s.card}
               firstIcon={<DonutezIcon />}
               secondIcon={<TezosIcon />}
-              value={0}
+              value={!accountPkh ? null : 0}
               header="DTZ / XTZ QP tokens staked"
-              buttons={(
-                <>
-                  <Button className={s.button}>Stake</Button>
-                  <Button className={s.button} theme="secondary">Unstake</Button>
-                </>
-              )}
+              buttons={
+                !accountPkh
+                  ? <ConnectWallet label="Connect wallet" />
+                  : (
+                    <>
+                      <Button className={s.button}>Stake</Button>
+                      <Button className={s.button} theme="secondary">Unstake</Button>
+                    </>
+                  )
+              }
             />
           </div>
 
