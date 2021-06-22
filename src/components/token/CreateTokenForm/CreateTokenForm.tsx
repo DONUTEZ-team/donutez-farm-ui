@@ -13,7 +13,10 @@ import {
   BCD,
   TEMPLATE_TOKEN_ICON,
 } from '@utils/defaults';
-import { useTezos } from '@utils/dapp';
+import {
+  useTezos,
+  createToken,
+} from '@utils/dapp';
 import {
   parseNumber,
   parseTokenSymbol,
@@ -26,7 +29,6 @@ import {
   required,
   validateMinMax,
 } from '@utils/validators';
-import { createToken } from '@utils/createToken';
 import useIpfsFactory from '@utils/ipfs';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';

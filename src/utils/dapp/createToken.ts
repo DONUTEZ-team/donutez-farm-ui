@@ -2,7 +2,7 @@ import { TezosToolkit } from '@taquito/taquito';
 import BigNumber from 'bignumber.js';
 
 import { TOKEN_CONTRACT } from '@utils/defaults';
-import { batchify } from '@utils/helpers';
+import { batchify } from '@utils/dapp';
 
 export const createToken = async (
   tezos: TezosToolkit,
