@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { NextSeo } from 'next-seo';
 
+import firstScreenImage from '@images/TokenPerson.png';
 import { BaseLayout } from '@layouts/BaseLayout';
 import { FirstScreen } from '@components/home/FirstScreen';
 import { CreateTokenForm } from '@components/token/CreateTokenForm';
@@ -32,7 +33,7 @@ const Token: React.FC = () => {
         )}
         alt={t('token:Create you own FA 2 token for free')}
         description={t('token:Create & Deploy your own token in a minute')}
-        image="/images/TokenPerson.png"
+        image={firstScreenImage}
       />
       <CreateTokenForm />
     </BaseLayout>

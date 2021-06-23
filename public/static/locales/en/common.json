@@ -6,8 +6,8 @@
   "Choose file": "Choose file",
   "Create": "Create",
   "Loading...": "Loading...",
-  "This field is required": "This field is required",
   "You entered not a valid QP address": "You entered not a valid QP address",
   "You entered not a valid token address": "You entered not a valid token address",
+  "This field is required": "This field is required",
   "Value has to be a number between {{min}} and {{max}}": "Value has to be a number between {{min}} and {{max}}"
 }

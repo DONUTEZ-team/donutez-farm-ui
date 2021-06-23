@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { NextSeo } from 'next-seo';
 
+import firstScreenImage from '@images/HomePerson.png';
 import { BaseLayout } from '@layouts/BaseLayout';
 import { FirstScreen } from '@components/home/FirstScreen';
 import { CreateFarmForm } from '@components/home/CreateFarmForm';
@@ -23,7 +24,7 @@ const Home: React.FC = () => {
       <FirstScreen
         title={t('home:All u need\nis farming...\nand Donutez')}
         description={t('home:Create your own yield farming in 5 minutes')}
-        image="/images/HomePerson.png"
+        image={firstScreenImage}
         isHome
       />
       <CreateFarmForm />

@@ -6,8 +6,8 @@
   "Choose file": "Оберіть файл",
   "Create": "Створити",
   "Loading...": "Loading...",
-  "This field is required": "Це поле є обов`язковим для заповнення",
   "You entered not a valid QP address": "Ви ввели неправильну адресу QP токена",
   "You entered not a valid token address": "Ви ввели неправильну адресу токена",
+  "This field is required": "Це поле є обов`язковим для заповнення",
   "Value has to be a number between {{min}} and {{max}}": "Значення має бути числом від {{min}} до {{max}}"
 }

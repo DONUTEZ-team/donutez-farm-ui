@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import cx from 'classnames';
 
+import handRight from '@images/HandRight.png';
 import { Container } from '@components/ui/Container';
 import { Row } from '@components/ui/Row';
 import { Button } from '@components/ui/Button';
@@ -17,7 +18,7 @@ type FirstScreenProps = {
   title: string | ReactNode
   alt?: string
   description: string
-  image: string
+  image: StaticImageData
   isHome?: boolean
 };
 
@@ -94,12 +95,9 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
               </Button>
               <div className={s.hand}>
                 <Image
-                  layout="responsive"
                   quality={90}
-                  width={230}
-                  height={160}
                   priority
-                  src="/images/HandRight.png"
+                  src={handRight}
                   alt="DONUTEZ Farm"
                 />
               </div>
@@ -111,10 +109,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
           )}
           <div className={s.image}>
             <Image
-              layout="responsive"
               quality={90}
-              width={325}
-              height={628}
               priority
               src={image}
               alt={imageAlt}
