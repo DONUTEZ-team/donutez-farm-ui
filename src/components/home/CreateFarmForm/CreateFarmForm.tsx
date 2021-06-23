@@ -18,6 +18,7 @@ import BigNumber from 'bignumber.js';
 import {
   getStorageInfo,
   getTokenInfo,
+  getUserBalance,
   useAccountPkh,
   useTezos,
 } from '@utils/dapp';
@@ -191,22 +192,15 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
         });
       }
 
-      let balance = new BigNumber(0);
-      const { ledger } = await getStorageInfo(
-        tezos!,
-        tokenAddress,
-      );
-      const ledgerRecord = await ledger.get(accountPkh);
-      if (ledgerRecord) {
-        balance = ledgerRecord.balance;
+      if (accountPkh) {
+        const userBalance = await getUserBalance(tezos, tokenAddress, accountPkh);
+        setRewardTokenBalance(
+          userBalance.balance
+            .div(new BigNumber(10).pow(userBalance?.decimals ?? 0))
+            .decimalPlaces(tokenData?.decimals ? +tokenData?.decimals : 0, 1)
+            .toNumber(),
+        );
       }
-
-      setRewardTokenBalance(
-        balance
-          .div(new BigNumber(10).pow(tokenData?.decimals ?? 0))
-          .decimalPlaces(tokenData?.decimals ? +tokenData?.decimals : 0, 1)
-          .toNumber(),
-      );
     } catch (e) {
       setRewardTokenMetadata({
         data: null,
