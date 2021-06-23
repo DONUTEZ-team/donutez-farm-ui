@@ -32,7 +32,8 @@
     "react-final-form-listeners": "^1.0.3",
     "react-lottie": "^1.2.3",
     "react-modal": "^3.14.3",
-    "sass": "^1.35.1"
+    "sass": "^1.35.1",
+    "swr": "^0.5.6"
   },
   "devDependencies": {
     "@types/classnames": "^2.3.1",

@@ -35,7 +35,6 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = ({
 
   return (ready && accountPkh) ? (
     <AccountButton
-      balance={120}
       accountPkh={accountPkh}
       onReconnect={handleConnect}
       onDisconnect={handleDisconnect}

@@ -7,6 +7,7 @@ export const NETWORK_RPC = process.env.NEXT_PUBLIC_NETWORK_RPC!;
 
 // Contracts
 export const TOKEN_CONTRACT = process.env.NEXT_PUBLIC_TOKEN_CONTRACT!;
+export const DONUTEZ_TOKEN_ADDRESS = process.env.NEXT_PUBLIC_DONUTEZ_TOKEN_ADDRESS!;
 
 export const BCD = 'https://better-call.dev/florencenet/';
 
