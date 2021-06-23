@@ -6,8 +6,8 @@
   "Choose file": "选择文件",
   "Create": "创造",
   "Loading...": "Loading...",
-  "This field is required": "此字段是必需的",
   "You entered not a valid QP address": "您输入的 QP 地址无效",
   "You entered not a valid token address": "您输入的令牌地址无效",
+  "This field is required": "此字段是必需的",
   "Value has to be a number between {{min}} and {{max}}": "值必须是介于{{min}}和{{max}}之间的数字"
 }
