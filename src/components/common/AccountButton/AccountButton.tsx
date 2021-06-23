@@ -1,12 +1,23 @@
-import React, { useCallback, useState } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 import cx from 'classnames';
+import BigNumber from 'bignumber.js';
 
+import { useTezos } from '@utils/dapp';
+import {
+  BLOCK_INTERVAL,
+  DONUTEZ_TOKEN_ADDRESS,
+} from '@utils/defaults';
+import { getUserBalance } from '@utils/dapp/getUserBalance';
+import useBlockchainSWR from '@utils/useBlockchainSWR';
 import { Button } from '@components/ui/Button';
 
 import s from './AccountButton.module.sass';
 
 type AccountButtonProps = {
-  balance: number
   accountPkh: string
   onReconnect: () => void
   onDisconnect: () => void
@@ -14,12 +25,13 @@ type AccountButtonProps = {
 };
 
 export const AccountButton: React.FC<AccountButtonProps> = ({
-  balance,
   accountPkh,
   onReconnect,
   onDisconnect,
   className,
 }) => {
+  const tezos = useTezos()!;
+
   const [accountDialogOpened, setAccountDialogOpened] = useState(false);
 
   const openAccountDialog = useCallback(() => {
@@ -28,6 +40,45 @@ export const AccountButton: React.FC<AccountButtonProps> = ({
   const closeAccountDialog = useCallback(() => {
     setAccountDialogOpened(false);
   }, []);
+
+  const getUserBalanceCb = useCallback(async () => (
+    getUserBalance(tezos, accountPkh, DONUTEZ_TOKEN_ADDRESS)
+  ),
+  [accountPkh, tezos]);
+
+  const { error, data } = useBlockchainSWR(
+    ['donutez-balance'],
+    getUserBalanceCb,
+    { refreshInterval: BLOCK_INTERVAL },
+  );
+
+  const balanceInfo = useMemo(() => {
+    if (error) {
+      return {
+        balance: '0',
+        token: 'XXX',
+      };
+    }
+    return {
+      balance: data?.balance
+        .div(new BigNumber(10).pow(data?.decimals))
+        .decimalPlaces(data?.decimals, 1)
+        .toString(),
+      token: data?.symbol,
+    };
+  }, [data?.balance, data?.decimals, data?.symbol, error]);
+
+  if (!error && !data) {
+    return (
+      <Button
+        className={className}
+        theme="secondary"
+        disabled
+      >
+        Loading...
+      </Button>
+    );
+  }
 
   return (
     <div
@@ -42,9 +93,9 @@ export const AccountButton: React.FC<AccountButtonProps> = ({
         className={cx(s.root, className)}
       >
         <span className={s.balance}>
-          {balance}
+          {balanceInfo.balance}
           {' '}
-          XTZ
+          {balanceInfo.token}
         </span>
         <span className={s.icon} />
       </button>
@@ -53,9 +104,9 @@ export const AccountButton: React.FC<AccountButtonProps> = ({
         <p className={s.value}>{accountPkh}</p>
         <p className={s.header}>Your balance:</p>
         <p className={cx(s.value, s.amount)}>
-          {balance}
+          {balanceInfo.balance}
           {' '}
-          XTZ
+          {balanceInfo.token}
         </p>
         <div className={s.buttons}>
           <Button

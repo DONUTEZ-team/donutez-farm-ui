@@ -6,6 +6,10 @@ export const getTokenLogo = (url: string | null) => {
   }
 
   const splitLink = url.split('://');
+  if (!splitLink) {
+    return null;
+  }
+
   const getProtocol: string = splitLink && splitLink.length ? splitLink[0] : '';
   const isIpfs = getProtocol === IPFS;
 

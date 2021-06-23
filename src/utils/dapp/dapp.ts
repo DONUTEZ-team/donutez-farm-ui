@@ -1,15 +1,15 @@
 import {
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import constate from 'constate';
 import { TempleWallet } from '@temple-wallet/dapp';
 import { TezosToolkit } from '@taquito/taquito';
-import memoizee from 'memoizee';
-import { LOCALSTORAGE_RECONNECT_KEY, NETWORK_RPC } from '@utils/defaults';
-import { getTokenLogo, uintToString } from '@utils/helpers';
+import {
+  LOCALSTORAGE_RECONNECT_KEY,
+  NETWORK_RPC,
+} from '@utils/defaults';
 
 export type DAppType = {
   wallet: null | TempleWallet
@@ -129,75 +129,3 @@ export const [
   (v) => v.connect,
   (v) => v.disconnect,
 );
-
-/**
- * Block update
- */
-export const useOnBlock = (tezos: TezosToolkit | null, callback: (hash: string) => void) => {
-  const blockHashRef = useRef<string | undefined>();
-
-  useEffect(() => {
-    if (tezos) {
-      let sub: any; // Which type do I have to set here?
-
-      const spawnSub = () => {
-        sub = tezos.stream.subscribe('head');
-
-        sub.on('data', (hash: string) => {
-          if (blockHashRef.current && blockHashRef.current !== hash) {
-            callback(hash);
-          }
-          blockHashRef.current = hash;
-        });
-        sub.on('error', (err: Error) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.error(err);
-          }
-          sub.close();
-          spawnSub();
-        });
-      };
-
-      spawnSub();
-      return () => sub.close();
-    }
-
-    // close error: Expected to return a value
-    return () => undefined;
-  }, [tezos, callback]);
-};
-
-// STORAGE
-const getContractPure = (tezos: TezosToolkit, address: string) => tezos.contract.at(address);
-
-export const getContract = memoizee(getContractPure);
-
-const getStoragePure = async (tezos: TezosToolkit, contractAddress: string) => {
-  const contract = await getContract(tezos, contractAddress);
-  return contract?.storage<any>();
-};
-
-export const getStorageInfo = memoizee(getStoragePure, { maxAge: 30000 });
-
-// Token info
-export const getTokenInfo = async (tezos: TezosToolkit, tokenAddress: string) => {
-  const {
-    token_metadata: tokenMetadata,
-  } = await getStorageInfo(tezos, tokenAddress);
-  if (!tokenMetadata) return null;
-  const {
-    token_info: tokenInfo,
-  } = await tokenMetadata.get(0);
-  if (!tokenInfo) return null;
-
-  const name = uintToString(tokenInfo.get('name')) ?? null;
-  const symbol = uintToString(tokenInfo.get('symbol')) ?? null;
-  const icon = getTokenLogo(uintToString(tokenInfo.get('thumbnailUri'))) ?? null;
-
-  return {
-    name,
-    symbol,
-    icon,
-    address: tokenAddress,
-  };
-};

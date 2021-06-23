@@ -13,10 +13,12 @@ import {
 } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
 import dayjs from 'dayjs';
+import BigNumber from 'bignumber.js';
 
 import {
   getStorageInfo,
   getTokenInfo,
+  useAccountPkh,
   useTezos,
 } from '@utils/dapp';
 import {
@@ -35,7 +37,10 @@ import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { MediaInput } from '@components/common/MediaInput';
 import { NumberInput } from '@components/common/NumberInput';
-import { TokenProps, TokensInfo } from '@components/common/TokensInfo';
+import {
+  TokenProps,
+  TokensInfo,
+} from '@components/common/TokensInfo';
 
 import { FormBlock } from './FormBlock';
 import { FinalDonut } from './FinalDonut';
@@ -88,8 +93,10 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
     rewardTokenMetadata,
     setRewardTokenMetadata,
   ] = useState<MetadataProps>(initialMetadataState);
+  const [rewardTokenBalance, setRewardTokenBalance] = useState<number | null>(null);
 
   const tezos = useTezos()!;
+  const accountPkh = useAccountPkh();
 
   // Donut animation
   const refDonutGlaze = useRef(null);
@@ -183,6 +190,23 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
           error: false,
         });
       }
+
+      let balance = new BigNumber(0);
+      const { ledger } = await getStorageInfo(
+        tezos!,
+        tokenAddress,
+      );
+      const ledgerRecord = await ledger.get(accountPkh);
+      if (ledgerRecord) {
+        balance = ledgerRecord.balance;
+      }
+
+      setRewardTokenBalance(
+        balance
+          .div(new BigNumber(10).pow(tokenData?.decimals ?? 0))
+          .decimalPlaces(tokenData?.decimals ? +tokenData?.decimals : 0, 1)
+          .toNumber(),
+      );
     } catch (e) {
       setRewardTokenMetadata({
         data: null,
@@ -190,7 +214,7 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
         error: true,
       });
     }
-  }, [tezos]);
+  }, [accountPkh, tezos]);
 
   // TODO: submitting
   const onSubmit = useCallback(async (
@@ -646,7 +670,7 @@ export const CreateFarmForm: React.FC<CreateFarmFormProps> = ({
                         Available balance:
                         {' '}
                         <strong>
-                          0
+                          {rewardTokenBalance ?? 0}
                           {' '}
                           {rewardTokenMetadata.data?.symbol}
                         </strong>
